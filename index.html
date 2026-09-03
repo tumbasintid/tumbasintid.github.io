@@ -119,10 +119,10 @@
 <!-- Section Form Pembayaran -->
 <section id="checkout-section" class="checkout-section">
     <div class="checkout-card">
-        <form class="checkout-form">
+        <form id="orderForm" class="checkout-form">
             <div class="form-group">
                 <label for="whatsapp">No. WhatsApp</label>
-                <input type="tel" id="whatsapp" placeholder="Masukkan Nomor WhatsApp Anda" required>
+                <input type="tel" id="whatsappInput" placeholder="Masukkan Nomor WhatsApp Anda" required>
                 <small class="form-note">ⓘ Nomor ini akan dihubungi jika terjadi masalah.</small>
             </div>
 
@@ -347,36 +347,51 @@ function switchTab(tabName) {
     }
 }
 
-// Logika saat tombol "LANJUTKAN PEMBAYARAN" diklik
-const btnSubmit = document.querySelector('.btn-submit');
-if (btnSubmit) {
-    btnSubmit.addEventListener('click', function(e) {
-        e.preventDefault();
+// Logika Validasi & Pindah Tab saat Beli Sekarang
+const orderForm = document.getElementById('orderForm');
+if (orderForm) {
+  orderForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-        const waInput = document.getElementById('whatsapp')?.value || '-';
-        const methodInput = document.getElementById('paymentMethodInput')?.value || 'QRIS';
-        
-        const selectedCard = document.querySelector('.product-card.selected');
-        const productName = selectedCard ? selectedCard.querySelector('h3')?.textContent : 'Advance Server';
-        const productPrice = selectedCard ? selectedCard.querySelector('.price')?.textContent : 'Rp 0';
+    // 1. Ambil nilai input
+    const waInput = document.getElementById('whatsappInput')?.value.trim();
+    const methodInput = document.getElementById('paymentMethodInput')?.value;
 
-        let cleanPrice = parseInt(productPrice.replace(/[^0-9]/g, '')) || 0;
-        let totalBayar = cleanPrice + 275;
-        let formattedTotal = 'Rp ' + totalBayar.toLocaleString('id-ID');
+    // 2. Cek Validasi Input
+    if (!waInput) {
+      alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
+      return;
+    }
 
-        if (document.getElementById('summary-product')) document.getElementById('summary-product').textContent = productName;
-        if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = productPrice;
-        if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
-        if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput.toUpperCase();
-        if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
+    if (!methodInput) {
+      alert('Silakan pilih metode pembayaran terlebih dahulu!');
+      return;
+    }
 
-        const emptyState = document.getElementById('empty-order-state');
-        const orderDetail = document.getElementById('order-detail-content');
-        if (emptyState) emptyState.style.display = 'none';
-        if (orderDetail) orderDetail.style.display = 'block';
+    // 3. Update data ringkasan pesanan
+    const selectedCard = document.querySelector('.product-card.selected');
+    const productName = selectedCard ? selectedCard.querySelector('h3')?.textContent : 'Advance Server';
+    const productPrice = selectedCard ? selectedCard.querySelector('.price')?.textContent : 'Rp 0';
 
-        switchTab('pesanan');
-    });
+    let cleanPrice = parseInt(productPrice.replace(/[^0-9]/g, '')) || 0;
+    let totalBayar = cleanPrice + 275;
+    let formattedTotal = 'Rp ' + totalBayar.toLocaleString('id-ID');
+
+    if (document.getElementById('summary-product')) document.getElementById('summary-product').textContent = productName;
+    if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = productPrice;
+    if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
+    if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput;
+    if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
+
+    // 4. Sembunyikan Empty State & Tampilkan Detail
+    const emptyState = document.getElementById('empty-order-state');
+    const orderDetail = document.getElementById('order-detail-content');
+    if (emptyState) emptyState.style.display = 'none';
+    if (orderDetail) orderDetail.style.display = 'block';
+
+    // 5. Pindah ke Tab Pesanan
+    switchTab('pesanan');
+  });
 }
 
 </script>
