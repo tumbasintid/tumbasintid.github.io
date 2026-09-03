@@ -388,4 +388,126 @@ html {
 .nav-item.active {
     color: #ffcc00;
 }
+/* ==========================================
+   CUSTOM MODAL DROPDOWN (DARK THEME)
+   ========================================== */
+
+/* Style Tombol Pemicu Dropdown */
+.custom-select-trigger {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: #121824;
+    border: 1px solid #2a3447;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.custom-select-trigger:hover {
+    border-color: #eab308;
+}
+
+.custom-select-trigger .arrow {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* Background Overlay Hitam Transparan */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Kotak Modal Pop-up */
+.custom-modal-content {
+    background-color: #121824;
+    border: 1px solid #2a3447;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    transform: translateY(20px);
+    transition: transform 0.2s ease;
+}
+
+/* Class Aktif untuk Menampilkan Modal */
+.custom-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom-modal-overlay.active .custom-modal-content {
+    transform: translateY(0);
+}
+
+/* Header Modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #2a3447;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.close-btn {
+    font-size: 1.4rem;
+    color: #9ca3af;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+/* List Opsi Pilihan */
+.modal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option-item {
+    padding: 12px 14px;
+    background-color: #1a2232;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.option-item:hover,
+.option-item.selected {
+    background-color: #2a3447;
+    border-color: #eab308;
+    color: #eab308;
+}
 
