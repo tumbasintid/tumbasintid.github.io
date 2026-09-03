@@ -308,6 +308,60 @@ optionItems.forEach(item => {
         modalOverlay.classList.remove('active');
     });
 });
+// Logika Perpindahan Tab Navigasi & Detail Pesanan
+function switchTab(tabName) {
+    const tabBeranda = document.getElementById('checkout-section') ? document.getElementById('checkout-section').parentElement : null;
+    const tabPesanan = document.getElementById('tab-pesanan');
+    const navBeranda = document.getElementById('nav-beranda');
+    const navPesanan = document.getElementById('nav-pesanan');
+
+    if (tabPesanan) tabPesanan.style.display = 'none';
+    if (navBeranda) navBeranda.classList.remove('active');
+    if (navPesanan) navPesanan.classList.remove('active');
+
+    if (tabName === 'beranda') {
+        if (tabBeranda) tabBeranda.style.display = 'block';
+        if (navBeranda) navBeranda.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tabName === 'pesanan') {
+        if (tabBeranda) tabBeranda.style.display = 'none';
+        if (tabPesanan) tabPesanan.style.display = 'block';
+        if (navPesanan) navPesanan.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+// Logika saat tombol "LANJUTKAN PEMBAYARAN" diklik
+const btnSubmit = document.querySelector('.btn-submit');
+if (btnSubmit) {
+    btnSubmit.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const waInput = document.getElementById('whatsapp')?.value || '-';
+        const methodInput = document.getElementById('paymentMethodInput')?.value || 'QRIS';
+        
+        const selectedCard = document.querySelector('.product-card.selected');
+        const productName = selectedCard ? selectedCard.querySelector('h3')?.textContent : 'Advance Server';
+        const productPrice = selectedCard ? selectedCard.querySelector('.price')?.textContent : 'Rp 0';
+
+        let cleanPrice = parseInt(productPrice.replace(/[^0-9]/g, '')) || 0;
+        let totalBayar = cleanPrice + 275;
+        let formattedTotal = 'Rp ' + totalBayar.toLocaleString('id-ID');
+
+        if (document.getElementById('summary-product')) document.getElementById('summary-product').textContent = productName;
+        if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = productPrice;
+        if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
+        if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput.toUpperCase();
+        if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
+
+        const emptyState = document.getElementById('empty-order-state');
+        const orderDetail = document.getElementById('order-detail-content');
+        if (emptyState) emptyState.style.display = 'none';
+        if (orderDetail) orderDetail.style.display = 'block';
+
+        switchTab('pesanan');
+    });
+}
 
 </script>
 
