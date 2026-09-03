@@ -306,6 +306,10 @@ html {
     outline: none;
     box-sizing: border-box;
 }
+.form-group select option {
+    background-color: #121824;
+    color: #ffffff;
+}
 
 .form-group input:focus, 
 .form-group select:focus {
