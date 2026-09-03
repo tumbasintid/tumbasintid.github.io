@@ -295,6 +295,7 @@ html {
 
 .form-group input, 
 .form-group select {
+    color-scheme: dark; /* Baris ajaib agar pop-up HP otomatis jadi dark mode */
     width: 100%;
     padding: 12px 14px;
     background-color: #121824;
