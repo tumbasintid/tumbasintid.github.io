@@ -179,16 +179,19 @@
         </nav>
     </div>
 <script>
-    // Ambil semua elemen kartu produk
     const cards = document.querySelectorAll('.product-card');
+    const checkoutSection = document.querySelector('.checkout-section');
 
     cards.forEach(card => {
         card.addEventListener('click', function() {
-            // Hapus status 'selected' dari semua kartu lain
+            // 1. Ubah tampilan kartu terpilih
             cards.forEach(c => c.classList.remove('selected'));
-            
-            // Tambahkan status 'selected' HANYA pada kartu yang diklik
             this.classList.add('selected');
+            
+            // 2. Scroll mulus ke formulir pembayaran
+            if (checkoutSection) {
+                checkoutSection.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
 </script>
