@@ -212,6 +212,46 @@
             }
         });
     });
+    // Logika Custom Modal Dropdown
+const selectTrigger = document.getElementById('selectTrigger');
+const modalOverlay = document.getElementById('modalOverlay');
+const closeModal = document.getElementById('closeModal');
+const selectedOptionText = document.getElementById('selectedOption');
+const paymentInput = document.getElementById('paymentMethodInput');
+const optionItems = document.querySelectorAll('.option-item');
+
+if (selectTrigger) {
+    selectTrigger.addEventListener('click', () => {
+        modalOverlay.classList.add('active');
+    });
+}
+
+if (closeModal) {
+    closeModal.addEventListener('click', () => {
+        modalOverlay.classList.remove('active');
+    });
+}
+
+if (modalOverlay) {
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.classList.remove('active');
+        }
+    });
+}
+
+optionItems.forEach(item => {
+    item.addEventListener('click', () => {
+        optionItems.forEach(opt => opt.classList.remove('selected'));
+        item.classList.add('selected');
+        
+        selectedOptionText.textContent = item.textContent;
+        paymentInput.value = item.getAttribute('data-value');
+        
+        modalOverlay.classList.remove('active');
+    });
+});
+
 </script>
 
 </body>
