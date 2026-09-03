@@ -178,6 +178,20 @@
             </a>
         </nav>
     </div>
+<script>
+    // Ambil semua elemen kartu produk
+    const cards = document.querySelectorAll('.product-card');
+
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Hapus status 'selected' dari semua kartu lain
+            cards.forEach(c => c.classList.remove('selected'));
+            
+            // Tambahkan status 'selected' HANYA pada kartu yang diklik
+            this.classList.add('selected');
+        });
+    });
+</script>
 
 </body>
 </html>
