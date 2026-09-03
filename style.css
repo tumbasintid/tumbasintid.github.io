@@ -316,10 +316,12 @@ html {
 }
 
 .form-note {
-    font-size: 0.7rem;
-    color: #9ca3af;
+    font-size: 0.68rem;
+    color: #0ca3af;
     margin-top: 6px;
     font-style: italic;
+    word-spacing: 1px;
+    line-height: 1.4;
 }
 
 .btn-submit {
