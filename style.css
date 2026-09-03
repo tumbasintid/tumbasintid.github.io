@@ -19,3 +19,53 @@ body {
     padding: 15px;
 }
 
+/* Tampilan Header */
+.header {
+    background: #222222;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #333333;
+    margin-bottom: 15px;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 2rem;
+}
+
+.logo-text h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffcc00;
+    letter-spacing: 1px;
+}
+
+.logo-text p {
+    font-size: 0.75rem;
+    color: #aaaaaa;
+}
+
+/* Banner Info */
+.banner {
+    background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 4px solid #ffcc00;
+    margin-bottom: 20px;
+}
+
+.banner h2 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.banner p {
+    font-size: 0.8rem;
+    color: #bbbbbb;
+}
+
