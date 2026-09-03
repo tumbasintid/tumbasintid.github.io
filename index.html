@@ -174,12 +174,29 @@
         <div class="checkout-card">
             
             <!-- Tampilan Saat Belum Ada Pesanan (Empty State) -->
-            <div id="empty-order-state" class="empty-state-box">
-                <div class="empty-icon">⚠️</div>
-                <h3 style="color:#fff; margin-bottom:8px;">Belum Ada Pesanan Aktif</h3>
-                <p style="color:#9ca3af; font-size:0.85rem; margin-bottom:16px;">Anda belum melakukan pemesanan. Silakan pilih akun Advance Server di tab Beranda terlebih dahulu.</p>
-                <button type="button" class="btn-submit" onclick="switchTab('beranda')">KEMBALI KE BERANDA</button>
-            </div>
+<div id="empty-order-state" class="empty-state-box" style="text-align: center; padding: 20px 15px;">
+  
+  <!-- Icon SVG Diperbesar (56px) & Jarak Bawah Lebar Ke Judul (24px) -->
+  <div class="empty-icon" style="margin-bottom: 24px; display: flex; justify-content: center;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+      <line x1="12" y1="9" x2="12" y2="13"></line>
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+  </div>
+
+  <!-- Judul Utama (Jarak ke Deskripsi Bawah Tetap 8px) -->
+  <h3 style="color: #fff; margin-bottom: 8px; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em;">Belum Ada Pesanan</h3>
+  
+  <!-- Deskripsi / Teks Bawah -->
+  <p style="color: #9ca3af; font-size: 0.875rem; line-height: 1.5; margin-bottom: 24px; max-width: 290px; margin-left: auto; margin-right: auto;">
+    Riwayat transaksi kamu bakal muncul di sini. Silakan pilih produk di tab Beranda untuk mulai belanja!.
+  </p>
+  
+  <!-- Tombol -->
+  <button type="button" class="btn-submit" onclick="switchTab('beranda')">KEMBALI KE BERANDA</button>
+  
+</div>
 
             <!-- Tampilan Rincian Detail Pembelian (Default Disembunyikan) -->
             <div id="order-detail-content" style="display: none;">
