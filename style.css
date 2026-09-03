@@ -199,9 +199,9 @@ html {
     transition: transform 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
-.product-card:active {
-    transform: scale(0.98);
-    border-color: #d97706;
+.product-card.selected {
+    transform: scale(0.97);
+    border-color: #eab308;
 }
 
 .product-image-wrapper {
