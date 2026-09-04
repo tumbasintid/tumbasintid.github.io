@@ -479,7 +479,24 @@ if (orderForm) {
         if (emptyState) emptyState.style.display = 'none';
         if (orderDetail) orderDetail.style.display = 'block';
 
-        switchTab('pesanan');
+                    // Pindah Tab ke Pesanan dengan Efek Loading
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const loadingSubtext = document.getElementById('loadingSubtext');
+
+            if (loadingOverlay) {
+                loadingText.textContent = 'Membuat Pesanan...';
+                loadingSubtext.textContent = 'Mohon tunggu sebentar';
+                loadingOverlay.style.display = 'flex';
+
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    switchTab('pesanan');
+                }, 1000);
+            } else {
+                switchTab('pesanan');
+            }
+
     });
 }
 function showToast(message) {
