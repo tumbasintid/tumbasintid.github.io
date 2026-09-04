@@ -481,7 +481,26 @@ function showToast(message) {
     qrisCard.scrollIntoView({ behavior: 'smooth' });
   }
 });
-    
+    function bayar(snapToken) {
+  window.snap.pay(snapToken, {
+    onSuccess: function(result){
+      alert("Pembayaran berhasil!");
+      console.log(result);
+    },
+    onPending: function(result){
+      alert("Menunggu pembayaran...");
+      console.log(result);
+    },
+    onError: function(result){
+      alert("Pembayaran gagal!");
+      console.log(result);
+    },
+        onClose: function(){
+      alert('Kamu menutup halaman pembayaran sebelum selesai.');
+    }
+  });
+    }
+  
 </script>
         <div id="toast" class="toast-msg"></div>
 </body>
