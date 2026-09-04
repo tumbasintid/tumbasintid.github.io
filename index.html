@@ -408,64 +408,72 @@ function switchTab(tabName) {
     }
 }
 
-// Logika Validasi & Pindah Tab saat Beli Sekarang
+// 1. Logika Klik Pilih Kartu Produk (Efek Garis Kuning)
+document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', function() {
+        document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+    });
+});
+
+// 2. Logika Validasi & Submit Form
 const orderForm = document.getElementById('orderForm');
 if (orderForm) {
-  orderForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+    orderForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    // 1. Wajib Pilih Produk
-    const selectedCard = document.querySelector('.product-card.selected');
-    if (!selectedCard) {
-      showToast('Pilih produk terlebih dahulu!');
-      return false;
-    }
+        const selectedCard = document.querySelector('.product-card.selected');
+        if (!selectedCard) {
+            showToast('Pilih produk terlebih dahulu!');
+            return false;
+        }
 
-    // 2. Ambil Input
-    const waInput = document.getElementById('whatsappInput')?.value.trim();
-    const methodInput = document.getElementById('paymentMethodInput')?.value.trim();
+        const waInput = document.getElementById('whatsappInput') ? document.getElementById('whatsappInput').value.trim() : '';
+        const methodInput = document.getElementById('paymentMethodInput') ? document.getElementById('paymentMethodInput').value : '';
 
-    if (!waInput) {
-      showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
-      return false;
-    }
+        if (!waInput) {
+            showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
+            return false;
+        }
 
-    if (!methodInput || methodInput === '' || methodInput === 'Pilih Metode Pembayaran') {
-      showToast('Pilih metode pembayaran terlebih dahulu!');
-      return false;
-    }
+        if (!methodInput || methodInput === '' || methodInput === 'Pilih Metode Pembayaran') {
+            showToast('Pilih metode pembayaran terlebih dahulu!');
+            return false;
+        }
 
-    // 3. Ambil Nama & Harga Produk (Mendukung fleksibilitas struktur class)
-    const productName = selectedCard.querySelector('h3')?.textContent || 'Advance Server';
-    
-            // Cari harga produk (mengabaikan harga coret)
+        // Ambil Nama Produk
+        const productName = selectedCard.querySelector('h3') ? selectedCard.querySelector('h3').textContent : 'Advance Server';
+
+        // Ambil Harga Produk (Mengabaikan harga coret <del>)
+        let priceText = 'Rp 0';
         const priceElement = selectedCard.querySelector('.price') || selectedCard.querySelector('strong');
-        let priceText = priceElement ? priceElement.textContent : 'Rp 0';
-    }
+        if (priceElement) {
+            priceText = priceElement.textContent;
+        }
 
-    // Hitung Angka Bersih
-    let cleanPrice = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
-    let totalBayar = cleanPrice + 275;
-    
-    let formattedPrice = 'Rp ' + cleanPrice.toLocaleString('id-ID');
-    let formattedTotal = 'Rp ' + totalBayar.toLocaleString('id-ID');
+        // Hitung Angka Bersih
+        let cleanPrice = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
+        let totalBayar = cleanPrice + 275;
 
-    // 4. Masukkan ke Ringkasan Detail Pembelian
-    if (document.getElementById('summary-product')) document.getElementById('summary-product').textContent = productName;
-    if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = formattedPrice;
-    if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
-    if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput;
-    if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
-    if (document.getElementById('qrisTotal')) document.getElementById('qrisTotal').textContent = formattedTotal;
+        let formattedPrice = 'Rp ' + cleanPrice.toLocaleString('id-ID');
+        let formattedTotal = 'Rp ' + totalBayar.toLocaleString('id-ID');
 
-    // 5. Tampilkan Halaman Detail & Pindah Tab
-    const emptyState = document.getElementById('empty-order-state');
-    const orderDetail = document.getElementById('order-detail-content');
-    if (emptyState) emptyState.style.display = 'none';
-    if (orderDetail) orderDetail.style.display = 'block';
+        // Isi ke Ringkasan Detail Pembelian
+        if (document.getElementById('summary-product')) document.getElementById('summary-product').textContent = productName;
+        if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = formattedPrice;
+        if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
+        if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput;
+        if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
+        if (document.getElementById('qrisTotal')) document.getElementById('qrisTotal').textContent = formattedTotal;
 
-    switchTab('pesanan');
-  });
+        // Pindah Tab ke Pesanan
+        const emptyState = document.getElementById('empty-order-state');
+        const orderDetail = document.getElementById('order-detail-content');
+        if (emptyState) emptyState.style.display = 'none';
+        if (orderDetail) orderDetail.style.display = 'block';
+
+        switchTab('pesanan');
+    });
 }
 function showToast(message) {
   const toast = document.getElementById('toast');
