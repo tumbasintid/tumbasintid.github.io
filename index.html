@@ -157,7 +157,7 @@
             </div>
 
             <!-- Hidden input untuk penampung nilai form -->
-            <input type="hidden" name="payment_method" id="paymentMethodInput" value="QRIS" required>
+            <input type="hidden" name="payment_method" id="paymentMethodInput" value="" required>
 
             </div>
 
@@ -362,14 +362,14 @@ if (orderForm) {
 
     // 2. Ambil Input
     const waInput = document.getElementById('whatsappInput')?.value.trim();
-    const methodInput = document.getElementById('paymentMethodInput')?.value;
+    const methodInput = document.getElementById('paymentMethodInput')?.value.trim();
 
     if (!waInput) {
       alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
       return false;
     }
 
-    if (!methodInput) {
+    if (!methodInput || methodInput === '' || methodInput === 'Pilih Metode Pembayaran') {
       alert('Silakan pilih metode pembayaran terlebih dahulu!');
       return false;
     }
