@@ -408,7 +408,7 @@ function switchTab(tabName) {
     }
 }
 
-// 1. Logika Klik Pilih Kartu Produk (Efek Garis Kuning)
+// 1. Logika Klik Pilih Kartu Produk (Garis Kuning)
 document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', function() {
         document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
@@ -444,9 +444,13 @@ if (orderForm) {
         // Ambil Nama Produk
         const productName = selectedCard.querySelector('h3') ? selectedCard.querySelector('h3').textContent : 'Advance Server';
 
-        // Ambil Harga Produk (Mengabaikan harga coret <del>)
-        let priceText = 'Rp 0';
-        const priceElement = selectedCard.querySelector('.price') || selectedCard.querySelector('strong');
+        // Ambil Harga Produk (Cari harga aktif, abaikan harga coret <del>)
+                let priceText = 'Rp 0';
+        const priceElement = selectedCard.querySelector('.price') || 
+                             selectedCard.querySelector('.discount-price') || 
+                             selectedCard.querySelector('strong') || 
+                             selectedCard.querySelector('span');
+
         if (priceElement) {
             priceText = priceElement.textContent;
         }
