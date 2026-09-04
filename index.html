@@ -6,6 +6,37 @@
     <title>Saka Store - Akun Advance Server MLBB</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=5">
+<style>
+/* Custom Toast Notification Dark Theme */
+.toast-msg {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: #1e293b;
+  color: #fbbf24;
+  border: 1px solid #fbbf24;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.toast-msg.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+
 </head>
 <body>
 
@@ -356,7 +387,7 @@ if (orderForm) {
     // 1. Wajib Pilih Produk
     const selectedCard = document.querySelector('.product-card.selected');
     if (!selectedCard) {
-      alert('Silakan pilih akun terlebih dahulu!');
+      showToast('Silakan pilih akun terlebih dahulu!');
       return false;
     }
 
@@ -365,12 +396,12 @@ if (orderForm) {
     const methodInput = document.getElementById('paymentMethodInput')?.value.trim();
 
     if (!waInput) {
-      alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
+      showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
       return false;
     }
 
     if (!methodInput || methodInput === '' || methodInput === 'Pilih Metode Pembayaran') {
-      alert('Silakan pilih metode pembayaran terlebih dahulu!');
+      showToast('Silakan pilih metode pembayaran terlebih dahulu!');
       return false;
     }
 
@@ -417,9 +448,18 @@ if (orderForm) {
     switchTab('pesanan');
   });
 }
-
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+    
 </script>
-
+        <div id="toast" class="toast-msg"></div>
 </body>
 </html>
 
