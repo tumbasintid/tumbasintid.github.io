@@ -268,6 +268,18 @@
 
 
                 <button type="button" class="btn-submit" id="btnConfirmPay" style="word-spacing: 4px;">KONFIRMASI PEMBAYARAN</button>
+                <!-- KARTU QRIS -->
+<div id="qrisCard" style="display: none; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; margin-top: 15px; text-align: center; color: #fff;">
+  <h4 style="margin-bottom: 8px; color: #eab308; font-size: 1.1rem;">Scan QRIS Untuk Membayar</h4>
+  <p style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 15px;">Gunakan DANA, GoPay, OVO, ShopeePay, atau Bank Utama.</p>
+  
+  <div style="background: #fff; display: inline-block; padding: 10px; border-radius: 8px;">
+    <img src="https://via.placeholder.com/200x200?text=QRIS+DANA" alt="Kode QRIS" style="width: 180px; height: 180px; display: block;">
+  </div>
+
+  <p style="font-size: 0.85rem; color: #d1d5db; margin-top: 15px;">Total Pembayaran: <strong style="color: #eab308;">Rp 5.275</strong></p>
+</div>
+
             </div>
 
         </div>
@@ -459,6 +471,13 @@ function showToast(message) {
     toast.classList.remove('show');
   }, 3000);
 }
+    document.getElementById('btnConfirmPay').addEventListener('click', function() {
+  const qrisCard = document.getElementById('qrisCard');
+  if (qrisCard) {
+    qrisCard.style.display = 'block';
+    qrisCard.scrollIntoView({ behavior: 'smooth' });
+  }
+});
     
 </script>
         <div id="toast" class="toast-msg"></div>
