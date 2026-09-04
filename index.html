@@ -353,11 +353,18 @@ if (orderForm) {
   orderForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // 1. Ambil nilai input
+    // 1. Cek apakah pengguna sudah memilih produk
+    const selectedCard = document.querySelector('.product-card.selected');
+    if (!selectedCard) {
+      alert('Silakan pilih akun terlebih dahulu!');
+      return;
+    }
+
+    // 2. Ambil nilai input
     const waInput = document.getElementById('whatsappInput')?.value.trim();
     const methodInput = document.getElementById('paymentMethodInput')?.value;
 
-    // 2. Cek Validasi Input
+    // 3. Cek Validasi Input WA & Pembayaran
     if (!waInput) {
       alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
       return;
@@ -368,10 +375,9 @@ if (orderForm) {
       return;
     }
 
-    // 3. Update data ringkasan pesanan
-    const selectedCard = document.querySelector('.product-card.selected');
-    const productName = selectedCard ? selectedCard.querySelector('h3')?.textContent : 'Advance Server';
-    const productPrice = selectedCard ? selectedCard.querySelector('.price')?.textContent : 'Rp 0';
+    // 4. Update data ringkasan pesanan dari produk terpilih
+    const productName = selectedCard.querySelector('h3')?.textContent || 'Advance Server';
+    const productPrice = selectedCard.querySelector('.price')?.textContent || 'Rp 0';
 
     let cleanPrice = parseInt(productPrice.replace(/[^0-9]/g, '')) || 0;
     let totalBayar = cleanPrice + 275;
@@ -383,13 +389,13 @@ if (orderForm) {
     if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput;
     if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
 
-    // 4. Sembunyikan Empty State & Tampilkan Detail
+    // 5. Sembunyikan Empty State & Tampilkan Detail
     const emptyState = document.getElementById('empty-order-state');
     const orderDetail = document.getElementById('order-detail-content');
     if (emptyState) emptyState.style.display = 'none';
     if (orderDetail) orderDetail.style.display = 'block';
 
-    // 5. Pindah ke Tab Pesanan
+    // 6. Pindah ke Tab Pesanan
     switchTab('pesanan');
   });
 }
