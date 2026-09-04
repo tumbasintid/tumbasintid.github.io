@@ -27,7 +27,9 @@
   transition: all 0.3s ease;
   pointer-events: none;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
+      max-width: 90%;
+  word-break: break-word;
 }
 
 .toast-msg.show {
@@ -401,7 +403,7 @@ if (orderForm) {
     }
 
     if (!methodInput || methodInput === '' || methodInput === 'Pilih Metode Pembayaran') {
-      showToast('Silakan pilih metode pembayaran terlebih dahulu!');
+      showToast('Pilih metode pembayaran terlebih dahulu!');
       return false;
     }
 
