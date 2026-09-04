@@ -353,49 +353,67 @@ if (orderForm) {
   orderForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // 1. Cek apakah pengguna sudah memilih produk
+    // 1. Wajib Pilih Produk
     const selectedCard = document.querySelector('.product-card.selected');
     if (!selectedCard) {
       alert('Silakan pilih akun terlebih dahulu!');
-      return;
+      return false;
     }
 
-    // 2. Ambil nilai input
+    // 2. Ambil Input
     const waInput = document.getElementById('whatsappInput')?.value.trim();
     const methodInput = document.getElementById('paymentMethodInput')?.value;
 
-    // 3. Cek Validasi Input WA & Pembayaran
     if (!waInput) {
       alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
-      return;
+      return false;
     }
 
     if (!methodInput) {
       alert('Silakan pilih metode pembayaran terlebih dahulu!');
-      return;
+      return false;
     }
 
-    // 4. Update data ringkasan pesanan dari produk terpilih
+    // 3. Ambil Nama & Harga Produk (Mendukung fleksibilitas struktur class)
     const productName = selectedCard.querySelector('h3')?.textContent || 'Advance Server';
-    const productPrice = selectedCard.querySelector('.price')?.textContent || 'Rp 0';
+    
+    // Cari elemen harga dari class .price atau teks berawalan Rp
+    let priceText = 'Rp 0';
+    const priceElement = selectedCard.querySelector('.price') || selectedCard.querySelector('span[class*="price"]');
+    
+    if (priceElement) {
+      priceText = priceElement.textContent;
+    } else {
+      // Fallback: cari elemen di dalam kartu yang mengandung tulisan "Rp"
+      const allSpans = selectedCard.querySelectorAll('span, p, div');
+      for (let el of allSpans) {
+        if (el.textContent.includes('Rp') && !el.textContent.includes('Rp 8.000')) { // hindari harga coret
+          priceText = el.textContent;
+          break;
+        }
+      }
+    }
 
-    let cleanPrice = parseInt(productPrice.replace(/[^0-9]/g, '')) || 0;
+    // Hitung Angka Bersih
+    let cleanPrice = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
     let totalBayar = cleanPrice + 275;
+    
+    let formattedPrice = 'Rp ' + cleanPrice.toLocaleString('id-ID');
     let formattedTotal = 'Rp ' + totalBayar.toLocaleString('id-ID');
 
+    // 4. Masukkan ke Ringkasan Detail Pembelian
     if (document.getElementById('summary-product')) document.getElementById('summary-product').textContent = productName;
-    if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = productPrice;
+    if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = formattedPrice;
     if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
     if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput;
     if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
 
-    // 5. Sembunyikan Empty State & Tampilkan Detail
+    // 5. Tampilkan Halaman Detail & Pindah Tab
     const emptyState = document.getElementById('empty-order-state');
     const orderDetail = document.getElementById('order-detail-content');
     if (emptyState) emptyState.style.display = 'none';
     if (orderDetail) orderDetail.style.display = 'block';
 
-    // 6. Pindah ke Tab Pesanan
     switchTab('pesanan');
   });
 }
