@@ -272,15 +272,28 @@
 
                 <button type="button" class="btn-submit" id="btnConfirmPay" style="word-spacing: 4px;">KONFIRMASI PEMBAYARAN</button>
                 <!-- KARTU QRIS -->
-<div id="qrisCard" style="display: none; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; margin-top: 15px; text-align: center; color: #fff;">
-  <h4 style="margin-bottom: 8px; color: #eab308; font-size: 1.1rem;">Scan QRIS Untuk Membayar</h4>
-  <p style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 15px;">Gunakan DANA, GoPay, OVO, ShopeePay, atau Bank Utama.</p>
-  
-  <div style="background: #fff; display: inline-block; padding: 10px; border-radius: 8px;">
-    <img src="https://via.placeholder.com/200x200?text=QRIS+DANA" alt="Kode QRIS" style="width: 180px; height: 180px; display: block;">
-  </div>
+<div id="qrisSection" style="display: none; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;">
+    <h4 style="margin-bottom: 8px; color: #eab308; font-size: 1.1rem;">Scan QRIS Untuk Membayar</h4>
+    <p style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 15px;">Gunakan DANA, GoPay, OVO, ShopeePay, atau Bank Utama.</p>
+    
+    <div style="background: #fff; display: inline-block; padding: 10px; border-radius: 8px;">
+        <img id="qrisImage" src="https://via.placeholder.com/200x200?text=QRIS+DANA" alt="Kode QRIS" style="width: 180px; height: 180px; display: block;">
+    </div>
+    
+    <p style="font-size: 0.85rem; color: #d1d5db; margin-top: 15px;">Total Pembayaran: <strong id="qrisTotal" style="color: #eab308;">Rp 5.275</strong></p>
+    <p style="font-size: 0.75rem; color: #6b7280; margin-top: 5px;">Menunggu pembayaran Anda...</p>
+</div>
 
-  <p style="font-size: 0.85rem; color: #d1d5db; margin-top: 15px;">Total Pembayaran: <strong style="color: #eab308;">Rp 5.275</strong></p>
+<!-- KARTU DETAIL AKUN (Hasil Pembelian) -->
+<div id="accountSection" style="display: none; background-color: #111827; border: 1px solid #10b981; border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;">
+    <h4 style="margin-bottom: 8px; color: #10b981; font-size: 1.1rem;">Pembayaran Berhasil! 🎉</h4>
+    <p style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 15px;">Berikut adalah detail akun yang Anda beli:</p>
+    
+    <div style="background-color: #1f2937; padding: 12px; border-radius: 8px; text-align: left;">
+        <p style="margin: 5px 0; font-size: 0.9rem; color: #fff;"><strong>Email:</strong> <span id="accEmail">loading...</span></p>
+        <p style="margin: 5px 0; font-size: 0.9rem; color: #fff;"><strong>Password:</strong> <span id="accPassword">loading...</span></p>
+    </div>
+    <p style="font-size: 0.75rem; color: #6b7280; margin-top: 10px;">Simpan informasi ini baik-baik ya!</p>
 </div>
 
             </div>
