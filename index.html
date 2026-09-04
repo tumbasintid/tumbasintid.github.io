@@ -438,21 +438,9 @@ if (orderForm) {
     // 3. Ambil Nama & Harga Produk (Mendukung fleksibilitas struktur class)
     const productName = selectedCard.querySelector('h3')?.textContent || 'Advance Server';
     
-    // Cari elemen harga dari class .price atau teks berawalan Rp
-    let priceText = 'Rp 0';
-    const priceElement = selectedCard.querySelector('.price') || selectedCard.querySelector('span[class*="price"]');
-    
-    if (priceElement) {
-      priceText = priceElement.textContent;
-    } else {
-      // Fallback: cari elemen di dalam kartu yang mengandung tulisan "Rp"
-      const allSpans = selectedCard.querySelectorAll('span, p, div');
-      for (let el of allSpans) {
-        if (el.textContent.includes('Rp') && !el.textContent.includes('Rp 8.000')) { // hindari harga coret
-          priceText = el.textContent;
-          break;
-        }
-      }
+            // Cari harga produk (mengabaikan harga coret)
+        const priceElement = selectedCard.querySelector('.price') || selectedCard.querySelector('strong');
+        let priceText = priceElement ? priceElement.textContent : 'Rp 0';
     }
 
     // Hitung Angka Bersih
@@ -468,6 +456,7 @@ if (orderForm) {
     if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
     if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput;
     if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
+    if (document.getElementById('qrisTotal')) document.getElementById('qrisTotal').textContent = formattedTotal;
 
     // 5. Tampilkan Halaman Detail & Pindah Tab
     const emptyState = document.getElementById('empty-order-state');
