@@ -509,16 +509,53 @@ function showToast(message) {
   }, 3000);
 }
     
-   document.getElementById('btnConfirmPay').addEventListener('click', function() {
-    const qrisSec = document.getElementById('qrisSection');
-    const accSec = document.getElementById('accountSection');
-    
-    if (accSec) accSec.style.display = 'none';
-    if (qrisSec) {
-        qrisSec.style.display = 'block';
-        qrisSec.scrollIntoView({ behavior: 'smooth' });
-    }
-});
+   const btnConfirmPay = document.getElementById('btnConfirmPay');
+if (btnConfirmPay) {
+    btnConfirmPay.addEventListener('click', function() {
+        const qrisSec = document.getElementById('qrisSection');
+        const accSec = document.getElementById('accountSection');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const loadingSubtext = document.getElementById('loadingSubtext');
+
+        // STATE 1: Jika QRIS belum tampil (Klik pertama)
+        if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
+            qrisSec.style.display = 'block';
+            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+            
+            setTimeout(() => {
+                btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }, 100);
+        } 
+        // STATE 2: Jika tombol "SAYA SUDAH BAYAR" diklik
+        else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
+            if (loadingOverlay) {
+                loadingText.textContent = 'Memeriksa Pembayaran...';
+                loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
+                loadingOverlay.style.display = 'flex';
+
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    
+                    // Sembunyikan Kartu QRIS
+                    if (qrisSec) qrisSec.style.display = 'none';
+
+                    // Tampilkan Detail Akun
+                    if (accSec) accSec.style.display = 'block';
+
+                    // Ubah status tombol menjadi Selesai
+                    btnConfirmPay.textContent = 'PEMBAYARAN BERHASIL';
+                    btnConfirmPay.style.backgroundColor = '#10B981';
+                    btnConfirmPay.style.color = '#ffffff';
+                    btnConfirmPay.disabled = true;
+
+                    // Scroll halus ke Detail Akun
+                    accSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 2500);
+            }
+        }
+    });
+}
   
 </script>
         <div id="toast" class="toast-msg"></div>
