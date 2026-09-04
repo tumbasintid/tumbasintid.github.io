@@ -445,16 +445,14 @@ if (orderForm) {
         const productName = selectedCard.querySelector('h3') ? selectedCard.querySelector('h3').textContent : 'Advance Server';
 
         // Ambil Harga Produk (Cari harga aktif, abaikan harga coret <del>)
-                let priceText = 'Rp 0';
-        const priceElement = selectedCard.querySelector('.price') || 
-                             selectedCard.querySelector('.discount-price') || 
-                             selectedCard.querySelector('strong') || 
-                             selectedCard.querySelector('span');
+                        let priceText = 'Rp 0';
+        // Cari elemen bernilai Rp yang BUKAN bagian dari <del>
+        const priceElement = Array.from(selectedCard.querySelectorAll('*'))
+            .find(el => el.children.length === 0 && el.textContent.includes('Rp') && !el.closest('del'));
 
         if (priceElement) {
             priceText = priceElement.textContent;
         }
-
         // Hitung Angka Bersih
         let cleanPrice = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
         let totalBayar = cleanPrice + 275;
