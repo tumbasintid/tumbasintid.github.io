@@ -520,12 +520,22 @@ if (btnConfirmPay) {
 
         // STATE 1: Jika QRIS belum tampil (Klik pertama)
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
+            // Animasi halus muncul
+            qrisSec.style.opacity = '0';
+            qrisSec.style.transition = 'opacity 0.4s ease-in-out';
             qrisSec.style.display = 'block';
-            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
             
             setTimeout(() => {
-                btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }, 100);
+                qrisSec.style.opacity = '1';
+            }, 50);
+
+            // Ganti teks tombol
+            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+            
+            // Scroll halus tepat ke tombol "SAYA SUDAH BAYAR" di tengah layar
+            setTimeout(() => {
+                btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 350);
         } 
         // STATE 2: Jika tombol "SAYA SUDAH BAYAR" diklik
         else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
