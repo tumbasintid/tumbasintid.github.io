@@ -487,48 +487,17 @@ function showToast(message) {
     toast.classList.remove('show');
   }, 3000);
 }
-    document.getElementById('btnConfirmPay').addEventListener('click', async function() {
-    try {
-        const response = await fetch('https://midtrans-backend-alpha.vercel.app/api', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                gross_amount: 10000,
-                first_name: "Pembeli",
-                email: "pembeli@gmail.com"
-            })
-        });
-        const data = await response.json();
-        if (data.token) {
-            bayar(data.token);
-        } else {
-            alert("Gagal mendapatkan token transaksi.");
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Terjadi kesalahan koneksi ke server.");
+    
+   document.getElementById('btnConfirmPay').addEventListener('click', function() {
+    const qrisSec = document.getElementById('qrisSection');
+    const accSec = document.getElementById('accountSection');
+    
+    if (accSec) accSec.style.display = 'none';
+    if (qrisSec) {
+        qrisSec.style.display = 'block';
+        qrisSec.scrollIntoView({ behavior: 'smooth' });
     }
 });
-
-    function bayar(snapToken) {
-  window.snap.pay(snapToken, {
-    onSuccess: function(result){
-      alert("Pembayaran berhasil!");
-      console.log(result);
-    },
-    onPending: function(result){
-      alert("Menunggu pembayaran...");
-      console.log(result);
-    },
-    onError: function(result){
-      alert("Pembayaran gagal!");
-      console.log(result);
-    },
-        onClose: function(){
-      alert('Kamu menutup halaman pembayaran sebelum selesai.');
-    }
-  });
-    }
   
 </script>
         <div id="toast" class="toast-msg"></div>
