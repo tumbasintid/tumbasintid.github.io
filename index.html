@@ -490,9 +490,10 @@ if (orderForm) {
                 loadingOverlay.style.display = 'flex';
 
                 setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
-                    switchTab('pesanan');
-                }, 1000);
+    loadingOverlay.style.display = 'none';
+    switchTab('pesanan');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}, 1000);
             } else {
                 switchTab('pesanan');
             }
@@ -560,7 +561,7 @@ if (btnConfirmPay) {
                     btnConfirmPay.disabled = true;
 
                     // Scroll halus ke Detail Akun
-                    accSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }, 2500);
             }
         }
