@@ -475,12 +475,9 @@ function showToast(message) {
   }, 3000);
 }
     document.getElementById('btnConfirmPay').addEventListener('click', function() {
-  const qrisCard = document.getElementById('qrisCard');
-  if (qrisCard) {
-    qrisCard.style.display = 'block';
-    qrisCard.scrollIntoView({ behavior: 'smooth' });
-  }
+  bayar('SNAP_TOKEN_DARI_BACKEND');
 });
+
     function bayar(snapToken) {
   window.snap.pay(snapToken, {
     onSuccess: function(result){
