@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Saka Store - Akun Advance Server MLBB</title>
@@ -566,30 +563,26 @@ if (orderForm) {
         e.preventDefault();
 
         const selectedCard = document.querySelector('.product-card.selected, .card.selected');
-        const waInput = document.getElementById('whatsappInput') ? document.getElementById('whatsappInput').value.trim() : '';
-        const paymentSelect = document.getElementById('paymentMethodInput');
-        const paymentInput = paymentSelect ? paymentSelect.value : '';
+        const waInput = document.getElementById('whatsappInput')?.value.trim();
+        const paymentInput = document.getElementById('paymentMethodInput')?.value;
 
         if (!selectedCard) {
-            if (typeof showToast === 'function') showToast('Pilih produk terlebih dahulu!');
-            else alert('Pilih produk terlebih dahulu!');
+            showToast('Pilih produk terlebih dahulu!');
             return false;
         }
 
         if (!waInput) {
-            if (typeof showToast === 'function') showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
-            else alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
+            showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
             return false;
         }
 
-        if (!paymentInput || paymentInput === "" || paymentInput === "Pilih Metode Pembayaran") {
-            if (typeof showToast === 'function') showToast('Pilih metode pembayaran terlebih dahulu!');
-            else alert('Pilih metode pembayaran terlebih dahulu!');
+        if (!paymentInput || paymentInput === '' || paymentInput === 'Pilih Metode Pembayaran') {
+            showToast('Pilih metode pembayaran terlebih dahulu!');
             return false;
         }
 
         const productName = selectedCard.getAttribute('data-name') || 'Advance Server Level 3';
-        const productPrice = parseInt(selectedCard.getAttribute('data-price')) || 2000;
+        const productPrice = parseInt(selectedCard.getAttribute('data-price') || '2000');
         const adminFee = 275;
         const totalPrice = productPrice + adminFee;
 
@@ -693,37 +686,18 @@ function copyText(elementId) {
         alert('Berhasil disalin!');
     }
 }
-        
 </script>
-    <!-- BOTTOM NAVIGATION (4 MENU) -->
-<nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchTab('beranda', this)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        <span>Beranda</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('produk', this)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-        <span>Produk</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('pesanan', this)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-        <span>Pesanan</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('info', this)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-        <span>Info</span>
-    </button>
-</nav>
-
+        
 
 <!-- Toast & Loading Overlay (HTML) -->
 <div id="toast" class="toast-msg"></div>
 
 <!-- OVERLAY LOADING DENGAN EFEK BLUR -->
-<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 99999; justify-content: center; align-items: center;">
-    <div style="background: #111827; border: 1px solid #f59e0b; padding: 25px 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); max-width: 80%;">
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: #111827; border: 1px solid #f59e0b; padding: 25px 30px; border-radius: 16px; text-align: center; max-width: 80%;">
+        <!-- Spinner Putar Kuning -->
         <div style="border: 4px solid rgba(245, 158, 11, 0.2); border-left-color: #f59e0b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px auto;"></div>
-        <div id="loadingText" style="color: #ffffff; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px;">Memproses...</div>
+        <div id="loadingText" style="color: #ffffff; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px;">Memeriksa Pembayaran...</div>
         <div id="loadingSubtext" style="color: #9ca3af; font-size: 0.75rem;">Mohon tunggu sebentar...</div>
     </div>
 </div>
@@ -732,8 +706,7 @@ function copyText(elementId) {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
+    /* Card Cara Order */
 .info-card {
     background: #111827 !important;
     border: 1px solid #f59e0b !important;
@@ -743,6 +716,7 @@ function copyText(elementId) {
     max-width: 480px !important;
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1) !important;
 }
+
 .info-title {
     color: #ffffff !important;
     font-size: 1.1rem !important;
@@ -752,16 +726,19 @@ function copyText(elementId) {
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
 }
+
 .step-list {
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
 }
+
 .step-item {
     display: flex !important;
     align-items: flex-start !important;
     gap: 14px !important;
 }
+
 .step-number {
     background: #f59e0b !important;
     color: #111827 !important;
@@ -776,60 +753,27 @@ function copyText(elementId) {
     flex-shrink: 0 !important;
     margin-top: 2px !important;
 }
+
 .step-content {
     display: flex !important;
     flex-direction: column !important;
     gap: 2px !important;
 }
+
 .step-heading {
     color: #ffffff !important;
     font-size: 0.95rem !important;
     font-weight: 600 !important;
 }
+
 .step-desc {
     color: #9ca3af !important;
     font-size: 0.82rem !important;
     line-height: 1.4 !important;
 }
-    /* Styling Bottom Nav Tema Dark & Gold */
-.bottom-nav {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    background: #111827 !important;
-    border-top: 1px solid #374151 !important;
-    display: flex !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-    padding: 8px 0 !important;
-    z-index: 99999 !important;
-}
-
-.nav-item {
-    background: transparent !important;
-    border: none !important;
-    color: #9ca3af !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 4px !important;
-    font-size: 0.7rem !important;
-    font-weight: 500 !important;
-    cursor: pointer !important;
-    padding: 4px 8px !important;
-}
-
-.nav-item.active, .nav-item:hover {
-    color: #f59e0b !important;
-}
-
-.nav-item svg {
-    stroke: currentColor !important;
-}
-
 </style>
 
 </body>
 </html>
+
 
