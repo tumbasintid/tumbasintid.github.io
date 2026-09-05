@@ -572,17 +572,20 @@ if (btnConfirmPay) {
                                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
 
-                    document.querySelectorAll('.empty-state-card, [id*="empty"], #tab-pesanan > .card, #tab-pesanan > div').forEach(el => {
-                        if (el.id !== 'accountSection') el.style.display = 'none';
-                    });
-
                     const orderDetailContent = document.getElementById('order-detail-content');
                     if (orderDetailContent) orderDetailContent.style.display = 'none';
                     if (qrisSec) qrisSec.style.display = 'none';
                     btnConfirmPay.style.display = 'none';
 
-                    if (accSec) {
+                                        if (accSec) {
                         accSec.style.display = 'block';
+
+                        let prev = accSec.previousElementSibling;
+                        while (prev) {
+                            prev.style.display = 'none';
+                            prev = prev.previousElementSibling;
+                        }
+
                         accSec.style.opacity = '0';
                         setTimeout(() => {
                             accSec.style.opacity = '1';
