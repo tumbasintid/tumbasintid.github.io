@@ -165,35 +165,17 @@
                 <input type="text" id="promo" placeholder="Masukkan Kode Promo (Jika Ada)">
             </div>
 
-            <div class="form-group">
-                <label for="payment-method">Metode Pembayaran</label>
-                            <!-- Custom Select Trigger -->
-            <div class="custom-select-trigger" id="selectTrigger">
-                <span id="selectedOption">Pilih Metode Pembayaran</span>
-                <span class="arrow">▾</span>
-            </div>
-
-            <!-- Custom Modal Dark Theme -->
-            <div class="custom-modal-overlay" id="modalOverlay">
-                <div class="custom-modal-content">
-                    <div class="modal-header">
-                        <h3>Pilih Metode Pembayaran</h3>
-                        <span class="close-btn" id="closeModal">&times;</span>
+                    <div class="form-group">
+            <label for="paymentMethodInput">Metode Pembayaran</label>
+            <select id="paymentMethodInput" class="form-control" style="width: 100%; padding: 12px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px;" required>
+                <option value="" disabled selected>Pilih Metode Pembayaran</option>
+                <option value="qris">QRIS (All Payment)</option>
+                <option value="dana">DANA</option>
+                <option value="gopay">GoPay</option>
+                <option value="ovo">OVO</option>
+                <option value="bca">Bank BCA</option>
+            </select>
                     </div>
-                    <div class="modal-options">
-                        <div class="option-item" data-value="qris">QRIS (All Payment)</div>
-                        <div class="option-item" data-value="dana">DANA</div>
-                        <div class="option-item" data-value="gopay">GoPay</div>
-                        <div class="option-item" data-value="ovo">OVO</div>
-                        <div class="option-item" data-value="bca">Bank BCA</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hidden input untuk penampung nilai form -->
-            <input type="hidden" name="payment_method" id="paymentMethodInput" value="" required>
-
-            </div>
 
             <button type="submit" class="btn-submit">BELI SEKARANG</button>
             <p class="form-footer-note">Pastikan kembali nomor WhatsApp dan metode pembayaran yang Anda pilih sudah benar.</p>
