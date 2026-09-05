@@ -572,7 +572,7 @@ if (btnConfirmPay) {
                                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
 
-                    document.querySelectorAll('#tab-pesanan > div, .empty-state, .card-empty').forEach(el => {
+                    document.querySelectorAll('.empty-state-card, [id*="empty"], #tab-pesanan > .card, #tab-pesanan > div').forEach(el => {
                         if (el.id !== 'accountSection') el.style.display = 'none';
                     });
 
