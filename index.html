@@ -478,10 +478,15 @@ if (orderForm) {
             return false;
         }
 
-        // TAMPILKAN LOADING PERPINDAHAN TAB
+                // TAMPILKAN LOADING PERPINDAHAN TAB
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
+
+        // AMBIL ELEMEN TAB PESANAN
+        const emptyState = document.getElementById('empty-state-card');
+        const orderDetailContent = document.getElementById('order-detail-content');
+        const qrisSec = document.getElementById('qrisSection');
 
         if (loadingOverlay) {
             if (loadingText) loadingText.textContent = 'Membuat Pesanan...';
@@ -490,9 +495,19 @@ if (orderForm) {
 
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
+                
+                // TAMPILKAN DETAIL PEMBELIAN & SEMBUNYIKAN PESAN EMPTY STATE
+                if (emptyState) emptyState.style.display = 'none';
+                if (orderDetailContent) orderDetailContent.style.display = 'block';
+                if (qrisSec) qrisSec.style.display = 'none'; // QRIS tetap sembunyi dulu
+
                 switchTab('pesanan');
             }, 1000);
         } else {
+            if (emptyState) emptyState.style.display = 'none';
+            if (orderDetailContent) orderDetailContent.style.display = 'block';
+            if (qrisSec) qrisSec.style.display = 'none';
+
             switchTab('pesanan');
         }
     });
