@@ -409,7 +409,6 @@ document.addEventListener('DOMContentLoaded', function() {
 const selectTrigger = document.getElementById('selectTrigger');
 const modalOverlay = document.getElementById('modalOverlay');
 const closeModal = document.getElementById('closeModal');
-const selectedOptionText = document.getElementById('selectedOptionText');
 const paymentMethodInput = document.getElementById('paymentMethodInput');
 const modalOpts = document.querySelectorAll('.modal-opt');
 
@@ -443,13 +442,23 @@ modalOpts.forEach(function(opt) {
         this.style.border = '1px solid #eab308';
         this.style.color = '#eab308';
 
-        const value = this.getAttribute('data-value');
+        const value = this.getAttribute('data-value') || this.textContent.trim();
         const text = this.textContent.trim();
 
+        // Simpan nilai ke input hidden
         if (paymentMethodInput) paymentMethodInput.value = value;
-        if (selectedOptionText) {
-            selectedOptionText.textContent = text;
-            selectedOptionText.style.color = '#fff';
+
+        // Cari elemen teks di dalam tombol selectTrigger (fleksibel berdasarkan tag span/p atau ID)
+        const targetText = document.getElementById('selectedOptionText') || 
+                           selectTrigger.querySelector('span') || 
+                           selectTrigger.querySelector('p');
+
+        if (targetText) {
+            targetText.textContent = text;
+            targetText.style.color = '#fff';
+        } else {
+            // Jika tidak ada tag span/p, ganti isi teks utama tombol
+            selectTrigger.firstChild.textContent = text + ' ';
         }
 
         setTimeout(() => {
