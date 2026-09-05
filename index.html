@@ -587,10 +587,11 @@ if (btnConfirmPay) {
 
                 // 3. Scroll Halus ke Puncak Halaman
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 2500);
-            }
+                            }, 2500);
         }
     });
+}
+
 function copyText(elementId) {
     const textElement = document.getElementById(elementId);
     if (!textElement) return;
@@ -617,6 +618,7 @@ function copyText(elementId) {
         }
     }
 }
+
 </script>
         <div id="toast" class="toast-msg"></div>
         <!-- OVERLAY LOADING DENGAN EFEK BLUR -->
