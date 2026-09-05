@@ -568,12 +568,9 @@ if (btnConfirmPay) {
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
 
-                                        // 1. Sembunyikan Detail Pembelian, QRIS, Tombol Bayar, dan Container Pembungkus Atas
+                                                            // 1. Sembunyikan Detail Pembelian, QRIS, dan Tombol Bayar
                     const orderDetailContent = document.getElementById('order-detail-content');
-                    const checkoutSection = document.querySelector('.checkout-section');
-
                     if (orderDetailContent) orderDetailContent.style.display = 'none';
-                    if (checkoutSection) checkoutSection.style.display = 'none';
                     if (qrisSec) qrisSec.style.display = 'none';
                     if (btnConfirmPay) btnConfirmPay.style.display = 'none';
 
@@ -585,7 +582,8 @@ if (btnConfirmPay) {
 
                         setTimeout(() => { 
                             accSec.style.opacity = '1'; 
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            // Memastikan layar otomatis scroll tepat ke card sukses
+                            accSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }, 100);
                     }
         }
