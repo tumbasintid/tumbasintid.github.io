@@ -113,7 +113,7 @@
     
     <div class="product-grid">
         <!-- Kartu Produk 1 -->
-        <div class="product-card">
+        <div class="product-card" data-name="Advance Server Level 3" data-price="2000">
             <div class="product-image-wrapper">
                 <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Advance Server Level 3" class="product-image">
             </div>
@@ -131,7 +131,7 @@
         </div>
 
         <!-- Kartu Produk 2 -->
-        <div class="product-card">
+        <div class="product-card" data-name="Advance Server Level 20" data-price="5000">
             <div class="product-image-wrapper">
                 <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Advance Server Level 15" class="product-image">
             </div>
@@ -461,29 +461,49 @@ if (orderForm) {
     orderForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const selectedCard = document.querySelector('.product-card.selected');
+                const selectedCard = document.querySelector('.product-card.selected');
         const waInput = document.getElementById('whatsappInput')?.value.trim();
         const paymentInput = document.getElementById('paymentMethodInput')?.value;
 
+        // 1. CEK KELENGKAPAN INPUT DULU
         if (!selectedCard) {
             showToast('Pilih produk terlebih dahulu!');
             return false;
         }
+
         if (!waInput) {
             showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
             return false;
         }
+
         if (!paymentInput || paymentInput === '' || paymentInput === 'Pilih Metode Pembayaran') {
             showToast('Pilih metode pembayaran terlebih dahulu!');
             return false;
         }
 
-                // TAMPILKAN LOADING PERPINDAHAN TAB
+        // 2. HITUNG DAN UPDATE RINCIAN PESANAN
+        const productName = selectedCard.getAttribute('data-name') || 'Advance Server Level 3';
+        const productPrice = parseInt(selectedCard.getAttribute('data-price') || '2000');
+        const adminFee = 275;
+        const totalPrice = productPrice + adminFee;
+
+        const summaryProduct = document.getElementById('summary-product');
+        const summaryPrice = document.getElementById('summary-price');
+        const summaryTotal = document.getElementById('summary-total');
+        const summaryWa = document.getElementById('summary-wa');
+        const summaryMethod = document.getElementById('summary-method');
+
+        if (summaryProduct) summaryProduct.textContent = productName;
+        if (summaryPrice) summaryPrice.textContent = 'Rp ' + productPrice.toLocaleString('id-ID');
+        if (summaryTotal) summaryTotal.textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
+        if (summaryWa) summaryWa.textContent = waInput;
+        if (summaryMethod) summaryMethod.textContent = paymentInput.toUpperCase();
+
+        // 3. JALANKAN LOADING DAN PINDAH TAB
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
 
-        // AMBIL ELEMEN TAB PESANAN
         const emptyState = document.getElementById('empty-state-card');
         const orderDetailContent = document.getElementById('order-detail-content');
         const qrisSec = document.getElementById('qrisSection');
@@ -496,10 +516,9 @@ if (orderForm) {
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
                 
-                // TAMPILKAN DETAIL PEMBELIAN & SEMBUNYIKAN PESAN EMPTY STATE
                 if (emptyState) emptyState.style.display = 'none';
                 if (orderDetailContent) orderDetailContent.style.display = 'block';
-                if (qrisSec) qrisSec.style.display = 'none'; // QRIS tetap sembunyi dulu
+                if (qrisSec) qrisSec.style.display = 'none';
 
                 switchTab('pesanan');
             }, 1000);
@@ -510,7 +529,7 @@ if (orderForm) {
 
             switchTab('pesanan');
         }
-    });
+
 }
 // 5. Fungsi Toast Notification
 function showToast(message) {
