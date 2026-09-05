@@ -563,26 +563,30 @@ if (orderForm) {
         e.preventDefault();
 
         const selectedCard = document.querySelector('.product-card.selected, .card.selected');
-        const waInput = document.getElementById('whatsappInput')?.value.trim();
-        const paymentInput = document.getElementById('paymentMethodInput')?.value;
+        const waInput = document.getElementById('whatsappInput') ? document.getElementById('whatsappInput').value.trim() : '';
+        const paymentSelect = document.getElementById('paymentMethodInput');
+        const paymentInput = paymentSelect ? paymentSelect.value : '';
 
         if (!selectedCard) {
-            showToast('Pilih produk terlebih dahulu!');
+            if (typeof showToast === 'function') showToast('Pilih produk terlebih dahulu!');
+            else alert('Pilih produk terlebih dahulu!');
             return false;
         }
 
         if (!waInput) {
-            showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
+            if (typeof showToast === 'function') showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
+            else alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
             return false;
         }
 
-        if (!paymentInput || paymentInput === '' || paymentInput === 'Pilih Metode Pembayaran') {
-            showToast('Pilih metode pembayaran terlebih dahulu!');
+        if (!paymentInput || paymentInput === "" || paymentInput === "Pilih Metode Pembayaran") {
+            if (typeof showToast === 'function') showToast('Pilih metode pembayaran terlebih dahulu!');
+            else alert('Pilih metode pembayaran terlebih dahulu!');
             return false;
         }
 
         const productName = selectedCard.getAttribute('data-name') || 'Advance Server Level 3';
-        const productPrice = parseInt(selectedCard.getAttribute('data-price') || '2000');
+        const productPrice = parseInt(selectedCard.getAttribute('data-price')) || 2000;
         const adminFee = 275;
         const totalPrice = productPrice + adminFee;
 
