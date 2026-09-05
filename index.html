@@ -165,17 +165,35 @@
                 <input type="text" id="promo" placeholder="Masukkan Kode Promo (Jika Ada)">
             </div>
 
-                    <div class="form-group">
-            <label for="paymentMethodInput">Metode Pembayaran</label>
-            <select id="paymentMethodInput" class="form-control" style="width: 100%; padding: 12px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px;" required>
-                <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                <option value="qris">QRIS (All Payment)</option>
-                <option value="dana">DANA</option>
-                <option value="gopay">GoPay</option>
-                <option value="ovo">OVO</option>
-                <option value="bca">Bank BCA</option>
-            </select>
-                    </div>
+                            <div class="form-group">
+            <label for="payment-method">Metode Pembayaran</label>
+            <!-- Custom Select Trigger -->
+            <div class="custom-select-trigger" id="selectTrigger" style="background: #1e293b; border: 1px solid #334155; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                <span id="selectedOption" style="color: #94a3b8;">Pilih Metode Pembayaran</span>
+                <span style="font-size: 12px; color: #94a3b8;">▼</span>
+            </div>
+        </div>
+
+        <!-- Custom Modal Dark Theme -->
+        <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+            <div style="background: #151c28; border: 1px solid #334155; border-radius: 12px; width: 100%; max-width: 360px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #2a364f; padding-bottom: 10px;">
+                    <h3 style="margin: 0; font-size: 16px; color: #fff; font-weight: 600;">Pilih Metode Pembayaran</h3>
+                    <span id="closeModal" style="color: #94a3b8; font-size: 20px; cursor: pointer; font-weight: bold;">&times;</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="modal-opt" data-value="qris" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">QRIS (All Payment)</div>
+                    <div class="modal-opt" data-value="dana" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">DANA</div>
+                    <div class="modal-opt" data-value="gopay" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">GoPay</div>
+                    <div class="modal-opt" data-value="ovo" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">OVO</div>
+                    <div class="modal-opt" data-value="bca" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">Bank BCA</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden input penampung nilai untuk Javascript -->
+        <input type="hidden" id="paymentMethodInput" value="">
+
 
             <button type="submit" class="btn-submit">BELI SEKARANG</button>
             <p class="form-footer-note">Pastikan kembali nomor WhatsApp dan metode pembayaran yang Anda pilih sudah benar.</p>
@@ -384,6 +402,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 checkoutSec.scrollIntoView({ behavior: 'smooth' });
             }
         });
+    });
+});
+// Logika Buka / Tutup Custom Modal Pembayaran
+const selectTrigger = document.getElementById('selectTrigger');
+const modalOverlay = document.getElementById('modalOverlay');
+const closeModal = document.getElementById('closeModal');
+const selectedOptionText = document.getElementById('selectedOption');
+const paymentInput = document.getElementById('paymentMethodInput');
+const modalOpts = document.querySelectorAll('.modal-opt');
+
+if (selectTrigger && modalOverlay) {
+    selectTrigger.addEventListener('click', function() {
+        modalOverlay.style.display = 'flex';
+    });
+}
+
+if (closeModal && modalOverlay) {
+    closeModal.addEventListener('click', function() {
+        modalOverlay.style.display = 'none';
+    });
+}
+
+window.addEventListener('click', function(e) {
+    if (e.target === modalOverlay) {
+        modalOverlay.style.display = 'none';
+    }
+});
+
+modalOpts.forEach(opt => {
+    opt.addEventListener('click', function() {
+        modalOpts.forEach(o => {
+            o.style.border = '1px solid #334155';
+            o.style.color = '#fff';
+        });
+        
+        this.style.border = '1px solid #eab308';
+        this.style.color = '#eab308';
+        
+        const value = this.getAttribute('data-value');
+        const text = this.textContent;
+
+        if (paymentInput) paymentInput.value = value;
+        if (selectedOptionText) {
+            selectedOptionText.textContent = text;
+            selectedOptionText.style.color = '#fff';
+        }
+
+        setTimeout(() => {
+            modalOverlay.style.display = 'none';
+        }, 150);
     });
 });
 
