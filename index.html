@@ -552,6 +552,7 @@ if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', function() {
         const qrisSec = document.getElementById('qrisSection');
         const accSec = document.getElementById('accountSection');
+        const emptyState = document.getElementById('empty-state-card');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
@@ -570,6 +571,7 @@ if (btnConfirmPay) {
 
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
+                    if (emptyState) emptyState.style.display = 'none';
                     const orderDetailContent = document.getElementById('order-detail-content');
                     if (orderDetailContent) orderDetailContent.style.display = 'none';
                     if (qrisSec) qrisSec.style.display = 'none';
