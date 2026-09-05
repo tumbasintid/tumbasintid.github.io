@@ -354,174 +354,100 @@
 </nav>
        
 <script>
-    const cards = document.querySelectorAll('.product-card');
-    const checkoutSection = document.querySelector('.checkout-section');
-
-    cards.forEach(card => {
-        card.addEventListener('click', function() {
-            // 1. Ubah tampilan kartu terpilih
-            cards.forEach(c => c.classList.remove('selected'));
-            this.classList.add('selected');
-            
-            // 2. Scroll mulus ke formulir pembayaran
-            if (checkoutSection) {
-                checkoutSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-    // Logika Custom Modal Dropdown
-const selectTrigger = document.getElementById('selectTrigger');
-const modalOverlay = document.getElementById('modalOverlay');
-const closeModal = document.getElementById('closeModal');
-const selectedOptionText = document.getElementById('selectedOption');
-const paymentInput = document.getElementById('paymentMethodInput');
-const optionItems = document.querySelectorAll('.option-item');
-
-if (selectTrigger) {
-    selectTrigger.addEventListener('click', () => {
-        modalOverlay.classList.add('active');
-    });
-}
-
-if (closeModal) {
-    closeModal.addEventListener('click', () => {
-        modalOverlay.classList.remove('active');
-    });
-}
-
-if (modalOverlay) {
-    modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) {
-            modalOverlay.classList.remove('active');
+// 1. Inisialisasi Scroll Navbar
+window.addEventListener('scroll', function() {
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
-    });
-}
-
-optionItems.forEach(item => {
-    item.addEventListener('click', () => {
-        optionItems.forEach(opt => opt.classList.remove('selected'));
-        item.classList.add('selected');
-        
-        selectedOptionText.textContent = item.textContent;
-        paymentInput.value = item.getAttribute('data-value');
-        
-        modalOverlay.classList.remove('active');
-    });
+    }
 });
-// Logika Perpindahan Tab Navigasi & Detail Pesanan
+
+// 2. Logika Pindah Tab (Beranda / Pesanan)
 function switchTab(tabName) {
-    const tabBeranda = document.getElementById('checkout-section') ? document.getElementById('checkout-section').parentElement : null;
-    const tabPesanan = document.getElementById('tab-pesanan');
+    const berandaTab = document.getElementById('tab-beranda');
+    const pesananTab = document.getElementById('tab-pesanan');
     const navBeranda = document.getElementById('nav-beranda');
     const navPesanan = document.getElementById('nav-pesanan');
 
-    if (tabPesanan) tabPesanan.style.display = 'none';
-    if (navBeranda) navBeranda.classList.remove('active');
-    if (navPesanan) navPesanan.classList.remove('active');
-
     if (tabName === 'beranda') {
-        if (tabBeranda) tabBeranda.style.display = 'block';
-        if (navBeranda) navBeranda.classList.add('active');
+        if(berandaTab) berandaTab.style.display = 'block';
+        if(pesananTab) pesananTab.style.display = 'none';
+        if(navBeranda) navBeranda.classList.add('active');
+        if(navPesanan) navPesanan.classList.remove('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (tabName === 'pesanan') {
-        if (tabBeranda) tabBeranda.style.display = 'none';
-        if (tabPesanan) tabPesanan.style.display = 'block';
-        if (navPesanan) navPesanan.classList.add('active');
+        if(berandaTab) berandaTab.style.display = 'none';
+        if(pesananTab) pesananTab.style.display = 'block';
+        if(navBeranda) navBeranda.classList.remove('active');
+        if(navPesanan) navPesanan.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
 
-// 1. Logika Klik Pilih Kartu Produk (Garis Kuning)
-document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', function() {
-        document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
-        this.classList.add('selected');
+// 3. Logika Klik Kartu Produk (Garis Kuning + Auto Scroll)
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.product-card');
+    const checkoutSec = document.getElementById('checkout-section');
+
+    cards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            cards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            if (checkoutSec) {
+                checkoutSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
     });
 });
 
-// 2. Logika Validasi & Submit Form
+// 4. Logika Validasi Form & Loading Pas Klik "BELI SEKARANG"
 const orderForm = document.getElementById('orderForm');
 if (orderForm) {
     orderForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const selectedCard = document.querySelector('.product-card.selected');
+        const waInput = document.getElementById('whatsappInput')?.value.trim();
+        const paymentInput = document.getElementById('paymentMethodInput')?.value;
+
         if (!selectedCard) {
             showToast('Pilih produk terlebih dahulu!');
             return false;
         }
-
-        const waInput = document.getElementById('whatsappInput') ? document.getElementById('whatsappInput').value.trim() : '';
-        const methodInput = document.getElementById('paymentMethodInput') ? document.getElementById('paymentMethodInput').value : '';
-
         if (!waInput) {
             showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
             return false;
         }
-
-        if (!methodInput || methodInput === '' || methodInput === 'Pilih Metode Pembayaran') {
+        if (!paymentInput || paymentInput === '' || paymentInput === 'Pilih Metode Pembayaran') {
             showToast('Pilih metode pembayaran terlebih dahulu!');
             return false;
         }
 
-        // Ambil Nama Produk
-        const productName = selectedCard.querySelector('h3') ? selectedCard.querySelector('h3').textContent : 'Advance Server';
+        // TAMPILKAN LOADING PERPINDAHAN TAB
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const loadingSubtext = document.getElementById('loadingSubtext');
 
-        // Ambil Harga Produk (Cari harga aktif, abaikan harga coret <del>)
-                                // Ambil Harga Produk
-        let priceText = 'Rp 0';
-        
-        // Cari semua elemen teks Rp
-        const priceElements = Array.from(selectedCard.querySelectorAll('*'))
-            .filter(el => el.children.length === 0 && el.textContent.includes('Rp'));
+        if (loadingOverlay) {
+            if (loadingText) loadingText.textContent = 'Membuat Pesanan...';
+            if (loadingSubtext) loadingSubtext.textContent = 'Mohon tunggu sebentar...';
+            loadingOverlay.style.display = 'flex';
 
-        // Ambil elemen terakhir (harga aktif/diskon)
-        if (priceElements.length > 0) {
-            priceText = priceElements[priceElements.length - 1].textContent;
-        }
-
-        // Hitung Angka Bersih
-        let cleanPrice = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
-        let totalBayar = cleanPrice + 275;
-
-        let formattedPrice = 'Rp ' + cleanPrice.toLocaleString('id-ID');
-        let formattedTotal = 'Rp ' + totalBayar.toLocaleString('id-ID');
-
-        // Isi ke Ringkasan Detail Pembelian
-        if (document.getElementById('summary-product')) document.getElementById('summary-product').textContent = productName;
-        if (document.getElementById('summary-price')) document.getElementById('summary-price').textContent = formattedPrice;
-        if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = formattedTotal;
-        if (document.getElementById('summary-method')) document.getElementById('summary-method').textContent = methodInput;
-        if (document.getElementById('summary-wa')) document.getElementById('summary-wa').textContent = waInput;
-        if (document.getElementById('qrisTotal')) document.getElementById('qrisTotal').textContent = formattedTotal;
-
-        // Pindah Tab ke Pesanan
-        const emptyState = document.getElementById('empty-order-state');
-        const orderDetail = document.getElementById('order-detail-content');
-        if (emptyState) emptyState.style.display = 'none';
-        if (orderDetail) orderDetail.style.display = 'block';
-
-                    // Pindah Tab ke Pesanan dengan Efek Loading
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const loadingText = document.getElementById('loadingText');
-            const loadingSubtext = document.getElementById('loadingSubtext');
-
-            if (loadingOverlay) {
-                loadingText.textContent = 'Membuat Pesanan...';
-                loadingSubtext.textContent = 'Mohon tunggu sebentar';
-                loadingOverlay.style.display = 'flex';
-
-                setTimeout(() => {
-    loadingOverlay.style.display = 'none';
-    switchTab('pesanan');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}, 1000);
-            } else {
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
                 switchTab('pesanan');
-            }
-
+            }, 1000);
+        } else {
+            switchTab('pesanan');
+        }
     });
 }
+// 5. Fungsi Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
     if (toast) {
@@ -530,9 +456,12 @@ function showToast(message) {
         setTimeout(() => {
             toast.classList.remove('show');
         }, 3000);
+    } else {
+        alert(message);
     }
 }
 
+// 6. Logika Konfirmasi Pembayaran & QRIS
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', function() {
@@ -542,83 +471,55 @@ if (btnConfirmPay) {
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
 
-        // STATE 1: Jika QRIS belum tampil (Klik pertama)
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
             qrisSec.style.opacity = '0';
-            qrisSec.style.transition = 'opacity 0.4s ease-in-out';
             qrisSec.style.display = 'block';
-
-            setTimeout(() => {
-                qrisSec.style.opacity = '1';
-            }, 50);
-
+            setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
             btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
-
-            setTimeout(() => {
-                btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 350);
+            setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
         } 
-        // STATE 2: Jika tombol "SAYA SUDAH BAYAR" diklik
         else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
             if (loadingOverlay) {
-                loadingText.textContent = 'Memeriksa Pembayaran...';
-                loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
+                if (loadingText) loadingText.textContent = 'Memeriksa Pembayaran...';
+                if (loadingSubtext) loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
                 loadingOverlay.style.display = 'flex';
 
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
-
-                                                            // 1. Sembunyikan Detail Pembelian, QRIS, dan Tombol Bayar
                     const orderDetailContent = document.getElementById('order-detail-content');
                     if (orderDetailContent) orderDetailContent.style.display = 'none';
                     if (qrisSec) qrisSec.style.display = 'none';
-                    if (btnConfirmPay) btnConfirmPay.style.display = 'none';
+                    btnConfirmPay.style.display = 'none';
 
-                    // 2. Tampilkan Card Pembelian Berhasil
                     if (accSec) {
                         accSec.style.display = 'block';
                         accSec.style.opacity = '0';
-                        accSec.style.transition = 'opacity 0.5s ease-in-out';
-
-                        setTimeout(() => { 
-                            accSec.style.opacity = '1'; 
-                            // Memastikan layar otomatis scroll tepat ke card sukses
+                        setTimeout(() => {
+                            accSec.style.opacity = '1';
                             accSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }, 100);
                     }
+                }, 1500);
+            }
         }
     });
 }
 
+// 7. Fungsi Salin Teks
 function copyText(elementId) {
     const textElement = document.getElementById(elementId);
     if (!textElement) return;
     const text = textElement.innerText;
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
-            if (typeof showToast === 'function') {
-                showToast('Berhasil disalin ke papan klip!');
-            } else {
-                alert('Berhasil disalin!');
-            }
+            showToast('Berhasil disalin!');
         });
     } else {
-        const tempInput = document.createElement('input');
-        tempInput.value = text;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        if (typeof showToast === 'function') {
-            showToast('Berhasil disalin!');
-        } else {
-            alert('Berhasil disalin!');
-        }
+        alert('Berhasil disalin!');
     }
 }
-
-        }
 </script>
+
 
 <!-- Toast & Loading Overlay (HTML) -->
 <div id="toast" class="toast-msg"></div>
