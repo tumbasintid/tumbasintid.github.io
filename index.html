@@ -690,18 +690,17 @@ function copyText(elementId) {
         alert('Berhasil disalin!');
     }
 }
-</script>
         
+</script>
 
 <!-- Toast & Loading Overlay (HTML) -->
 <div id="toast" class="toast-msg"></div>
 
 <!-- OVERLAY LOADING DENGAN EFEK BLUR -->
-<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; align-items: center; justify-content: center;">
-    <div style="background: #111827; border: 1px solid #f59e0b; padding: 25px 30px; border-radius: 16px; text-align: center; max-width: 80%;">
-        <!-- Spinner Putar Kuning -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 99999; justify-content: center; align-items: center;">
+    <div style="background: #111827; border: 1px solid #f59e0b; padding: 25px 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); max-width: 80%;">
         <div style="border: 4px solid rgba(245, 158, 11, 0.2); border-left-color: #f59e0b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px auto;"></div>
-        <div id="loadingText" style="color: #ffffff; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px;">Memeriksa Pembayaran...</div>
+        <div id="loadingText" style="color: #ffffff; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px;">Memproses...</div>
         <div id="loadingSubtext" style="color: #9ca3af; font-size: 0.75rem;">Mohon tunggu sebentar...</div>
     </div>
 </div>
@@ -710,7 +709,8 @@ function copyText(elementId) {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-    /* Card Cara Order */
+}
+
 .info-card {
     background: #111827 !important;
     border: 1px solid #f59e0b !important;
@@ -720,7 +720,6 @@ function copyText(elementId) {
     max-width: 480px !important;
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1) !important;
 }
-
 .info-title {
     color: #ffffff !important;
     font-size: 1.1rem !important;
@@ -730,19 +729,16 @@ function copyText(elementId) {
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
 }
-
 .step-list {
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
 }
-
 .step-item {
     display: flex !important;
     align-items: flex-start !important;
     gap: 14px !important;
 }
-
 .step-number {
     background: #f59e0b !important;
     color: #111827 !important;
@@ -757,19 +753,16 @@ function copyText(elementId) {
     flex-shrink: 0 !important;
     margin-top: 2px !important;
 }
-
 .step-content {
     display: flex !important;
     flex-direction: column !important;
     gap: 2px !important;
 }
-
 .step-heading {
     color: #ffffff !important;
     font-size: 0.95rem !important;
     font-weight: 600 !important;
 }
-
 .step-desc {
     color: #9ca3af !important;
     font-size: 0.82rem !important;
@@ -779,5 +772,4 @@ function copyText(elementId) {
 
 </body>
 </html>
-
 
