@@ -291,7 +291,7 @@
     </section>
 </div>
 <!-- KARTU DETAIL AKUN (Hasil Pembelian) -->
-<div id="accountSection" style="display: none; padding: 25px 20px; background-color: #111827; border: 1px solid #eab308; border-radius: 16px; margin-top: 20px;">
+<div id="accountSection" style="display: none; padding: 25px 20px; background-color: #111827; border: 1px solid #eab308; border-radius: 16px; margin-top: 10px;">
     <!-- Icon Centang Hijau -->
     <div style="width: 64px; height: 64px; background-color: rgba(16, 185, 129, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto;">
         <div style="width: 45px; height: 45px; background-color: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
@@ -568,25 +568,26 @@ if (btnConfirmPay) {
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
 
-                    // 1. Sembunyikan Card Detail Pembelian, Card QRIS, dan Tombol Bayar
+                                        // 1. Sembunyikan Detail Pembelian, QRIS, Tombol Bayar, dan Container Pembungkus Atas
                     const orderDetailContent = document.getElementById('order-detail-content');
+                    const checkoutSection = document.querySelector('.checkout-section');
+
                     if (orderDetailContent) orderDetailContent.style.display = 'none';
+                    if (checkoutSection) checkoutSection.style.display = 'none';
                     if (qrisSec) qrisSec.style.display = 'none';
                     if (btnConfirmPay) btnConfirmPay.style.display = 'none';
 
-                                    // 2. Tampilkan Card Pembelian Berhasil Berdesain Baru
-                if (accSec) {
-                    if (accSec.parentElement) accSec.parentElement.style.display = 'block'; 
-                    accSec.style.display = 'block';
-                    accSec.style.opacity = '0';
-                    accSec.style.transition = 'opacity 0.5s ease-in-out';
-                    setTimeout(() => { accSec.style.opacity = '1'; }, 50);
-                }
+                    // 2. Tampilkan Card Pembelian Berhasil
+                    if (accSec) {
+                        accSec.style.display = 'block';
+                        accSec.style.opacity = '0';
+                        accSec.style.transition = 'opacity 0.5s ease-in-out';
 
-                    // 3. Scroll Halus ke Puncak Halaman
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 2500);
-            }
+                        setTimeout(() => { 
+                            accSec.style.opacity = '1'; 
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 100);
+                    }
         }
     });
 }
