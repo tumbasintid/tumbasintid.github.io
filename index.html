@@ -569,9 +569,13 @@ if (btnConfirmPay) {
                 if (loadingSubtext) loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
                 loadingOverlay.style.display = 'flex';
 
-                setTimeout(() => {
+                                setTimeout(() => {
                     loadingOverlay.style.display = 'none';
-                    if (emptyState) emptyState.style.display = 'none';
+
+                    document.querySelectorAll('#tab-pesanan > div, .empty-state, .card-empty').forEach(el => {
+                        if (el.id !== 'accountSection') el.style.display = 'none';
+                    });
+
                     const orderDetailContent = document.getElementById('order-detail-content');
                     if (orderDetailContent) orderDetailContent.style.display = 'none';
                     if (qrisSec) qrisSec.style.display = 'none';
