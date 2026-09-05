@@ -324,6 +324,71 @@
 
 </section>
 </div>
+       <!-- TAB 3: INFO & CARA ORDER -->
+<div id="tab-info" class="tab-content" style="display: none; min-height: 80vh; padding-top: 60px;">
+    <section class="checkout-section">
+        <div class="info-card">
+            <div class="info-title">Cara Order</div>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-heading">Pilih Produk</div>
+                        <div class="step-desc">Pilih produk digital yang ingin Anda beli pada halaman Beranda.</div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-heading">Lengkapi Data Pemesanan</div>
+                        <div class="step-desc">Masukkan No. WhatsApp aktif, kode promo (jika ada), dan pilih metode pembayaran.</div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-heading">Klik Beli Sekarang</div>
+                        <div class="step-desc">Tekan tombol Beli Sekarang untuk membuat tagihan pesanan Anda.</div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-heading">Periksa Detail Pesanan</div>
+                        <div class="step-desc">Pastikan rincian produk, jumlah, dan total harga sudah sesuai.</div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-heading">Konfirmasi Pembayaran</div>
+                        <div class="step-desc">Tekan tombol Konfirmasi Pembayaran untuk menampilkan kode QRIS.</div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <div class="step-heading">Selesaikan Pembayaran</div>
+                        <div class="step-desc">Scan QRIS yang tampil di layar dan selesaikan transaksi via aplikasi e-wallet / bank Anda.</div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <div class="step-heading">Klaim Akun Anda</div>
+                        <div class="step-desc">Tekan tombol SAYA SUDAH BAYAR untuk memverifikasi transaksi dan menerima data akun.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 
         <!-- BOTTOM NAVIGATION BARU -->
 <nav class="bottom-nav">
@@ -339,7 +404,7 @@
         </svg>
         <span>Pesanan</span>
     </a>
-    <a href="javascript:void(0)" class="nav-item" id="nav-info">
+    <a href="javascript:void(0)" class="nav-item" onclick="switchTab('info')" id="nav-info">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
         </svg>
@@ -370,22 +435,32 @@ window.addEventListener('scroll', function() {
 function switchTab(tabName) {
     const berandaTab = document.getElementById('tab-beranda');
     const pesananTab = document.getElementById('tab-pesanan');
+    const infoTab = document.getElementById('tab-info');
+
     const navBeranda = document.getElementById('nav-beranda');
     const navPesanan = document.getElementById('nav-pesanan');
+    const navInfo = document.getElementById('nav-info');
+
+    if (berandaTab) berandaTab.style.display = 'none';
+    if (pesananTab) pesananTab.style.display = 'none';
+    if (infoTab) infoTab.style.display = 'none';
+
+    if (navBeranda) navBeranda.classList.remove('active');
+    if (navPesanan) navPesanan.classList.remove('active');
+    if (navInfo) navInfo.classList.remove('active');
 
     if (tabName === 'beranda') {
         if (berandaTab) berandaTab.style.display = 'block';
-        if (pesananTab) pesananTab.style.display = 'none';
         if (navBeranda) navBeranda.classList.add('active');
-        if (navPesanan) navPesanan.classList.remove('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (tabName === 'pesanan') {
-        if (berandaTab) berandaTab.style.display = 'none';
         if (pesananTab) pesananTab.style.display = 'block';
-        if (navBeranda) navBeranda.classList.remove('active');
         if (navPesanan) navPesanan.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tabName === 'info') {
+        if (infoTab) infoTab.style.display = 'block';
+        if (navInfo) navInfo.classList.add('active');
     }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 3. Logika Klik Kartu Produk (Mendukung .product-card dan .card)
@@ -631,6 +706,70 @@ function copyText(elementId) {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+    /* Card Cara Order */
+.info-card {
+    background: #111827;
+    border: 1px solid #f59e0b;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 480px;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+}
+
+.info-title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.step-number {
+    background: #f59e0b;
+    color: #111827;
+    font-weight: 800;
+    font-size: 0.85rem;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.step-heading {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.step-desc {
+    color: #9ca3af;
+    font-size: 0.82rem;
+    line-height: 1.4;
 }
 </style>
 
