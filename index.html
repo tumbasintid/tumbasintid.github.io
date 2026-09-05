@@ -524,16 +524,17 @@ if (orderForm) {
     });
 }
 function showToast(message) {
-  const toast = document.getElementById('toast');
-  if (!toast) return;
-  toast.textContent = message;
-  toast.classList.add('show');
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3000);
+    const toast = document.getElementById('toast');
+    if (toast) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
 }
-    
-   const btnConfirmPay = document.getElementById('btnConfirmPay');
+
+const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', function() {
         const qrisSec = document.getElementById('qrisSection');
@@ -544,19 +545,16 @@ if (btnConfirmPay) {
 
         // STATE 1: Jika QRIS belum tampil (Klik pertama)
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
-            // Animasi halus muncul
             qrisSec.style.opacity = '0';
             qrisSec.style.transition = 'opacity 0.4s ease-in-out';
             qrisSec.style.display = 'block';
-            
+
             setTimeout(() => {
                 qrisSec.style.opacity = '1';
             }, 50);
 
-            // Ganti teks tombol
             btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
-            
-            // Scroll halus tepat ke tombol "SAYA SUDAH BAYAR" di tengah layar
+
             setTimeout(() => {
                 btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 350);
@@ -570,24 +568,25 @@ if (btnConfirmPay) {
 
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
-                    
-                                    // 1. Sembunyikan Card Detail Pembelian, Card QRIS, dan Tombol Bayar
-                const orderDetailContent = document.getElementById('order-detail-content');
-                if (orderDetailContent) orderDetailContent.style.display = 'none';
-                if (qrisSec) qrisSec.style.display = 'none';
-                if (btnConfirmPay) btnConfirmPay.style.display = 'none';
 
-                // 2. Tampilkan Card Pembelian Berhasil Berdesain Baru
-                if (accSec) {
-                    accSec.style.opacity = '0';
-                    accSec.style.transition = 'opacity 0.5s ease-in-out';
-                    accSec.style.display = 'block';
-                    setTimeout(() => { accSec.style.opacity = '1'; }, 50);
-                }
+                    // 1. Sembunyikan Card Detail Pembelian, Card QRIS, dan Tombol Bayar
+                    const orderDetailContent = document.getElementById('order-detail-content');
+                    if (orderDetailContent) orderDetailContent.style.display = 'none';
+                    if (qrisSec) qrisSec.style.display = 'none';
+                    if (btnConfirmPay) btnConfirmPay.style.display = 'none';
 
-                // 3. Scroll Halus ke Puncak Halaman
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }, 2500);
+                    // 2. Tampilkan Card Pembelian Berhasil Berdesain Baru
+                    if (accSec) {
+                        accSec.style.opacity = '0';
+                        accSec.style.transition = 'opacity 0.5s ease-in-out';
+                        accSec.style.display = 'block';
+                        setTimeout(() => { accSec.style.opacity = '1'; }, 50);
+                    }
+
+                    // 3. Scroll Halus ke Puncak Halaman
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 2500);
+            }
         }
     });
 }
