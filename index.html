@@ -350,7 +350,7 @@
         </svg>
         <span>Pesanan</span>
     </a>
-    <a href="javascript:void(0)" class="nav-item" id="nav-info">
+    <a href="javascript:void(0)" class="nav-item" onclick="switchTab('info')" id="nav-info">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
         </svg>
@@ -377,26 +377,40 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 2. Logika Pindah Tab (Beranda / Pesanan)
+// 2. Logika Pindah Tab (Beranda / Pesanan / Info)
 function switchTab(tabName) {
-    const berandaTab = document.getElementById('tab-beranda');
-    const pesananTab = document.getElementById('tab-pesanan');
-    const navBeranda = document.getElementById('nav-beranda');
-    const navPesanan = document.getElementById('nav-pesanan');
+  const berandaTab = document.getElementById('tab-beranda');
+  const pesananTab = document.getElementById('tab-pesanan');
+  const infoTab = document.getElementById('tab-info');
+  const navBeranda = document.getElementById('nav-beranda');
+  const navPesanan = document.getElementById('nav-pesanan');
+  const navInfo = document.getElementById('nav-info');
 
-    if (tabName === 'beranda') {
-        if (berandaTab) berandaTab.style.display = 'block';
-        if (pesananTab) pesananTab.style.display = 'none';
-        if (navBeranda) navBeranda.classList.add('active');
-        if (navPesanan) navPesanan.classList.remove('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (tabName === 'pesanan') {
-        if (berandaTab) berandaTab.style.display = 'none';
-        if (pesananTab) pesananTab.style.display = 'block';
-        if (navBeranda) navBeranda.classList.remove('active');
-        if (navPesanan) navPesanan.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  if (tabName === 'beranda') {
+    if (berandaTab) berandaTab.style.display = 'block';
+    if (pesananTab) pesananTab.style.display = 'none';
+    if (infoTab) infoTab.style.display = 'none';
+    if (navBeranda) navBeranda.classList.add('active');
+    if (navPesanan) navPesanan.classList.remove('active');
+    if (navInfo) navInfo.classList.remove('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (tabName === 'pesanan') {
+    if (berandaTab) berandaTab.style.display = 'none';
+    if (pesananTab) pesananTab.style.display = 'block';
+    if (infoTab) infoTab.style.display = 'none';
+    if (navBeranda) navBeranda.classList.remove('active');
+    if (navPesanan) navPesanan.classList.add('active');
+    if (navInfo) navInfo.classList.remove('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (tabName === 'info') {
+    if (berandaTab) berandaTab.style.display = 'none';
+    if (pesananTab) pesananTab.style.display = 'none';
+    if (infoTab) infoTab.style.display = 'block';
+    if (navBeranda) navBeranda.classList.remove('active');
+    if (navPesanan) navPesanan.classList.remove('active');
+    if (navInfo) navInfo.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 // 3. Logika Klik Kartu Produk (Mendukung .product-card dan .card)
