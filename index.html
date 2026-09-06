@@ -564,6 +564,7 @@ if (btnConfirmPay) {
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
             qrisSec.style.opacity = '0';
             qrisSec.style.display = 'block';
+            document.getElementById('qrisTotal').innerText = document.getElementById('summary-total').innerText;
             setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
             btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
             setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
