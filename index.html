@@ -706,12 +706,8 @@ if (btnConfirmPay) {
                     accSec.style.opacity = '0';
                     setTimeout(() => {
                         accSec.style.opacity = '1';
-                        const headerOffset = 90;
-                        const elementPosition = accSec.getBoundingClientRect().top + window.pageYOffset;
-                        window.scrollTo({
-                            top: elementPosition - headerOffset,
-                            behavior: 'smooth'
-                        });
+                        // Efek scroll halus fokus tepat di tengah layar HP
+                        accSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 100);
                 }
             } catch (err) {
@@ -739,3 +735,4 @@ function copyText(elementId) {
 </script>
 </body>
 </html>
+
