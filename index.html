@@ -40,6 +40,8 @@
     transform: translateX(-50%) translateY(0);
   }
 </style>
+<!-- Supabase SDK JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="text/javascript"
   src="https://app.sandbox.midtrans.com/snap/snap.js"
   data-client-key="Mid-client-z_9mRuYosxMewBWB"></script>
@@ -427,6 +429,11 @@
 </style>
 
 <script>
+// Inisialisasi Supabase Client
+const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // 1. Inisialisasi Scroll Navbar
 window.addEventListener('scroll', function() {
     const navbar = document.getElementById('navbar');
@@ -638,10 +645,10 @@ if (orderForm) {
     });
 }
 
-// 7. Logika Konfirmasi Pembayaran & QRIS
+// 7. Logika Konfirmasi Pembayaran & QRIS (Terhubung ke Supabase)
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
-    btnConfirmPay.addEventListener('click', function() {
+    btnConfirmPay.addEventListener('click', async function() {
         const qrisSec = document.getElementById('qrisSection');
         const accSec = document.getElementById('accountSection');
         const loadingOverlay = document.getElementById('loadingOverlay');
@@ -660,34 +667,57 @@ if (btnConfirmPay) {
                 if (loadingText) loadingText.textContent = 'Memeriksa Pembayaran...';
                 if (loadingSubtext) loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
                 loadingOverlay.style.display = 'flex';
+            }
 
-                setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
+            try {
+                // Ambil 1 akun dari database yang is_sold = false
+                const { data, error } = await supabaseClient
+                    .from('accounts')
+                    .select('*')
+                    .eq('is_sold', false)
+                    .limit(1)
+                    .maybeSingle();
 
-                    const orderDetailContent = document.getElementById('order-detail-content');
-                    if (orderDetailContent) orderDetailContent.style.display = 'none';
-                    if (qrisSec) qrisSec.style.display = 'none';
-                    btnConfirmPay.style.display = 'none';
+                if (error || !data) {
+                    if (loadingOverlay) loadingOverlay.style.display = 'none';
+                    showToast("Stok akun sedang habis atau terjadi masalah!");
+                    return;
+                }
 
-                    if (accSec) {
-                        // Injeksi data akun otomatis
-                        const randomNum = Math.floor(1000 + Math.random() * 9000);
-                        document.getElementById('accEmail').textContent = `adv.mlbb_${randomNum}@saka.com`;
-                        document.getElementById('accPassword').textContent = `SakaAdvPass#${randomNum}`;
+                // Tandai akun sebagai terjual (is_sold = true)
+                await supabaseClient
+                    .from('accounts')
+                    .update({ is_sold: true })
+                    .eq('id', data.id);
 
-                        accSec.style.display = 'block';
-                        accSec.style.opacity = '0';
-                        setTimeout(() => {
-                            accSec.style.opacity = '1';
-                            const headerOffset = 90;
-                            const elementPosition = accSec.getBoundingClientRect().top + window.pageYOffset;
-                            window.scrollTo({
-                                top: elementPosition - headerOffset,
-                                behavior: 'smooth'
-                            });
-                        }, 100);
-                    }
-                }, 2500);
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+
+                const orderDetailContent = document.getElementById('order-detail-content');
+                if (orderDetailContent) orderDetailContent.style.display = 'none';
+                if (qrisSec) qrisSec.style.display = 'none';
+                btnConfirmPay.style.display = 'none';
+
+                if (accSec) {
+                    // Tampilkan data asli dari Supabase
+                    document.getElementById('accEmail').textContent = data.account_data || '-';
+                    document.getElementById('accPassword').textContent = data.password_data || '-';
+
+                    accSec.style.display = 'block';
+                    accSec.style.opacity = '0';
+                    setTimeout(() => {
+                        accSec.style.opacity = '1';
+                        const headerOffset = 90;
+                        const elementPosition = accSec.getBoundingClientRect().top + window.pageYOffset;
+                        window.scrollTo({
+                            top: elementPosition - headerOffset,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                }
+            } catch (err) {
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+                showToast("Gagal memproses akun. Silakan coba lagi!");
+                console.error("Error Supabase:", err);
             }
         }
     });
