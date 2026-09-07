@@ -462,6 +462,9 @@ const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Variable global untuk menyimpan nominal transaksi aktif
+let currentOrderAmount = 0;
+
 // 1. Inisialisasi Scroll Navbar
 window.addEventListener('scroll', function() {
     const navbar = document.getElementById('navbar');
@@ -683,6 +686,9 @@ if (orderForm) {
         const adminFee = 275;
         const totalPrice = productPrice + adminFee;
 
+        // Simpan total harga ke variable global
+        currentOrderAmount = totalPrice;
+
         const summaryProduct = document.getElementById('summary-product');
         const summaryPrice = document.getElementById('summary-price');
         const summaryTotal = document.getElementById('summary-total');
@@ -731,7 +737,7 @@ if (orderForm) {
     });
 }
 
-// 8. Logika Konfirmasi Pembayaran & Ambil Akun Sesuai Kategori yang Dipilih
+// 8. Logika Konfirmasi Pembayaran & Ambil QRIS Otomatis dari Supabase
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', async function() {
@@ -740,14 +746,55 @@ if (btnConfirmPay) {
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
+        const qrisImg = document.getElementById('qrisImage');
 
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
-            qrisSec.style.opacity = '0';
-            qrisSec.style.display = 'block';
-            document.getElementById('qrisTotal').innerText = document.getElementById('summary-total').innerText;
-            setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
-            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
-            setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
+            // Tampilkan loading saat meminta QRIS ke Supabase
+            if (loadingOverlay) {
+                if (loadingText) loadingText.textContent = 'Membuat Kode QRIS...';
+                if (loadingSubtext) loadingSubtext.textContent = 'Menghubungkan ke sistem pembayaran Midtrans';
+                loadingOverlay.style.display = 'flex';
+            }
+
+            try {
+                // Generasi ID Order Unik
+                const generatedOrderId = 'SAKA-' + Date.now();
+
+                // Panggil Supabase Edge Function smooth-task
+                const apiResponse = await fetch('https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        orderId: generatedOrderId,
+                        amount: currentOrderAmount > 0 ? currentOrderAmount : 2275
+                    })
+                });
+
+                const apiData = await apiResponse.json();
+
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+
+                if (apiData.success && apiData.qris_url) {
+                    // Set gambar QRIS dari URL yang dibalas Supabase
+                    if (qrisImg) qrisImg.src = apiData.qris_url;
+
+                    qrisSec.style.opacity = '0';
+                    qrisSec.style.display = 'block';
+                    document.getElementById('qrisTotal').innerText = document.getElementById('summary-total').innerText;
+                    setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
+                    btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+                    setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
+                } else {
+                    showToast("Gagal membuat kode QRIS. Silakan coba lagi!");
+                }
+            } catch (err) {
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+                console.error("Error meminta QRIS:", err);
+                showToast("Terjadi kesalahan koneksi saat membuat QRIS.");
+            }
+
         } else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
             if (loadingOverlay) {
                 if (loadingText) loadingText.textContent = 'Memeriksa Pembayaran...';
