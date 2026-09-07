@@ -7,49 +7,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=5">
 <style>
-    html {
-  scroll-behavior: smooth;
-}
+  html {
+    scroll-behavior: smooth;
+  }
 
-/* Custom Toast Notification Dark Theme */
-.toast-msg {
-  position: fixed;
-  bottom: 90px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background-color: #1e293b;
-  color: #fbbf24;
-  border: 1px solid #fbbf24;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  pointer-events: none;
-  text-align: center;
-  white-space: nowrap;
-}
+  /* Custom Toast Notification Dark Theme */
+  .toast-msg {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background-color: #1e293b;
+    color: #fbbf24;
+    border: 1px solid #fbbf24;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
+  }
 
-.toast-msg.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
+  .toast-msg.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Style Teks Stok */
+  .stock-text-muted {
+    color: #a0aec0 !important;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .stock-text-empty {
+    color: #ef4444 !important;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
 </style>
+<!-- Supabase SDK JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="text/javascript"
   src="https://app.sandbox.midtrans.com/snap/snap.js"
   data-client-key="Mid-client-z_9mRuYosxMewBWB"></script>
-
 </head>
 <body>
 
     <div id="app">
         <!-- Header Sticky -->
-        <header class="navbar">
+        <header class="navbar" id="navbar">
             <button class="menu-btn" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -59,384 +72,396 @@
                 <img src="https://flagcdn.com/w40/id.png" alt="Indonesia Flag">
             </div>
         </header>
-<div id="tab-beranda" class="tab-content active">
 
-        <!-- Store Profile Section -->
-        <section class="store-profile">
-            <!-- Cover / Banner Store -->
-            <div class="profile-cover">
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Store Banner">
-            </div>
+        <!-- TAB 1: BERANDA -->
+        <div id="tab-beranda" class="tab-content active">
 
-            <!-- Content Detail -->
-            <div class="profile-details">
-                <!-- Avatar Logo -->
-                <div class="avatar-wrapper">
-                    <img src="https://i.ibb.co.com/pBqghwTh/20260903-141638.jpg" alt="TUMBASAKUN Logo" class="profile-avatar">
+            <!-- Store Profile Section -->
+            <section class="store-profile">
+                <div class="profile-cover">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Store Banner">
                 </div>
 
-                <!-- Title & Verified Badge -->
-                <div class="profile-heading">
-                    <h1 class="store-name">TUMBASAKUN</h1>
-                    <svg class="verified-badge" viewBox="0 0 24 24" width="18" height="18">
-                        <path fill="#3897f0" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7l-3.5-3.5 1.4-1.4 2.1 2.1 5.3-5.3 1.4 1.4-6.7 6.7z"/>
-                    </svg>
+                <div class="profile-details">
+                    <div class="avatar-wrapper">
+                        <img src="https://i.ibb.co.com/pBqghwTh/20260903-141638.jpg" alt="TUMBASAKUN Logo" class="profile-avatar">
+                    </div>
+
+                    <div class="profile-heading">
+                        <h1 class="store-name">TUMBASAKUN</h1>
+                        <svg class="verified-badge" viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="#3897f0" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7l-3.5-3.5 1.4-1.4 2.1 2.1 5.3-5.3 1.4 1.4-6.7 6.7z"/>
+                        </svg>
+                    </div>
+
+                    <p class="store-bio">
+                        Khusus Jual Beli Akun Advance Server Mobile Legends.<br>
+                        Nikmati Akses Fitur dan Hero Terbaru Lebih Awal.
+                    </p>
+
+                    <div class="action-buttons">
+                        <a href="#katalog" class="btn-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121824" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                            <span>Lihat Produk</span>
+                        </a>
+
+                        <a href="javascript:void(0)" class="btn-action" onclick="switchTab('info')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121824" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                            <span>Cara Order</span>
+                        </a>
+                    </div>
                 </div>
+            </section>
 
-                <!-- Bio / Deskripsi -->
-                <p class="store-bio">
-    Khusus Jual Beli Akun Advance Server Mobile Legends.<br>
-    Nikmati Akses Fitur dan Hero Terbaru Lebih Awal.</p>
+            <!-- Section Katalog Produk -->
+            <section id="katalog" class="catalog-section">
+                <h2 class="section-title">Pilihan Akun</h2>
+                
+                <div class="product-grid">
+                    <!-- Kartu Produk 1: Level 3 -->
+                    <div class="product-card" data-name="Advance Server Level 3 (1 Server)" data-price="2000" data-category="Level 3" data-stock="0">
+                        <div class="product-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Advance Server Level 3" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Advance Server Level 3 ( 1 Server )</h3>
+                            <div class="price-container">
+                                <span class="price-original">Rp 5.000</span>
+                                <span class="price-discount">Rp 2.000</span>
+                            </div>
+                            <div class="stock-status">
+                                <span class="stock-text stock-text-empty">Stok tersedia : <span class="stock-num">0</span></span>
+                            </div>
+                        </div>
+                    </div>
 
-                        <!-- Tombol Berdampingan -->
-        <div class="action-buttons">
-            <a href="#katalog" class="btn-action">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121824" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <path d="M16 10a4 4 0 0 1-8 0"></path>
-                </svg>
-                <span>Lihat Produk</span>
-            </a>
-
-            <a href="javascript:void(0)" class="btn-action" onclick="switchTab('info')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121824" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-                <span>Cara Order</span>
-            </a>
-        </div>
-
-            </div>
-        </section>
-        <!-- Section Katalog Produk -->
-<section id="katalog" class="catalog-section">
-    <h2 class="section-title">Pilihan Akun</h2>
-    
-    <div class="product-grid">
-        <!-- Kartu Produk 1 -->
-        <div class="product-card" data-name="Advance Server Level 3" data-price="2000">
-            <div class="product-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Advance Server Level 3" class="product-image">
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">Advance Server Level 3 ( 1 Server )</h3>
-                <div class="price-container">
-                    <span class="price-original">Rp 5.000</span>
-                    <span class="price-discount">Rp 2.000</span>
+                    <!-- Kartu Produk 2: Level 20 -->
+                    <div class="product-card" data-name="Advance Server Level 20" data-price="5000" data-category="Level 20" data-stock="0">
+                        <div class="product-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Advance Server Level 20" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Advance Server Level 20</h3>
+                            <div class="price-container">
+                                <span class="price-original">Rp 8.000</span>
+                                <span class="price-discount">Rp 5.000</span>
+                            </div>
+                            <div class="stock-status">
+                                <span class="stock-text stock-text-empty">Stok tersedia : <span class="stock-num">0</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stock-status">
-                    <span class="stock-dot"></span>
-                    <span class="stock-text">Stok tersedia</span>
+            </section>
+
+            <!-- Section Form Pembayaran -->
+            <section id="checkout-section" class="checkout-section">
+                <div class="checkout-card">
+                    <form id="orderForm" class="checkout-form">
+                        <div class="form-group">
+                            <label for="whatsappInput">No. WhatsApp</label>
+                            <input type="tel" id="whatsappInput" placeholder="Masukkan Nomor WhatsApp Anda" required>
+                            <small class="form-note">ⓘ Nomor ini akan dihubungi jika terjadi masalah.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="promo">Kode Promo</label>
+                            <input type="text" id="promo" placeholder="Masukkan Kode Promo (Jika Ada)">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Metode Pembayaran</label>
+                            <div class="custom-select-trigger" id="selectTrigger" style="background: #1e293b; border: 1px solid #334155; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <span id="selectedOptionText" style="color: #94a3b8;">Pilih Metode Pembayaran</span>
+                                <span style="font-size: 12px; color: #94a3b8;">▼</span>
+                            </div>
+                        </div>
+
+                        <!-- Custom Modal Dark Theme -->
+                        <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+                            <div style="background: #151c28; border: 1px solid #334155; border-radius: 12px; width: 100%; max-width: 360px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #2a364f; padding-bottom: 10px;">
+                                    <h3 style="margin: 0; font-size: 16px; color: #fff; font-weight: 600;">Pilih Metode Pembayaran</h3>
+                                    <span id="closeModal" style="color: #94a3b8; font-size: 20px; cursor: pointer; font-weight: bold;">&times;</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <div class="modal-opt" data-value="qris" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">QRIS (All Payment)</div>
+                                    <div class="modal-opt" data-value="dana" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">DANA</div>
+                                    <div class="modal-opt" data-value="gopay" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">GoPay</div>
+                                    <div class="modal-opt" data-value="ovo" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">OVO</div>
+                                    <div class="modal-opt" data-value="bca" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">Bank BCA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="paymentMethodInput" value="">
+                        <button type="submit" class="btn-submit">BELI SEKARANG</button>
+                        <p class="form-footer-note">Pastikan kembali nomor WhatsApp dan metode pembayaran yang Anda pilih sudah benar.</p>
+                    </form>
                 </div>
-            </div>
-        </div>
-
-        <!-- Kartu Produk 2 -->
-        <div class="product-card" data-name="Advance Server Level 20" data-price="5000">
-            <div class="product-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Advance Server Level 15" class="product-image">
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">Advance Server Level 20</h3>
-                <div class="price-container">
-                    <span class="price-original">Rp 8.000</span>
-                    <span class="price-discount">Rp 5.000</span>
-                </div>
-                <div class="stock-status">
-                    <span class="stock-dot"></span>
-                    <span class="stock-text">Stok tersedia</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Section Form Pembayaran -->
-<section id="checkout-section" class="checkout-section">
-    <div class="checkout-card">
-        <form id="orderForm" class="checkout-form">
-            <div class="form-group">
-                <label for="whatsapp">No. WhatsApp</label>
-                <input type="tel" id="whatsappInput" placeholder="Masukkan Nomor WhatsApp Anda" required>
-                <small class="form-note">ⓘ Nomor ini akan dihubungi jika terjadi masalah.</small>
-            </div>
-
-            <div class="form-group">
-                <label for="promo">Kode Promo</label>
-                <input type="text" id="promo" placeholder="Masukkan Kode Promo (Jika Ada)">
-            </div>
-
-                            <div class="form-group">
-            <label for="payment-method">Metode Pembayaran</label>
-            <!-- Custom Select Trigger -->
-            <div class="custom-select-trigger" id="selectTrigger" style="background: #1e293b; border: 1px solid #334155; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                <span id="selectedOption" style="color: #94a3b8;">Pilih Metode Pembayaran</span>
-                <span style="font-size: 12px; color: #94a3b8;">▼</span>
-            </div>
-        </div>
-
-        <!-- Custom Modal Dark Theme -->
-        <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
-            <div style="background: #151c28; border: 1px solid #334155; border-radius: 12px; width: 100%; max-width: 360px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #2a364f; padding-bottom: 10px;">
-                    <h3 style="margin: 0; font-size: 16px; color: #fff; font-weight: 600;">Pilih Metode Pembayaran</h3>
-                    <span id="closeModal" style="color: #94a3b8; font-size: 20px; cursor: pointer; font-weight: bold;">&times;</span>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div class="modal-opt" data-value="qris" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">QRIS (All Payment)</div>
-                    <div class="modal-opt" data-value="dana" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">DANA</div>
-                    <div class="modal-opt" data-value="gopay" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">GoPay</div>
-                    <div class="modal-opt" data-value="ovo" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">OVO</div>
-                    <div class="modal-opt" data-value="bca" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">Bank BCA</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Hidden input penampung nilai untuk Javascript -->
-        <input type="hidden" id="paymentMethodInput" value="">
-
-
-            <button type="submit" class="btn-submit">BELI SEKARANG</button>
-            <p class="form-footer-note">Pastikan kembali nomor WhatsApp dan metode pembayaran yang Anda pilih sudah benar.</p>
-        </form>
-    </div>
-</section>
+            </section>
         </div>
 
         <!-- TAB 2: DETAIL PESANAN -->
-<div id="tab-pesanan" class="tab-content" style="display: none; min-height: 80vh; padding-top: 60px;">
-    <section class="checkout-section">
-        <div class="checkout-card" style="margin-top: 15px;">
-            
-            <!-- Tampilan Saat Belum Ada Pesanan (Empty State) -->
-<div id="empty-state-card" class="empty-state-box" style="text-align: center; padding: 20px 15px;">
-  
-  <!-- Icon SVG Diperbesar (56px) & Jarak Bawah Lebar Ke Judul (24px) -->
-  <div class="empty-icon" style="margin-bottom: 24px; display: flex; justify-content: center;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
-      <line x1="12" y1="9" x2="12" y2="13"></line>
-      <line x1="12" y1="17" x2="12.01" y2="17"></line>
-    </svg>
-  </div>
+        <div id="tab-pesanan" class="tab-content" style="display: none; min-height: 80vh; padding-top: 60px;">
+            <section class="checkout-section">
+                <div class="checkout-card" style="margin-top: 15px;">
+                    
+                    <!-- Empty State -->
+                    <div id="empty-state-card" class="empty-state-box" style="text-align: center; padding: 20px 15px;">
+                        <div class="empty-icon" style="margin-bottom: 24px; display: flex; justify-content: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                        </div>
+                        <h3 style="color: #fff; margin-bottom: 8px; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em;">Belum Ada Pesanan</h3>
+                        <p style="color: #9ca3af; font-size: 0.875rem; line-height: 1.5; margin-bottom: 24px; max-width: 290px; margin-left: auto; margin-right: auto;">
+                            Riwayat transaksi kamu bakal muncul di sini. Silakan pilih produk di tab Beranda untuk mulai belanja!
+                        </p>
+                        <button type="button" class="btn-submit" onclick="switchTab('beranda')">KEMBALI KE BERANDA</button>
+                    </div>
 
-  <!-- Judul Utama (Jarak ke Deskripsi Bawah Tetap 8px) -->
-  <h3 style="color: #fff; margin-bottom: 8px; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em;">Belum Ada Pesanan</h3>
-  
-  <!-- Deskripsi / Teks Bawah -->
-  <p style="color: #9ca3af; font-size: 0.875rem; line-height: 1.5; margin-bottom: 24px; max-width: 290px; margin-left: auto; margin-right: auto;">
-    Riwayat transaksi kamu bakal muncul di sini. Silakan pilih produk di tab Beranda untuk mulai belanja!.
-  </p>
-  
-  <!-- Tombol -->
-  <button type="button" class="btn-submit" onclick="switchTab('beranda')">KEMBALI KE BERANDA</button>
-  
-</div>
+                    <!-- Tampilan Rincian Detail Pembelian -->
+                    <div id="order-detail-content" style="display: none;">
+                        <h3 class="detail-title" style="color:#fff; border-bottom:1px solid #2a3447; padding-bottom:10px; margin-bottom:15px;">DETAIL PEMBELIAN</h3>
+                        
+                        <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
+                            <span>Jenis Akun</span>
+                            <strong id="summary-product" style="color:#fff;">-</strong>
+                        </div>
+                        <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
+                            <span>Harga Produk</span>
+                            <span id="summary-price" style="color:#fff;">Rp 0</span>
+                        </div>
+                        <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
+                            <span>Biaya Admin</span>
+                            <span style="color:#fff;">Rp 275</span>
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px solid #2a3447; margin:15px 0;">
+                        
+                        <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:1rem; font-weight:bold;">
+                            <span style="color:#fff;">Total Bayar</span>
+                            <strong id="summary-total" style="color:#eab308;">Rp 0</strong>
+                        </div>
+                        <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
+                            <span>Metode Pembayaran</span>
+                            <strong id="summary-method" style="color:#fff;">-</strong>
+                        </div>
+                        <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:15px; color:#9ca3af; font-size:0.85rem;">
+                            <span>WhatsApp</span>
+                            <span id="summary-wa" style="color:#fff;">-</span>
+                        </div>
 
-            <!-- Tampilan Rincian Detail Pembelian (Default Disembunyikan) -->
-            <div id="order-detail-content" style="display: none;">
-                <h3 class="detail-title" style="color:#fff; border-bottom:1px solid #2a3447; padding-bottom:10px; margin-bottom:15px;">DETAIL PEMBELIAN</h3>
-                
-                <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
-                    <span>Jenis Akun</span>
-                    <strong id="summary-product" style="color:#fff;">Advance Server Level 20</strong>
+                        <div class="warning-box" style="background-color: #fffbe6; border-radius: 8px; padding: 16px 18px; margin-bottom: 15px; color: #854d0e; font-size: 0.8rem; line-height: 1.4;">
+                            <div style="font-weight: bold; margin-bottom: 2px;">Perhatian:</div>
+                            <div>Akun yang sudah dibeli tidak dapat dikembalikan atau refund. Pastikan data yang dimasukkan sudah benar sebelum melanjutkan.</div>
+                        </div>
+
+                        <!-- KARTU QRIS -->
+                        <div id="qrisSection" style="display: none; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;">
+                            <h4 style="margin-bottom: 8px; color: #eab308; font-size: 1.1rem;">Scan QRIS Untuk Membayar</h4>
+                            <p style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 15px;">Gunakan DANA, GoPay, OVO, ShopeePay, atau Bank Utama.</p>
+                            
+                            <div style="background: #fff; display: inline-block; padding: 10px; border-radius: 8px;">
+                                <img id="qrisImage" src="https://via.placeholder.com/200x200?text=QRIS+DANA" alt="Kode QRIS" style="width: 180px; height: 180px; display: block;">
+                            </div>
+                            
+                            <p style="font-size: 0.85rem; color: #d1d5db; margin-top: 15px;">Total Pembayaran: <strong id="qrisTotal" style="color: #eab308;">Rp 0</strong></p>
+                            <p style="font-size: 0.75rem; color: #6b7280; margin-top: 5px;">Menunggu pembayaran Anda...</p>
+                        </div>
+                        
+                        <button type="button" class="btn-submit" id="btnConfirmPay" style="word-spacing: 4px; margin-top: 15px;">KONFIRMASI PEMBAYARAN</button>
+                    </div>
+
+                    <!-- KARTU DETAIL AKUN (Hasil Pembelian) -->
+                    <div id="accountSection" style="display: none; padding: 25px 20px; background-color: #111827; border: 1px solid #eab308; border-radius: 16px; margin-top: 10px;">
+                        <div style="width: 64px; height: 64px; background-color: rgba(16, 185, 129, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto;">
+                            <div style="width: 45px; height: 45px; background-color: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: bold; margin-bottom: 6px; text-align: center;">Pembelian Berhasil!</h3>
+                        <p style="color: #9ca3af; font-size: 0.85rem; margin-bottom: 20px; text-align: center;">Berikut adalah data akun Anda:</p>
+
+                        <!-- Kolom Email -->
+                        <div style="background-color: #1f2937; padding: 12px 16px; border-radius: 10px; border: 1px solid #374151; margin-bottom: 12px;">
+                            <div style="overflow: hidden; text-align: left;">
+                                <span style="display: block; font-size: 0.75rem; color: #9ca3af;">Email Akun</span>
+                                <strong id="accEmail" style="color: #ffffff; font-size: 0.95rem; word-break: break-all;">loading...</strong>
+                            </div>
+                            <button type="button" onclick="copyText('accEmail')" style="background-color: #eab308; color: #000000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; margin-top: 8px;">Salin</button>
+                        </div>
+
+                        <!-- Kolom Password -->
+                        <div style="background-color: #1f2937; padding: 12px 16px; border-radius: 10px; border: 1px solid #374151; margin-bottom: 15px;">
+                            <div style="overflow: hidden; text-align: left;">
+                                <span style="display: block; font-size: 0.75rem; color: #9ca3af;">Password Akun</span>
+                                <strong id="accPassword" style="color: #ffffff; font-size: 0.95rem; word-break: break-all;">loading...</strong>
+                            </div>
+                            <button type="button" onclick="copyText('accPassword')" style="background-color: #eab308; color: #000000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; margin-top: 8px;">Salin</button>
+                        </div>
+
+                        <p style="font-size: 0.75rem; color: #6b7280; text-align: center;">Simpan informasi akun ini dengan baik ya!</p>
+                    </div>
+
                 </div>
-                <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
-                    <span>Harga Produk</span>
-                    <span id="summary-price" style="color:#fff;">Rp 5.000</span>
-                </div>
-                <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
-                    <span>Biaya Admin</span>
-                    <span style="color:#fff;">Rp 275</span>
-                </div>
-                
-                <hr style="border:0; border-top:1px solid #2a3447; margin:15px 0;">
-                
-                <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:1rem; font-weight:bold;">
-                    <span style="color:#fff;">Total Bayar</span>
-                    <strong id="summary-total" style="color:#eab308;">Rp 5.275</strong>
-                </div>
-                <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; color:#9ca3af; font-size:0.85rem;">
-                    <span>Metode Pembayaran</span>
-                    <strong id="summary-method" style="color:#fff;">QRIS</strong>
-                </div>
-                <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:15px; color:#9ca3af; font-size:0.85rem;">
-                    <span>WhatsApp</span>
-                    <span id="summary-wa" style="color:#fff;">081234567890</span>
+            </section>
+        </div>
+
+        <!-- TAB 3: INFO & CARA ORDER -->
+        <div id="tab-info" class="tab-content" style="display: none;">
+            <div style="padding: 80px 16px 100px 16px; max-width: 600px; margin: 0 auto; color: #fff;">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Cara Melakukan Pemesanan</h2>
+                    <p style="font-size: 0.775rem; color: #9ca3af; margin: 0; line-height: 1.4;">Ikuti 7 langkah berikut sebelum melakukan transaksi.</p>
                 </div>
 
-                <div class="warning-box" style="background-color: #fffbe6; border-radius: 8px; padding: 16px 18px; margin-bottom: 15px; color: #854d0e; font-size: 0.8rem; line-height: 1.4;">
-  <div style="font-weight: bold; margin-bottom: 2px;">Perhatian:</div>
-  <div>Akun yang sudah dibeli tidak dapat dikembalikan atau refund. Pastikan data yang dimasukkan sudah benar sebelum melanjutkan.</div>
-</div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Pilih Produk</h4>
+                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pilih produk (akun) yang Anda butuhkan di halaman Beranda.</p>
+                        </div>
+                    </div>
 
-<!-- KARTU QRIS -->
-<div id="qrisSection" style="display: none; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;">
-    <h4 style="margin-bottom: 8px; color: #eab308; font-size: 1.1rem;">Scan QRIS Untuk Membayar</h4>
-    <p style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 15px;">Gunakan DANA, GoPay, OVO, ShopeePay, atau Bank Utama.</p>
-    
-    <div style="background: #fff; display: inline-block; padding: 10px; border-radius: 8px;">
-        <img id="qrisImage" src="https://via.placeholder.com/200x200?text=QRIS+DANA" alt="Kode QRIS" style="width: 180px; height: 180px; display: block;">
-    </div>
-    
-    <p style="font-size: 0.85rem; color: #d1d5db; margin-top: 15px;">Total Pembayaran: <strong id="qrisTotal" style="color: #eab308;">Rp 5.275</strong></p>
-    <p style="font-size: 0.75rem; color: #6b7280; margin-top: 5px;">Menunggu pembayaran Anda...</p>
-</div>
-                
-                <button type="button" class="btn-submit" id="btnConfirmPay" style="word-spacing: 4px; margin-top: 15px;">KONFIRMASI PEMBAYARAN</button>
-                
-</div>
-        </div>
+                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Lengkapi Data Pemesanan</h4>
+                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Masukkan nomor WhatsApp aktif, kode promo (jika ada), lalu pilih metode pembayaran.</p>
+                        </div>
+                    </div>
 
-<!-- KARTU DETAIL AKUN (Hasil Pembelian) -->
-<div id="accountSection" style="display: none; padding: 25px 20px; background-color: #111827; border: 1px solid #eab308; border-radius: 16px; margin-top: 10px;">
-    <!-- Icon Centang Hijau -->
-    <div style="width: 64px; height: 64px; background-color: rgba(16, 185, 129, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto;">
-        <div style="width: 45px; height: 45px; background-color: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-        </div>
-    </div>
+                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klik Beli Sekarang</h4>
+                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>BELI SEKARANG</b> untuk membuat rincian tagihan Anda.</p>
+                        </div>
+                    </div>
 
-    <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: bold; margin-bottom: 6px; text-align: center;">Pembelian Berhasil!</h3>
-    <p style="color: #9ca3af; font-size: 0.85rem; margin-bottom: 20px; text-align: center;">Berikut adalah data akun Anda:</p>
+                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Periksa Detail Pesanan</h4>
+                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pastikan kembali item produk dan total pembayaran sudah sesuai.</p>
+                        </div>
+                    </div>
 
-    <!-- Kolom Email -->
-    <div style="background-color: #1f2937; padding: 12px 16px; border-radius: 10px; border: 1px solid #374151; margin-bottom: 12px;">
-        <div style="overflow: hidden; text-align: left;">
-            <span style="display: block; font-size: 0.75rem; color: #9ca3af;">Email Akun</span>
-            <strong id="accEmail" style="color: #ffffff; font-size: 0.95rem; word-break: break-all;">loading...</strong>
-        </div>
-        <button type="button" onclick="copyText('accEmail')" style="background-color: #eab308; color: #000000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; margin-top: 8px;">Salin</button>
-    </div>
+                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Konfirmasi Pembayaran</h4>
+                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>KONFIRMASI PEMBAYARAN</b> untuk menampilkan QRIS / kode bayar.</p>
+                        </div>
+                    </div>
 
-    <!-- Kolom Password -->
-    <div style="background-color: #1f2937; padding: 12px 16px; border-radius: 10px; border: 1px solid #374151; margin-bottom: 15px;">
-        <div style="overflow: hidden; text-align: left;">
-            <span style="display: block; font-size: 0.75rem; color: #9ca3af;">Password Akun</span>
-            <strong id="accPassword" style="color: #ffffff; font-size: 0.95rem; word-break: break-all;">loading...</strong>
-        </div>
-        <button type="button" onclick="copyText('accPassword')" style="background-color: #eab308; color: #000000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; margin-top: 8px;">Salin</button>
-    </div>
+                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Selesaikan Pembayaran</h4>
+                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Lakukan pemindaian (scan) QRIS yang tampil di layar via aplikasi e-wallet / mobile banking Anda.</p>
+                        </div>
+                    </div>
 
-    <p style="font-size: 0.75rem; color: #6b7280; text-align: center;">Simpan informasi akun ini dengan baik ya!</p>
-</div>
-
-</section>
-</div>
-<!-- TAB 3: INFO & CARA ORDER -->
-<div id="tab-info" class="tab-content" style="display: none;">
-  <div style="padding: 80px 16px 100px 16px; max-width: 600px; margin: 0 auto; color: #fff;">
-    
-    <!-- Judul Halaman -->
-    <div style="text-align: center; margin-bottom: 24px;">
-      <h2 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Cara Melakukan Pemesanan</h2>
-      <p style="font-size: 0.775rem; color: #9ca3af; margin: 0; line-height: 1.4;">Ikuti 7 langkah berikut sebelum melakukan transaksi.</p>
-    </div>
-
-    <!-- Daftar Kartu Langkah Order -->
-    <div style="display: flex; flex-direction: column; gap: 12px;">
-
-      <!-- Langkah 1 -->
-      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-        <div>
-          <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Pilih Produk</h4>
-          <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pilih produk (akun) yang Anda butuhkan di halaman Beranda.</p>
-        </div>
-      </div>
-
-      <!-- Langkah 2 -->
-      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
-        <div>
-          <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Lengkapi Data Pemesanan</h4>
-          <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Masukkan nomor WhatsApp aktif, kode promo (jika ada), lalu pilih metode pembayaran.</p>
-        </div>
-      </div>
-
-      <!-- Langkah 3 -->
-      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
-        <div>
-          <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klik Beli Sekarang</h4>
-          <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>BELI SEKARANG</b> untuk membuat rincian tagihan Anda.</p>
-        </div>
-      </div>
-
-      <!-- Langkah 4 -->
-      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
-        <div>
-          <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Periksa Detail Pesanan</h4>
-          <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pastikan kembali item produk dan total pembayaran sudah sesuai.</p>
-        </div>
-      </div>
-
-      <!-- Langkah 5 -->
-      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
-        <div>
-          <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Konfirmasi Pembayaran</h4>
-          <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>KONFIRMASI PEMBAYARAN</b> untuk menampilkan QRIS / kode bayar.</p>
-        </div>
-      </div>
-
-      <!-- Langkah 6 -->
-      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
-        <div>
-          <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Selesaikan Pembayaran</h4>
-          <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Lakukan pemindaian (scan) QRIS yang tampil di layar via aplikasi e-wallet / mobile banking Anda.</p>
-        </div>
-      </div>
-
-      <!-- Langkah 7 -->
-      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
-        <div>
-          <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klaim Akun Anda</h4>
-          <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>SAYA SUDAH BAYAR</b> untuk verifikasi otomatis dan penerimaan data akun.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div> 
+                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klaim Akun Anda</h4>
+                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>SAYA SUDAH BAYAR</b> untuk verifikasi otomatis dan penerimaan data akun.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
         
-        <!-- BOTTOM NAVIGATION BARU -->
-<nav class="bottom-nav">
-    <a href="javascript:void(0)" class="nav-item active" onclick="switchTab('beranda')" id="nav-beranda">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-        </svg>
-        <span>Beranda</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="switchTab('pesanan')" id="nav-pesanan">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-        </svg>
-        <span>Pesanan</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="switchTab('info')" id="nav-info">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-        </svg>
-        <span>Info</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" id="nav-admin">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/>
-        </svg>
-        <span>Admin</span>
-    </a>
-</nav>
-       
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="bottom-nav">
+            <a href="javascript:void(0)" class="nav-item active" onclick="switchTab('beranda')" id="nav-beranda">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span>Beranda</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="switchTab('pesanan')" id="nav-pesanan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                <span>Pesanan</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="switchTab('info')" id="nav-info">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span>Info</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" id="nav-admin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/>
+                </svg>
+                <span>Admin</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Modal Peringatan Stok Habis -->
+    <div id="outOfStockModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #151c28; border: 1px solid #334155; border-radius: 16px; width: 100%; max-width: 340px; padding: 25px 20px; text-align: center; box-shadow: 0 20px 30px rgba(0,0,0,0.6);">
+            <div style="width: 56px; height: 56px; background-color: rgba(239, 68, 68, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <h3 style="margin: 0 0 8px 0; font-size: 1.15rem; color: #ffffff; font-weight: 700;">Stok Sedang Kosong</h3>
+            <p style="margin: 0 0 20px 0; font-size: 0.85rem; color: #9ca3af; line-height: 1.5;">
+                Mohon maaf, stok untuk akun ini sedang habis. Kami sedang menyiapkan stok akun baru, silakan cek kembali secara berkala ya!
+            </p>
+            <button type="button" onclick="closeStockModal()" style="background: #eab308; color: #000; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; width: 100%;">Mengerti</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-msg"></div>
+
+    <!-- OVERLAY LOADING DENGAN EFEK BLUR -->
+    <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: #111827; border: 1px solid #f59e0b; padding: 25px 30px; border-radius: 16px; text-align: center; max-width: 80%;">
+            <div style="border: 4px solid rgba(245, 158, 11, 0.2); border-left-color: #f59e0b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px auto;"></div>
+            <div id="loadingText" style="color: #ffffff; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px;">Memeriksa Pembayaran...</div>
+            <div id="loadingSubtext" style="color: #9ca3af; font-size: 0.75rem;">Mohon tunggu sebentar...</div>
+        </div>
+    </div>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
 <script>
+// Inisialisasi Supabase Client
+const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // 1. Inisialisasi Scroll Navbar
 window.addEventListener('scroll', function() {
     const navbar = document.getElementById('navbar');
@@ -449,7 +474,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 2. Logika Pindah Tab (Beranda / Pesanan / Info)
+// 2. Logika Pindah Tab
 function switchTab(tabName) {
   const berandaTab = document.getElementById('tab-beranda');
   const pesananTab = document.getElementById('tab-pesanan');
@@ -481,17 +506,75 @@ function switchTab(tabName) {
     if (navBeranda) navBeranda.classList.remove('active');
     if (navPesanan) navPesanan.classList.remove('active');
     if (navInfo) navInfo.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    window.scrollTo({ top: 300, behavior: 'instant' });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
   }
 }
 
-// 3. Logika Klik Kartu Produk (Mendukung .product-card dan .card)
+// 3. Fungsi Hitung dan Update Stok Masing-Masing Kategori dari Supabase
+async function updateStockFromSupabase() {
+    try {
+        const cards = document.querySelectorAll('.product-card');
+
+        for (const card of cards) {
+            const cat = card.getAttribute('data-category');
+
+            let query = supabaseClient
+                .from('accounts')
+                .select('*', { count: 'exact', head: true })
+                .eq('is_sold', false);
+
+            if (cat) {
+                query = query.eq('category', cat);
+            }
+
+            const { count, error } = await query;
+            const availableStock = error ? 0 : (count || 0);
+
+            card.setAttribute('data-stock', availableStock);
+            const stockTextEl = card.querySelector('.stock-text');
+            const stockNumEl = card.querySelector('.stock-num');
+
+            if (stockNumEl) stockNumEl.textContent = availableStock;
+
+            if (stockTextEl) {
+                if (availableStock > 0) {
+                    stockTextEl.className = 'stock-text stock-text-muted';
+                } else {
+                    stockTextEl.className = 'stock-text stock-text-empty';
+                }
+            }
+        }
+    } catch (err) {
+        console.error("Gagal mengambil stok:", err);
+    }
+}
+
+function closeStockModal() {
+    const modal = document.getElementById('outOfStockModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// 4. Logika Klik Kartu Produk
 document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.product-card, .card');
+    updateStockFromSupabase();
+
+    const cards = document.querySelectorAll('.product-card');
     const checkoutSec = document.getElementById('checkout-section');
 
     cards.forEach(function(card) {
         card.addEventListener('click', function() {
+            const stock = parseInt(this.getAttribute('data-stock') || '0');
+
+            if (stock <= 0) {
+                const stockModal = document.getElementById('outOfStockModal');
+                if (stockModal) stockModal.style.display = 'flex';
+                return;
+            }
+
             cards.forEach(c => c.classList.remove('selected'));
             this.classList.add('selected');
 
@@ -502,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// 4. Logika Modal Pembayaran
+// 5. Logika Modal Pembayaran
 const selectTrigger = document.getElementById('selectTrigger');
 const modalOverlay = document.getElementById('modalOverlay');
 const closeModal = document.getElementById('closeModal');
@@ -542,20 +625,12 @@ modalOpts.forEach(function(opt) {
         const value = this.getAttribute('data-value') || this.textContent.trim();
         const text = this.textContent.trim();
 
-        // Simpan nilai ke input hidden
         if (paymentMethodInput) paymentMethodInput.value = value;
 
-        // Cari elemen teks di dalam tombol selectTrigger (fleksibel berdasarkan tag span/p atau ID)
-        const targetText = document.getElementById('selectedOptionText') || 
-                           selectTrigger.querySelector('span') || 
-                           selectTrigger.querySelector('p');
-
+        const targetText = document.getElementById('selectedOptionText');
         if (targetText) {
             targetText.textContent = text;
             targetText.style.color = '#fff';
-        } else {
-            // Jika tidak ada tag span/p, ganti isi teks utama tombol
-            selectTrigger.firstChild.textContent = text + ' ';
         }
 
         setTimeout(() => {
@@ -564,7 +639,7 @@ modalOpts.forEach(function(opt) {
     });
 });
 
-// 5. Fungsi Toast Notification
+// 6. Fungsi Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
     if (toast) {
@@ -578,13 +653,13 @@ function showToast(message) {
     }
 }
 
-// 6. Logika Validasi Form & Order
+// 7. Logika Validasi Form & Order
 const orderForm = document.getElementById('orderForm');
 if (orderForm) {
     orderForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const selectedCard = document.querySelector('.product-card.selected, .card.selected');
+        const selectedCard = document.querySelector('.product-card.selected');
         const waInput = document.getElementById('whatsappInput')?.value.trim();
         const paymentInput = document.getElementById('paymentMethodInput')?.value;
 
@@ -621,12 +696,25 @@ if (orderForm) {
         if (summaryMethod) summaryMethod.textContent = paymentInput.toUpperCase();
 
         const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const loadingSubtext = document.getElementById('loadingSubtext');
         const emptyState = document.getElementById('empty-state-card');
         const orderDetailContent = document.getElementById('order-detail-content');
         const qrisSec = document.getElementById('qrisSection');
+        const btnConfirmPay = document.getElementById('btnConfirmPay');
+        const accSec = document.getElementById('accountSection');
+
+        if (accSec) accSec.style.display = 'none';
+        if (btnConfirmPay) {
+            btnConfirmPay.style.display = 'block';
+            btnConfirmPay.textContent = 'KONFIRMASI PEMBAYARAN';
+        }
 
         if (loadingOverlay) {
+            if (loadingText) loadingText.textContent = 'Memproses Pesanan...';
+            if (loadingSubtext) loadingSubtext.textContent = 'Mohon tunggu sebentar';
             loadingOverlay.style.display = 'flex';
+
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
                 if (emptyState) emptyState.style.display = 'none';
@@ -643,13 +731,12 @@ if (orderForm) {
     });
 }
 
-// 7. Logika Konfirmasi Pembayaran & QRIS
+// 8. Logika Konfirmasi Pembayaran & Ambil Akun Sesuai Kategori yang Dipilih
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
-    btnConfirmPay.addEventListener('click', function() {
+    btnConfirmPay.addEventListener('click', async function() {
         const qrisSec = document.getElementById('qrisSection');
         const accSec = document.getElementById('accountSection');
-        const emptyState = document.getElementById('empty-state-card');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
@@ -666,42 +753,65 @@ if (btnConfirmPay) {
                 if (loadingText) loadingText.textContent = 'Memeriksa Pembayaran...';
                 if (loadingSubtext) loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
                 loadingOverlay.style.display = 'flex';
+            }
 
-                                setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
+            try {
+                // Ambil kategori dari produk yang tadi di-klik/dipilih pembeli
+                const selectedCard = document.querySelector('.product-card.selected');
+                const selectedCategory = selectedCard ? selectedCard.getAttribute('data-category') : 'Level 3';
 
-                    const orderDetailContent = document.getElementById('order-detail-content');
-                    if (orderDetailContent) orderDetailContent.style.display = 'none';
-                    if (qrisSec) qrisSec.style.display = 'none';
-                    btnConfirmPay.style.display = 'none';
+                // Ambil 1 akun dari Supabase SESUAI KATEGORI yang belum terjual
+                const { data, error } = await supabaseClient
+                    .from('accounts')
+                    .select('*')
+                    .eq('is_sold', false)
+                    .eq('category', selectedCategory)
+                    .limit(1)
+                    .maybeSingle();
 
-                                        if (accSec) {
-                        accSec.style.display = 'block';
+                if (error || !data) {
+                    if (loadingOverlay) loadingOverlay.style.display = 'none';
+                    showToast("Stok akun untuk kategori ini sedang habis!");
+                    return;
+                }
 
-                        let prev = accSec.previousElementSibling;
-                        while (prev) {
-                            prev.style.display = 'none';
-                            prev = prev.previousElementSibling;
-                        }
+                // Tandai akun sebagai terjual
+                await supabaseClient
+                    .from('accounts')
+                    .update({ is_sold: true })
+                    .eq('id', data.id);
 
-                                    accSec.style.opacity = '0';
-            setTimeout(() => {
-                accSec.style.opacity = '1';
-                const headerOffset = 90;
-                const elementPosition = accSec.getBoundingClientRect().top + window.pageYOffset;
-                window.scrollTo({
-                    top: elementPosition - headerOffset,
-                    behavior: 'smooth'
-                });
-            }, 100);
-                    }
-                }, 2500);
+                // Update hitungan stok secara realtime
+                updateStockFromSupabase();
+
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+
+                const orderDetailContent = document.getElementById('order-detail-content');
+                if (orderDetailContent) orderDetailContent.style.display = 'none';
+                if (qrisSec) qrisSec.style.display = 'none';
+                btnConfirmPay.style.display = 'none';
+
+                if (accSec) {
+                    document.getElementById('accEmail').textContent = data.account_data || '-';
+                    document.getElementById('accPassword').textContent = data.password_data || '-';
+
+                    accSec.style.display = 'block';
+                    accSec.style.opacity = '0';
+                    setTimeout(() => {
+                        accSec.style.opacity = '1';
+                        accSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            } catch (err) {
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+                showToast("Gagal memproses akun. Silakan coba lagi!");
+                console.error("Error Supabase:", err);
             }
         }
     });
 }
 
-// 8. Fungsi Salin Teks
+// 9. Fungsi Salin Teks
 function copyText(elementId) {
     const textElement = document.getElementById(elementId);
     if (!textElement) return;
@@ -715,28 +825,5 @@ function copyText(elementId) {
     }
 }
 </script>
-        
-
-<!-- Toast & Loading Overlay (HTML) -->
-<div id="toast" class="toast-msg"></div>
-
-<!-- OVERLAY LOADING DENGAN EFEK BLUR -->
-<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; align-items: center; justify-content: center;">
-    <div style="background: #111827; border: 1px solid #f59e0b; padding: 25px 30px; border-radius: 16px; text-align: center; max-width: 80%;">
-        <!-- Spinner Putar Kuning -->
-        <div style="border: 4px solid rgba(245, 158, 11, 0.2); border-left-color: #f59e0b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px auto;"></div>
-        <div id="loadingText" style="color: #ffffff; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px;">Memeriksa Pembayaran...</div>
-        <div id="loadingSubtext" style="color: #9ca3af; font-size: 0.75rem;">Mohon tunggu sebentar...</div>
-    </div>
-</div>
-
-<style>
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
-
 </body>
-  </html>
-  
+                                </html>
