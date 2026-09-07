@@ -462,8 +462,9 @@ const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Variable global untuk menyimpan nominal transaksi aktif
+// Variable global untuk menyimpan nominal & order ID transaksi aktif
 let currentOrderAmount = 0;
+let currentOrderId = '';
 
 // 1. Inisialisasi Scroll Navbar
 window.addEventListener('scroll', function() {
@@ -737,7 +738,7 @@ if (orderForm) {
     });
 }
 
-// 8. Logika Konfirmasi Pembayaran & Ambil QRIS Otomatis dari Supabase
+// 8. Logika Konfirmasi Pembayaran & Cek Status Pembayaran Asli
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', async function() {
@@ -749,7 +750,7 @@ if (btnConfirmPay) {
         const qrisImg = document.getElementById('qrisImage');
 
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
-            // Tampilkan loading saat meminta QRIS ke Supabase
+            // Tampilkan loading saat meminta QRIS ke Supabase Edge Function
             if (loadingOverlay) {
                 if (loadingText) loadingText.textContent = 'Membuat Kode QRIS...';
                 if (loadingSubtext) loadingSubtext.textContent = 'Menghubungkan ke sistem pembayaran Midtrans';
@@ -757,8 +758,8 @@ if (btnConfirmPay) {
             }
 
             try {
-                // Generasi ID Order Unik
-                const generatedOrderId = 'SAKA-' + Date.now();
+                // Generasi ID Order Unik dan simpan ke variabel global
+                currentOrderId = 'SAKA-' + Date.now();
 
                 // Panggil Supabase Edge Function smooth-task
                 const apiResponse = await fetch('https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task', {
@@ -767,7 +768,7 @@ if (btnConfirmPay) {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        orderId: generatedOrderId,
+                        orderId: currentOrderId,
                         amount: currentOrderAmount > 0 ? currentOrderAmount : 2275
                     })
                 });
@@ -777,7 +778,6 @@ if (btnConfirmPay) {
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
 
                 if (apiData.success && apiData.qris_url) {
-                    // Set gambar QRIS dari URL yang dibalas Supabase
                     if (qrisImg) qrisImg.src = apiData.qris_url;
 
                     qrisSec.style.opacity = '0';
@@ -803,11 +803,34 @@ if (btnConfirmPay) {
             }
 
             try {
-                // Ambil kategori dari produk yang tadi di-klik/dipilih pembeli
+                // 1. CEK STATUS PEMBAYARAN KE SUPABASE EDGE FUNCTION / MIDTRANS
+                let isPaid = false;
+                
+                try {
+                    const checkResponse = await fetch(`https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task?order_id=${currentOrderId}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const checkResult = await checkResponse.json();
+                    
+                    if (checkResult.status === 'settlement' || checkResult.status === 'success' || checkResult.paid === true) {
+                        isPaid = true;
+                    }
+                } catch (chkErr) {
+                    console.log("Cek API status manual error, mencoba validasi fallback...", chkErr);
+                }
+
+                // JIKA BELUM DIBAYAR: Tolak penyerahan akun
+                if (!isPaid) {
+                    if (loadingOverlay) loadingOverlay.style.display = 'none';
+                    showToast("Pembayaran belum diterima! Silakan selesaikan pembayaran dulu.");
+                    return;
+                }
+
+                // 2. JIKA SUDAH DIBAYAR: Ambil 1 akun dari Supabase SESUAI KATEGORI
                 const selectedCard = document.querySelector('.product-card.selected');
                 const selectedCategory = selectedCard ? selectedCard.getAttribute('data-category') : 'Level 3';
 
-                // Ambil 1 akun dari Supabase SESUAI KATEGORI yang belum terjual
                 const { data, error } = await supabaseClient
                     .from('accounts')
                     .select('*')
@@ -818,7 +841,7 @@ if (btnConfirmPay) {
 
                 if (error || !data) {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
-                    showToast("Stok akun untuk kategori ini sedang habis!");
+                    showToast("Pembayaran diterima, tetapi stok akun sedang habis. Hubungi Admin!");
                     return;
                 }
 
@@ -851,8 +874,8 @@ if (btnConfirmPay) {
                 }
             } catch (err) {
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
-                showToast("Gagal memproses akun. Silakan coba lagi!");
-                console.error("Error Supabase:", err);
+                showToast("Gagal memproses verifikasi. Silakan coba lagi!");
+                console.error("Error Verifikasi:", err);
             }
         }
     });
