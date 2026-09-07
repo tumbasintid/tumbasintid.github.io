@@ -446,7 +446,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 2. Logika Pindah Tab
+// 2. Logika Pindah Tab (Khusus Tab Info: Start dari bawah lalu Smooth Scroll ke Atas)
 function switchTab(tabName) {
   const berandaTab = document.getElementById('tab-beranda');
   const pesananTab = document.getElementById('tab-pesanan');
@@ -478,9 +478,17 @@ function switchTab(tabName) {
     if (navBeranda) navBeranda.classList.remove('active');
     if (navPesanan) navPesanan.classList.remove('active');
     if (navInfo) navInfo.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // 1. Set posisi scroll instan ke agak bawah dulu (300px)
+    window.scrollTo({ top: 300, behavior: 'instant' });
+
+    // 2. Beri efek meluncur halus dari bawah ke paling atas
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
   }
 }
+   
 
 // 3. Logika Klik Kartu Produk
 document.addEventListener('DOMContentLoaded', function() {
