@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel - Input Stok Akun</title>
-  <!-- Load Supabase JS Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; background-color: #121212; color: #fff; }
@@ -23,10 +22,17 @@
     <h2>Input Stok Akun</h2>
     <form id="stockForm">
       <label>Kategori Produk</label>
-      <input type="text" id="category" placeholder="Contoh: MLBB Advance" required>
+      <select id="category" required>
+        <option value="">-- Pilih Kategori --</option>
+        <option value="Advance server level 3">Advance server level 3</option>
+        <option value="Advance server level 20">Advance server level 20</option>
+      </select>
 
-      <label>Data Akun (Email:Password / Detail)</label>
-      <input type="text" id="accountData" placeholder="user@gmail.com:pass123" required>
+      <label>Email / Username Akun</label>
+      <input type="text" id="accountData" placeholder="user1@gmail.com" required>
+
+      <label>Password Akun</label>
+      <input type="text" id="passwordData" placeholder="pass123" required>
 
       <button type="submit">Simpan ke Database</button>
     </form>
@@ -34,7 +40,6 @@
   </div>
 
   <script>
-    // Kunci Supabase kamu sudah terpasang
     const SUPABASE_URL = "https://rjgkxqzecrsczcmuamhd.supabase.co";
     const SUPABASE_KEY = "sb_publishable_NkdjOyOxw5TIBI0VpXDq7A_ypDhxts5";
     
@@ -47,17 +52,23 @@
       
       const category = document.getElementById('category').value;
       const accountData = document.getElementById('accountData').value;
+      const passwordData = document.getElementById('passwordData').value;
 
       const { data, error } = await supabase
         .from('accounts')
-        .insert([{ category: category, account_data: accountData, is_sold: false }]);
+        .insert([{ 
+          category: category, 
+          account_data: accountData, 
+          password_data: passwordData, 
+          is_sold: false 
+        }]);
 
       if (error) {
         msgDiv.style.color = "red";
         msgDiv.innerText = "Gagal simpan: " + error.message;
       } else {
         msgDiv.style.color = "lime";
-        msgDiv.innerText = "Stok berhasil disimpan!";
+        msgDiv.innerText = "Stok " + category + " berhasil disimpan!";
         document.getElementById('stockForm').reset();
       }
     });
