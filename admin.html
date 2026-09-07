@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Input Stok Akun</title>
+  <!-- Load Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background-color: #121212; color: #fff; }
+    .card { background: #1e1e1e; padding: 20px; border-radius: 8px; max-width: 400px; margin: 0 auto; }
+    h2 { text-align: center; margin-top: 0; }
+    label { display: block; margin-top: 10px; font-size: 0.9rem; }
+    input, select, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #333; box-sizing: border-box; }
+    input, select { background: #2a2a2a; color: #fff; }
+    button { background: #28a745; color: #fff; font-weight: bold; border: none; margin-top: 15px; cursor: pointer; }
+    #msg { margin-top: 15px; text-align: center; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Input Stok Akun</h2>
+    <form id="stockForm">
+      <label>Kategori Produk</label>
+      <input type="text" id="category" placeholder="Contoh: MLBB Advance" required>
+
+      <label>Data Akun (Email:Password / Detail)</label>
+      <input type="text" id="accountData" placeholder="user@gmail.com:pass123" required>
+
+      <button type="submit">Simpan ke Database</button>
+    </form>
+    <div id="msg"></div>
+  </div>
+
+  <script>
+    // Nanti kunci Supabase akan diisi di dua baris bawah ini
+    const SUPABASE_URL = "URL_SUPABASE_KAMU";
+    const SUPABASE_KEY = "PUBLISHABLE_KEY_KAMU";
+    
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    document.getElementById('stockForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msgDiv = document.getElementById('msg');
+      msgDiv.innerText = "Lagi menyimpan...";
+      
+      const category = document.getElementById('category').value;
+      const accountData = document.getElementById('accountData').value;
+
+      const { data, error } = await supabase
+        .from('accounts')
+        .insert([{ category: category, account_data: accountData, is_sold: false }]);
+
+      if (error) {
+        msgDiv.style.color = "red";
+        msgDiv.innerText = "Gagal simpan: " + error.message;
+      } else {
+        msgDiv.style.color = "lime";
+        msgDiv.innerText = "Stok berhasil disimpan!";
+        document.getElementById('stockForm').reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
+
