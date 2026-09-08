@@ -202,33 +202,33 @@
                             </div>
                         </div>
 
-                                                <input type="hidden" id="paymentMethodInput" value="">
+                        <input type="hidden" id="paymentMethodInput" value="">
                         <button type="submit" class="btn-submit">BELI SEKARANG</button>
                         <p class="form-footer-note">Pastikan kembali nomor WhatsApp dan metode pembayaran yang Anda pilih sudah benar.</p>
-                                                </form>
+                    </form>
                 </div>
 
-                                                <!-- CARD ULASAN PEMBELI AUTOMATIS -->
+                <!-- CARD ULASAN PEMBELI AUTOMATIS -->
                 <div style="margin-top: 16px; background-color: #171e2e; border: 1px solid #2d3748; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);">
                     
                     <h3 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 700; color: #ffffff;">Ulasan Pembeli</h3>
 
-                    <!-- Header Rating Kosong -->
+                    <!-- Header Rating -->
                     <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
                         <span id="rating-avg" style="font-size: 2.5rem; font-weight: 800; color: #ffffff; line-height: 1;">0.0</span>
                         <div>
                             <div style="display: flex; gap: 2px; margin-bottom: 4px;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
                             </div>
-                            <p id="rating-info" style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Belum ada ulasan</p>
+                            <p id="rating-info" style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Memuat ulasan...</p>
                         </div>
                     </div>
 
-                    <!-- Progress Bar Kosong -->
+                    <!-- Progress Bar -->
                     <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
@@ -262,19 +262,12 @@
                         </div>
                     </div>
 
-                    <button type="button" onclick="openReviewModal()" style="width: 100%; background-color: transparent; border: 1px solid #30363d; color: #e6edf3; padding: 10px; border-radius: 10px; font-weight: 600; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e6edf3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 20h9"></path>
-                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                        </svg>
-                        Tulis Ulasan
-                    </button>
                     <!-- Tempat Komentar Pembeli Dimuat -->
-<div id="review-list" style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
-  <!-- Komentar terbaru dari Supabase akan muncul otomatis di sini -->
-</div>
+                    <div id="review-list" style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Komentar terbaru akan muncul otomatis di sini -->
+                    </div>
 
-        </div>
+                </div>
             </section>
         </div>
 
@@ -525,12 +518,12 @@
 </style>
 
 <script>
-// Inisialisasi Supabase Client
+// Inisialisasi Supabase Client Utama
 const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Variable global untuk menyimpan nominal & order ID transaksi aktif
+// Variable global
 let currentOrderAmount = 0;
 let currentOrderId = '';
 
@@ -586,7 +579,7 @@ function switchTab(tabName) {
   }
 }
 
-// 3. Fungsi Hitung dan Update Stok Masing-Masing Kategori dari Supabase
+// 3. Update Stok dari Supabase
 async function updateStockFromSupabase() {
     try {
         const cards = document.querySelectorAll('.product-card');
@@ -633,6 +626,7 @@ function closeStockModal() {
 // 4. Logika Klik Kartu Produk
 document.addEventListener('DOMContentLoaded', function() {
     updateStockFromSupabase();
+    loadReviewStats();
 
     const cards = document.querySelectorAll('.product-card');
     const checkoutSec = document.getElementById('checkout-section');
@@ -711,7 +705,7 @@ modalOpts.forEach(function(opt) {
     });
 });
 
-// 6. Fungsi Toast Notification
+// 6. Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
     if (toast) {
@@ -725,7 +719,7 @@ function showToast(message) {
     }
 }
 
-// 7. Logika Validasi Form & Order
+// 7. Form Submit
 const orderForm = document.getElementById('orderForm');
 if (orderForm) {
     orderForm.addEventListener('submit', function(e) {
@@ -755,7 +749,6 @@ if (orderForm) {
         const adminFee = 275;
         const totalPrice = productPrice + adminFee;
 
-        // Simpan total harga ke variable global
         currentOrderAmount = totalPrice;
 
         const summaryProduct = document.getElementById('summary-product');
@@ -806,7 +799,7 @@ if (orderForm) {
     });
 }
 
-// 8. Logika Konfirmasi Pembayaran & Cek Status Pembayaran Asli
+// 8. Konfirmasi & Verifikasi Pembayaran
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', async function() {
@@ -818,7 +811,6 @@ if (btnConfirmPay) {
         const qrisImg = document.getElementById('qrisImage');
 
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
-            // Tampilkan loading saat meminta QRIS ke Supabase Edge Function
             if (loadingOverlay) {
                 if (loadingText) loadingText.textContent = 'Membuat Kode QRIS...';
                 if (loadingSubtext) loadingSubtext.textContent = 'Menghubungkan ke sistem pembayaran Midtrans';
@@ -826,15 +818,11 @@ if (btnConfirmPay) {
             }
 
             try {
-                // Generasi ID Order Unik dan simpan ke variabel global
                 currentOrderId = 'SAKA-' + Date.now();
 
-                // Panggil Supabase Edge Function smooth-task
                 const apiResponse = await fetch('https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         orderId: currentOrderId,
                         amount: currentOrderAmount > 0 ? currentOrderAmount : 2275
@@ -871,7 +859,6 @@ if (btnConfirmPay) {
             }
 
             try {
-                // 1. CEK STATUS PEMBAYARAN KE SUPABASE EDGE FUNCTION / MIDTRANS
                 let isPaid = false;
                 
                 try {
@@ -885,17 +872,15 @@ if (btnConfirmPay) {
                         isPaid = true;
                     }
                 } catch (chkErr) {
-                    console.log("Cek API status manual error, mencoba validasi fallback...", chkErr);
+                    console.log("Cek API status manual error...", chkErr);
                 }
 
-                // JIKA BELUM DIBAYAR: Tolak penyerahan akun
                 if (!isPaid) {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
                     showToast("Selesaikan pembayaran terlebih dahulu!");
                     return;
                 }
 
-                // 2. JIKA SUDAH DIBAYAR: Ambil 1 akun dari Supabase SESUAI KATEGORI
                 const selectedCard = document.querySelector('.product-card.selected');
                 const selectedCategory = selectedCard ? selectedCard.getAttribute('data-category') : 'Level 3';
 
@@ -913,13 +898,11 @@ if (btnConfirmPay) {
                     return;
                 }
 
-                // Tandai akun sebagai terjual
                 await supabaseClient
                     .from('accounts')
                     .update({ is_sold: true })
                     .eq('id', data.id);
 
-                // Update hitungan stok secara realtime
                 updateStockFromSupabase();
 
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
@@ -945,9 +928,11 @@ if (btnConfirmPay) {
                 showToast("Gagal memproses verifikasi. Silakan coba lagi!");
                 console.error("Error Verifikasi:", err);
             }
+        }
+    });
 }
 
-// 9. Fungsi Salin Teks
+// 9. Salin Teks
 function copyText(elementId) {
     const textElement = document.getElementById(elementId);
     if (!textElement) return;
@@ -960,19 +945,11 @@ function copyText(elementId) {
         alert('Berhasil disalin!');
     }
 }
-</script>
-        <!-- Supabase JS Library & Script Rating -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-      
-    const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
-    const supabaseRating = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function loadReviewStats() {
+// 10. Load Statistik & Ulasan Supabase
+async function loadReviewStats() {
     try {
-        // 1. Ambil SEMUA rating untuk statistik angka & progress bar
-        const { data: allReviews, error: errStats } = await supabaseRating
+        const { data: allReviews, error: errStats } = await supabaseClient
             .from('reviews')
             .select('*');
 
@@ -1010,8 +987,7 @@ function copyText(elementId) {
             }
         }
 
-        // 2. Ambil CUMA 2 Ulasan Terbaru untuk Tampilan Komentar
-        const { data: latestReviews, error: errList } = await supabaseRating
+        const { data: latestReviews, error: errList } = await supabaseClient
             .from('reviews')
             .select('*')
             .order('created_at', { ascending: false })
@@ -1019,7 +995,6 @@ function copyText(elementId) {
 
         if (errList) throw errList;
 
-        // Render Komentar Pembeli ke HTML
         if (reviewList && latestReviews) {
             reviewList.innerHTML = latestReviews.map(r => `
                 <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
@@ -1034,12 +1009,9 @@ function copyText(elementId) {
 
     } catch (err) {
         console.error('Gagal mengambil data ulasan:', err.message);
-        alert('Error Supabase: ' + err.message);
     }
-        }
-
-    loadReviewStats();
-  </script>
+}
+</script>
 </body>
 </html>
 
