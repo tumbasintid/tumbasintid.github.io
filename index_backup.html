@@ -207,6 +207,67 @@
                         <p class="form-footer-note">Pastikan kembali nomor WhatsApp dan metode pembayaran yang Anda pilih sudah benar.</p>
                     </form>
                 </div>
+
+                <!-- CARD ULASAN PEMBELI AUTOMATIS -->
+                <div style="margin-top: 16px; background-color: #171e2e; border: 1px solid #2d3748; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);">
+                    
+                    <h3 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 700; color: #ffffff;">Ulasan Pembeli</h3>
+
+                    <!-- Header Rating -->
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <span id="rating-avg" style="font-size: 2.5rem; font-weight: 800; color: #ffffff; line-height: 1;">0.0</span>
+                        <div>
+                            <div style="display: flex; gap: 2px; margin-bottom: 4px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                            </div>
+                            <p id="rating-info" style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Memuat ulasan...</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
+                                <div id="bar-5" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">5.0 ★</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
+                                <div id="bar-4" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">4.0 ★</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
+                                <div id="bar-3" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">3.0 ★</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
+                                <div id="bar-2" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">2.0 ★</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
+                                <div id="bar-1" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">1.0 ★</span>
+                        </div>
+                    </div>
+
+                    <!-- Tempat Komentar Pembeli Dimuat -->
+                    <div id="review-list" style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Komentar terbaru akan muncul otomatis di sini -->
+                    </div>
+
+                </div>
             </section>
         </div>
 
@@ -332,7 +393,7 @@
 
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
                         <div>
                             <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Pilih Produk</h4>
                             <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pilih produk (akun) yang Anda butuhkan di halaman Beranda.</p>
@@ -340,7 +401,7 @@
                     </div>
 
                     <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
                         <div>
                             <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Lengkapi Data Pemesanan</h4>
                             <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Masukkan nomor WhatsApp aktif, kode promo (jika ada), lalu pilih metode pembayaran.</p>
@@ -348,7 +409,7 @@
                     </div>
 
                     <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
                         <div>
                             <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klik Beli Sekarang</h4>
                             <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>BELI SEKARANG</b> untuk membuat rincian tagihan Anda.</p>
@@ -356,7 +417,7 @@
                     </div>
 
                     <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
                         <div>
                             <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Periksa Detail Pesanan</h4>
                             <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pastikan kembali item produk dan total pembayaran sudah sesuai.</p>
@@ -364,7 +425,7 @@
                     </div>
 
                     <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
                         <div>
                             <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Konfirmasi Pembayaran</h4>
                             <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>KONFIRMASI PEMBAYARAN</b> untuk menampilkan QRIS / kode bayar.</p>
@@ -372,7 +433,7 @@
                     </div>
 
                     <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
                         <div>
                             <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Selesaikan Pembayaran</h4>
                             <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Lakukan pemindaian (scan) QRIS yang tampil di layar via aplikasi e-wallet / mobile banking Anda.</p>
@@ -380,7 +441,7 @@
                     </div>
 
                     <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #feab30; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
                         <div>
                             <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klaim Akun Anda</h4>
                             <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>SAYA SUDAH BAYAR</b> untuk verifikasi otomatis dan penerimaan data akun.</p>
@@ -429,9 +490,9 @@
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
             </div>
-            <h3 style="margin: 0 0 8px 0; font-size: 1.15rem; color: #ffffff; font-weight: 700;">Stok Sedang Kosong</h3>
+            <h3 style="margin: 0 0 8px 0; font-size: 1.15rem; color: #ffffff; font-weight: 700;">Stok Belum Tersedia</h3>
             <p style="margin: 0 0 20px 0; font-size: 0.85rem; color: #9ca3af; line-height: 1.5;">
-                Mohon maaf, stok untuk akun ini sedang habis. Kami sedang menyiapkan stok akun baru, silakan cek kembali secara berkala ya!
+                Produk kategori ini sudah habis terjual. Silakan cek kembali nanti
             </p>
             <button type="button" onclick="closeStockModal()" style="background: #eab308; color: #000; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; width: 100%;">Mengerti</button>
         </div>
@@ -457,10 +518,14 @@
 </style>
 
 <script>
-// Inisialisasi Supabase Client
+// Inisialisasi Supabase Client Utama
 const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Variable global
+let currentOrderAmount = 0;
+let currentOrderId = '';
 
 // 1. Inisialisasi Scroll Navbar
 window.addEventListener('scroll', function() {
@@ -514,7 +579,7 @@ function switchTab(tabName) {
   }
 }
 
-// 3. Fungsi Hitung dan Update Stok Masing-Masing Kategori dari Supabase
+// 3. Update Stok dari Supabase
 async function updateStockFromSupabase() {
     try {
         const cards = document.querySelectorAll('.product-card');
@@ -561,6 +626,7 @@ function closeStockModal() {
 // 4. Logika Klik Kartu Produk
 document.addEventListener('DOMContentLoaded', function() {
     updateStockFromSupabase();
+    loadReviewStats();
 
     const cards = document.querySelectorAll('.product-card');
     const checkoutSec = document.getElementById('checkout-section');
@@ -639,7 +705,7 @@ modalOpts.forEach(function(opt) {
     });
 });
 
-// 6. Fungsi Toast Notification
+// 6. Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
     if (toast) {
@@ -653,7 +719,7 @@ function showToast(message) {
     }
 }
 
-// 7. Logika Validasi Form & Order
+// 7. Form Submit
 const orderForm = document.getElementById('orderForm');
 if (orderForm) {
     orderForm.addEventListener('submit', function(e) {
@@ -682,6 +748,8 @@ if (orderForm) {
         const productPrice = parseInt(selectedCard.getAttribute('data-price') || '2000');
         const adminFee = 275;
         const totalPrice = productPrice + adminFee;
+
+        currentOrderAmount = totalPrice;
 
         const summaryProduct = document.getElementById('summary-product');
         const summaryPrice = document.getElementById('summary-price');
@@ -731,7 +799,7 @@ if (orderForm) {
     });
 }
 
-// 8. Logika Konfirmasi Pembayaran & Ambil Akun Sesuai Kategori yang Dipilih
+// 8. Konfirmasi & Verifikasi Pembayaran
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', async function() {
@@ -740,14 +808,49 @@ if (btnConfirmPay) {
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
+        const qrisImg = document.getElementById('qrisImage');
 
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
-            qrisSec.style.opacity = '0';
-            qrisSec.style.display = 'block';
-            document.getElementById('qrisTotal').innerText = document.getElementById('summary-total').innerText;
-            setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
-            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
-            setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
+            if (loadingOverlay) {
+                if (loadingText) loadingText.textContent = 'Membuat Kode QRIS...';
+                if (loadingSubtext) loadingSubtext.textContent = 'Menghubungkan ke sistem pembayaran Midtrans';
+                loadingOverlay.style.display = 'flex';
+            }
+
+            try {
+                currentOrderId = 'SAKA-' + Date.now();
+
+                const apiResponse = await fetch('https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderId: currentOrderId,
+                        amount: currentOrderAmount > 0 ? currentOrderAmount : 2275
+                    })
+                });
+
+                const apiData = await apiResponse.json();
+
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+
+                if (apiData.success && apiData.qris_url) {
+                    if (qrisImg) qrisImg.src = apiData.qris_url;
+
+                    qrisSec.style.opacity = '0';
+                    qrisSec.style.display = 'block';
+                    document.getElementById('qrisTotal').innerText = document.getElementById('summary-total').innerText;
+                    setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
+                    btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+                    setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
+                } else {
+                    showToast("Gagal membuat kode QRIS. Silakan coba lagi!");
+                }
+            } catch (err) {
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+                console.error("Error meminta QRIS:", err);
+                showToast("Terjadi kesalahan koneksi saat membuat QRIS.");
+            }
+
         } else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
             if (loadingOverlay) {
                 if (loadingText) loadingText.textContent = 'Memeriksa Pembayaran...';
@@ -756,11 +859,31 @@ if (btnConfirmPay) {
             }
 
             try {
-                // Ambil kategori dari produk yang tadi di-klik/dipilih pembeli
+                let isPaid = false;
+                
+                try {
+                    const checkResponse = await fetch(`https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task?order_id=${currentOrderId}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const checkResult = await checkResponse.json();
+                    
+                    if (checkResult.status === 'settlement' || checkResult.status === 'success' || checkResult.paid === true) {
+                        isPaid = true;
+                    }
+                } catch (chkErr) {
+                    console.log("Cek API status manual error...", chkErr);
+                }
+
+                if (!isPaid) {
+                    if (loadingOverlay) loadingOverlay.style.display = 'none';
+                    showToast("Selesaikan pembayaran terlebih dahulu!");
+                    return;
+                }
+
                 const selectedCard = document.querySelector('.product-card.selected');
                 const selectedCategory = selectedCard ? selectedCard.getAttribute('data-category') : 'Level 3';
 
-                // Ambil 1 akun dari Supabase SESUAI KATEGORI yang belum terjual
                 const { data, error } = await supabaseClient
                     .from('accounts')
                     .select('*')
@@ -771,17 +894,15 @@ if (btnConfirmPay) {
 
                 if (error || !data) {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
-                    showToast("Stok akun untuk kategori ini sedang habis!");
+                    showToast("Pembayaran diterima, tetapi stok akun sedang habis. Hubungi Admin!");
                     return;
                 }
 
-                // Tandai akun sebagai terjual
                 await supabaseClient
                     .from('accounts')
                     .update({ is_sold: true })
                     .eq('id', data.id);
 
-                // Update hitungan stok secara realtime
                 updateStockFromSupabase();
 
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
@@ -804,14 +925,14 @@ if (btnConfirmPay) {
                 }
             } catch (err) {
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
-                showToast("Gagal memproses akun. Silakan coba lagi!");
-                console.error("Error Supabase:", err);
+                showToast("Gagal memproses verifikasi. Silakan coba lagi!");
+                console.error("Error Verifikasi:", err);
             }
         }
     });
 }
 
-// 9. Fungsi Salin Teks
+// 9. Salin Teks
 function copyText(elementId) {
     const textElement = document.getElementById(elementId);
     if (!textElement) return;
@@ -824,6 +945,72 @@ function copyText(elementId) {
         alert('Berhasil disalin!');
     }
 }
+
+// 10. Load Statistik & Ulasan Supabase
+async function loadReviewStats() {
+    try {
+        const { data: allReviews, error: errStats } = await supabaseClient
+            .from('reviews')
+            .select('*');
+
+        if (errStats) throw errStats;
+        
+        const total = (allReviews && Array.isArray(allReviews)) ? allReviews.length : 0;
+        const reviewList = document.getElementById('review-list');
+
+        if (total === 0) {
+            document.getElementById('rating-avg').innerText = '0.0';
+            document.getElementById('rating-info').innerText = 'Belum ada ulasan';
+            for (let i = 1; i <= 5; i++) {
+                const bar = document.getElementById(`bar-${i}`);
+                if (bar) bar.style.width = '0%';
+            }
+        } else {
+            let sum = 0;
+            const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+            allReviews.forEach(r => {
+                const numRating = Number(r.rating) || 0;
+                sum += numRating;
+                counts[numRating] = (counts[numRating] || 0) + 1;
+            });
+
+            const avg = (sum / total).toFixed(1);
+
+            document.getElementById('rating-avg').innerText = avg;
+            document.getElementById('rating-info').innerText = `${avg} • ${total} Ulasan`;
+
+            for (let i = 1; i <= 5; i++) {
+                const percent = ((counts[i] || 0) / total) * 100;
+                const bar = document.getElementById(`bar-${i}`);
+                if (bar) bar.style.width = `${percent}%`;
+            }
+        }
+
+        const { data: latestReviews, error: errList } = await supabaseClient
+            .from('reviews')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(2);
+
+        if (errList) throw errList;
+
+        if (reviewList && latestReviews) {
+            reviewList.innerHTML = latestReviews.map(r => `
+                <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
+                        <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
+                    </div>
+                    <p style="margin: 0; font-size: 0.8rem; color: #c9d1d9; line-height: 1.4;">${r.komentar}</p>
+                </div>
+            `).join('');
+        }
+
+    } catch (err) {
+        console.error('Gagal mengambil data ulasan:', err.message);
+    }
+}
 </script>
 </body>
-                                </html>
+    </html>
