@@ -1051,10 +1051,18 @@ function renderReviews() {
         </div>
     `).join('');
 
-    // Atur Status & Teks Tombol
+        // Cek Kondisi & Ubah Teks Tombol
     if (btn) {
-        if (visibleCount >= MAX_LIMIT || visibleCount >= allFetchedReviews.length) {
+        const isMaxReached = visibleCount >= MAX_LIMIT;
+        const isAllDataShown = visibleCount >= allFetchedReviews.length;
+
+        if (isMaxReached || isAllDataShown) {
             btn.innerText = "Sembunyikan Ulasan";
+            
+            // TOAST MUNCUL OTOMATIS (MENCAPAI 20 ATAU DATA HABIS)
+            if (typeof showToast === 'function') {
+                showToast("Ulasan terbatas");
+            }
         } else {
             btn.innerText = "Lihat Ulasan Lainnya";
         }
@@ -1063,23 +1071,13 @@ function renderReviews() {
 
 // Fungsi Tombol Klik (Load More / Collapse)
 function handleReviewClick() {
-    const btn = document.getElementById('btn-load-more');
-
-    // Jika sudah mencapai batas / habis data -> Sembunyikan Ulasan (Reset ke 2)
+    // Jika sudah di batas maksimal (20) ATAU semua ulasan di database sudah tampil -> Reset ke 2
     if (visibleCount >= MAX_LIMIT || visibleCount >= allFetchedReviews.length) {
         visibleCount = 2;
-        renderReviews();
-        if (typeof showToast === 'function') showToast("Ulasan disembunyikan");
-        return;
-    }
-
-    // Tambah 3 ulasan lagi
-    visibleCount += BATCH_SIZE;
-
-    // Jika melebihi batas 20 ulasan, kunci tepat di angka 20
-    if (visibleCount >= MAX_LIMIT) {
-        visibleCount = MAX_LIMIT;
-        if (typeof showToast === 'function') showToast("Ulasan terbatas (Maksimal 20 ulasan)");
+    } else {
+        // Tambah 3 ulasan lagi
+        visibleCount += BATCH_SIZE;
+        if (visibleCount > MAX_LIMIT) visibleCount = MAX_LIMIT;
     }
 
     renderReviews();
