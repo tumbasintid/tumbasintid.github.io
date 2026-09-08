@@ -975,7 +975,7 @@ function copyText(elementId) {
         // 1. Ambil SEMUA rating untuk statistik angka & progress bar
         const { data: allReviews, error: errStats } = await supabaseClient
           .from('reviews')
-          .select('rating');
+          .select('*');
 
         if (errStats) throw errStats;
 
@@ -1018,7 +1018,7 @@ function copyText(elementId) {
         // 2. Ambil CUMA 2 Ulasan Terbaru untuk Tampilan Komentar
         const { data: latestReviews, error: errList } = await supabaseClient
           .from('reviews')
-          .select('Nama, rating, komentar')
+          .select('*')
           .order('created_at', { ascending: false })
           .limit(2);
 
@@ -1029,7 +1029,7 @@ function copyText(elementId) {
           reviewList.innerHTML = latestReviews.map(r => `
             <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <strong style="font-size: 0.85rem; color: #ffffff;">${r.Nama || 'Pembeli'}</strong>
+                <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
                 <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
               </div>
               <p style="margin: 0; font-size: 0.8rem; color: #c9d1d9; line-height: 1.4;">${r.komentar}</p>
