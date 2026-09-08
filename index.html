@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saka Store - Akun Advance Server MLBB</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=5">
@@ -24,7 +24,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Custom Toast Notification Dark Theme */
   .toast-msg {
     position: fixed;
     bottom: 80px;
@@ -54,7 +53,6 @@
     transform: translateX(-50%) translateY(0);
   }
 
-  /* Style Teks Stok */
   .stock-text-muted {
     color: #a0aec0 !important;
     font-size: 0.8rem;
@@ -66,38 +64,19 @@
     font-weight: 500;
   }
 
-  /* Responsif Mobile adjustment */
-  @media (max-width: 600px) {
-    .catalog-section, .checkout-section {
-      padding: 12px;
-    }
-    .product-grid {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .store-profile {
-      padding: 10px;
-    }
-    .profile-details {
-      padding: 0 10px;
-    }
-    .action-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .btn-action {
-      width: 100%;
-      justify-content: center;
-    }
-    .detail-row {
-      font-size: 0.8rem !important;
-    }
-  }
-
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  .star-rating span {
+    font-size: 1.8rem;
+    color: #4b5563;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .star-rating span.active {
+    color: #f5b800;
   }
 </style>
 <!-- Supabase SDK JS -->
@@ -233,7 +212,7 @@
                             </div>
                         </div>
 
-                        <!-- Custom Modal Dark Theme -->
+                        <!-- Custom Modal Pilih Pembayaran -->
                         <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
                             <div style="background: #151c28; border: 1px solid #334155; border-radius: 12px; width: 100%; max-width: 360px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #2a364f; padding-bottom: 10px;">
@@ -256,7 +235,7 @@
                     </form>
                 </div>
 
-                <!-- CARD ULASAN PEMBELI AUTOMATIS -->
+                <!-- CARD ULASAN PEMBELI -->
                 <div style="margin-top: 16px; background-color: #171e2e; border: 1px solid #2d3748; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);">
                     
                     <h3 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 700; color: #ffffff;">Ulasan Pembeli</h3>
@@ -310,10 +289,13 @@
                         </div>
                     </div>
 
-                    <!-- Tempat Komentar Pembeli Dimuat -->
-                    <div id="review-list" style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
-                        <!-- Komentar terbaru akan muncul otomatis di sini -->
+                    <!-- List Ulasan -->
+                    <div id="review-list" style="display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Ulasan dimuat dari Supabase -->
                     </div>
+
+                    <!-- Tombol Lihat Ulasan Lainnya -->
+                    <button id="btnMoreReviews" onclick="loadMoreReviews()" style="display:none; width:100%; margin-top:12px; padding:10px; background:#1e293b; color:#f5b800; border:1px solid #334155; border-radius:8px; font-weight:600; font-size:0.8rem; cursor:pointer;">Lihat Ulasan Lainnya</button>
 
                 </div>
             </section>
@@ -393,7 +375,7 @@
                         <button type="button" class="btn-submit" id="btnConfirmPay" style="width:100%; padding:12px; background:#eab308; color:#000; font-weight:700; border:none; border-radius:8px; cursor:pointer; margin-top: 15px;">KONFIRMASI PEMBAYARAN</button>
                     </div>
 
-                    <!-- KARTU DETAIL AKUN (Hasil Pembelian) -->
+                    <!-- KARTU DETAIL AKUN (HASIL PEMBELIAN BERHASIL) -->
                     <div id="accountSection" style="display: none; padding: 20px 15px; background-color: #111827; border: 1px solid #eab308; border-radius: 16px; margin-top: 10px;">
                         <div style="width: 56px; height: 56px; background-color: rgba(16, 185, 129, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto;">
                             <div style="width: 40px; height: 40px; background-color: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
@@ -424,7 +406,9 @@
                             <button type="button" onclick="copyText('accPassword')" style="background-color: #eab308; color: #000000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; flex-shrink:0;">Salin</button>
                         </div>
 
-                        <p style="font-size: 0.75rem; color: #6b7280; text-align: center;">Simpan informasi akun ini dengan baik ya!</p>
+                        <!-- TOMBOL TULIS ULASAN (KHUSUS PEMBELI SUKSES) -->
+                        <button type="button" id="btnWriteReview" onclick="openReviewModal()" style="width:100%; padding:12px; background:#eab308; color:#000; font-weight:700; border:none; border-radius:8px; cursor:pointer; margin-top:10px;">★ TULIS ULASAN SEKARANG</button>
+
                     </div>
 
                 </div>
@@ -528,6 +512,41 @@
         </nav>
     </div>
 
+    <!-- MODAL TULIS ULASAN (Khusus Pembeli Yang Sudah Bayar) -->
+    <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #151c28; border: 1px solid #334155; border-radius: 16px; width: 100%; max-width: 360px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #2a364f; padding-bottom: 10px;">
+                <h3 style="margin: 0; font-size: 1rem; color: #fff; font-weight: 600;">Tulis Ulasan Pembeli</h3>
+                <span onclick="closeReviewModal()" style="color: #94a3af; font-size: 20px; cursor: pointer; font-weight: bold;">&times;</span>
+            </div>
+            
+            <form id="reviewForm">
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.8rem; color: #9ca3af; margin-bottom: 4px;">Nama Anda / Inisial</label>
+                    <input type="text" id="reviewNameInput" placeholder="Contoh: Tobietob" required style="width:100%; padding:10px; background:#1e293b; border:1px solid #334155; border-radius:8px; color:#fff; font-size:0.85rem;">
+                </div>
+
+                <div style="margin-bottom: 12px; text-align:center;">
+                    <label style="display: block; font-size: 0.8rem; color: #9ca3af; margin-bottom: 6px;">Beri Rating</label>
+                    <div class="star-rating" id="starRating">
+                        <span data-star="1">★</span>
+                        <span data-star="2">★</span>
+                        <span data-star="3">★</span>
+                        <span data-star="4">★</span>
+                        <span data-star="5" class="active">★</span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 0.8rem; color: #9ca3af; margin-bottom: 4px;">Ulasan / Komentar</label>
+                    <textarea id="reviewCommentInput" rows="3" placeholder="Tulis kepuasan transaksi Anda di sini..." required style="width:100%; padding:10px; background:#1e293b; border:1px solid #334155; border-radius:8px; color:#fff; font-size:0.85rem; resize:none;"></textarea>
+                </div>
+
+                <button type="submit" style="width:100%; padding:12px; background:#eab308; color:#000; font-weight:700; border:none; border-radius:8px; cursor:pointer; font-size:0.85rem;">KIRIM ULASAN</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Peringatan Stok Habis -->
     <div id="outOfStockModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
         <div style="background: #151c28; border: 1px solid #334155; border-radius: 16px; width: 100%; max-width: 340px; padding: 25px 20px; text-align: center; box-shadow: 0 20px 30px rgba(0,0,0,0.6);">
@@ -549,7 +568,7 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast-msg"></div>
 
-    <!-- OVERLAY LOADING DENGAN EFEK BLUR -->
+    <!-- OVERLAY LOADING -->
     <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; align-items: center; justify-content: center;">
         <div style="background: #111827; border: 1px solid #f59e0b; padding: 25px 30px; border-radius: 16px; text-align: center; max-width: 80%;">
             <div style="border: 4px solid rgba(245, 158, 11, 0.2); border-left-color: #f59e0b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px auto;"></div>
@@ -559,16 +578,18 @@
     </div>
 
 <script>
-// Inisialisasi Supabase Client Utama
+// Supabase Client
 const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Variable global
 let currentOrderAmount = 0;
 let currentOrderId = '';
+let selectedRating = 5;
+let allReviewsData = [];
+let reviewDisplayLimit = 2;
 
-// 1. Inisialisasi Scroll Navbar
+// Scroll Navbar
 window.addEventListener('scroll', function() {
     const navbar = document.getElementById('navbar');
     if (navbar) {
@@ -580,7 +601,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 2. Logika Pindah Tab
+// Switch Tab Navigasi
 function switchTab(tabName) {
   const berandaTab = document.getElementById('tab-beranda');
   const pesananTab = document.getElementById('tab-pesanan');
@@ -612,12 +633,11 @@ function switchTab(tabName) {
     if (navBeranda) navBeranda.classList.remove('active');
     if (navPesanan) navPesanan.classList.remove('active');
     if (navInfo) navInfo.classList.add('active');
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
-// 3. Update Stok dari Supabase
+// Update Stok
 async function updateStockFromSupabase() {
     try {
         const cards = document.querySelectorAll('.product-card');
@@ -661,10 +681,9 @@ function closeStockModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// 4. Logika Klik Kartu Produk
 document.addEventListener('DOMContentLoaded', function() {
     updateStockFromSupabase();
-    loadReviewStats();
+    loadReviewsData();
 
     const cards = document.querySelectorAll('.product-card');
     const checkoutSec = document.getElementById('checkout-section');
@@ -689,9 +708,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Pilihan Rating Bintang
+    const stars = document.querySelectorAll('#starRating span');
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            selectedRating = parseInt(this.getAttribute('data-star'));
+            stars.forEach(s => {
+                const val = parseInt(s.getAttribute('data-star'));
+                if (val <= selectedRating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+    });
 });
 
-// 5. Logika Modal Pembayaran
+// Modal Pembayaran
 const selectTrigger = document.getElementById('selectTrigger');
 const modalOverlay = document.getElementById('modalOverlay');
 const closeModal = document.getElementById('closeModal');
@@ -699,22 +734,16 @@ const paymentMethodInput = document.getElementById('paymentMethodInput');
 const modalOpts = document.querySelectorAll('.modal-opt');
 
 if (selectTrigger && modalOverlay) {
-    selectTrigger.addEventListener('click', function() {
-        modalOverlay.style.display = 'flex';
-    });
+    selectTrigger.addEventListener('click', function() { modalOverlay.style.display = 'flex'; });
 }
 
 if (closeModal && modalOverlay) {
-    closeModal.addEventListener('click', function() {
-        modalOverlay.style.display = 'none';
-    });
+    closeModal.addEventListener('click', function() { modalOverlay.style.display = 'none'; });
 }
 
 if (modalOverlay) {
     window.addEventListener('click', function(e) {
-        if (e.target === modalOverlay) {
-            modalOverlay.style.display = 'none';
-        }
+        if (e.target === modalOverlay) { modalOverlay.style.display = 'none'; }
     });
 }
 
@@ -745,21 +774,18 @@ modalOpts.forEach(function(opt) {
     });
 });
 
-// 6. Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
     if (toast) {
         toast.textContent = message;
         toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
+        setTimeout(() => { toast.classList.remove('show'); }, 3000);
     } else {
         alert(message);
     }
 }
 
-// 7. Form Submit
+// Form Submit Beli Sekarang
 const orderForm = document.getElementById('orderForm');
 if (orderForm) {
     orderForm.addEventListener('submit', function(e) {
@@ -769,16 +795,8 @@ if (orderForm) {
         const waInput = document.getElementById('whatsappInput')?.value.trim();
         const paymentInput = document.getElementById('paymentMethodInput')?.value;
 
-        if (!selectedCard) {
-            showToast('Pilih produk terlebih dahulu!');
-            return false;
-        }
-
-        if (!waInput) {
-            showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!');
-            return false;
-        }
-
+        if (!selectedCard) { showToast('Pilih produk terlebih dahulu!'); return false; }
+        if (!waInput) { showToast('Silakan masukkan nomor WhatsApp Anda terlebih dahulu!'); return false; }
         if (!paymentInput || paymentInput === '' || paymentInput === 'Pilih Metode Pembayaran') {
             showToast('Pilih metode pembayaran terlebih dahulu!');
             return false;
@@ -791,21 +809,13 @@ if (orderForm) {
 
         currentOrderAmount = totalPrice;
 
-        const summaryProduct = document.getElementById('summary-product');
-        const summaryPrice = document.getElementById('summary-price');
-        const summaryTotal = document.getElementById('summary-total');
-        const summaryWa = document.getElementById('summary-wa');
-        const summaryMethod = document.getElementById('summary-method');
-
-        if (summaryProduct) summaryProduct.textContent = productName;
-        if (summaryPrice) summaryPrice.textContent = 'Rp ' + productPrice.toLocaleString('id-ID');
-        if (summaryTotal) summaryTotal.textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
-        if (summaryWa) summaryWa.textContent = waInput;
-        if (summaryMethod) summaryMethod.textContent = paymentInput.toUpperCase();
+        document.getElementById('summary-product').textContent = productName;
+        document.getElementById('summary-price').textContent = 'Rp ' + productPrice.toLocaleString('id-ID');
+        document.getElementById('summary-total').textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
+        document.getElementById('summary-wa').textContent = waInput;
+        document.getElementById('summary-method').textContent = paymentInput.toUpperCase();
 
         const loadingOverlay = document.getElementById('loadingOverlay');
-        const loadingText = document.getElementById('loadingText');
-        const loadingSubtext = document.getElementById('loadingSubtext');
         const emptyState = document.getElementById('empty-state-card');
         const orderDetailContent = document.getElementById('order-detail-content');
         const qrisSec = document.getElementById('qrisSection');
@@ -819,8 +829,8 @@ if (orderForm) {
         }
 
         if (loadingOverlay) {
-            if (loadingText) loadingText.textContent = 'Memproses Pesanan...';
-            if (loadingSubtext) loadingSubtext.textContent = 'Mohon tunggu sebentar';
+            document.getElementById('loadingText').textContent = 'Memproses Pesanan...';
+            document.getElementById('loadingSubtext').textContent = 'Mohon tunggu sebentar';
             loadingOverlay.style.display = 'flex';
 
             setTimeout(() => {
@@ -830,30 +840,22 @@ if (orderForm) {
                 if (qrisSec) qrisSec.style.display = 'none';
                 switchTab('pesanan');
             }, 1000);
-        } else {
-            if (emptyState) emptyState.style.display = 'none';
-            if (orderDetailContent) orderDetailContent.style.display = 'block';
-            if (qrisSec) qrisSec.style.display = 'none';
-            switchTab('pesanan');
         }
     });
 }
 
-// 8. Konfirmasi & Verifikasi Pembayaran
+// Konfirmasi & Cek Pembayaran SAYA SUDAH BAYAR
 const btnConfirmPay = document.getElementById('btnConfirmPay');
 if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', async function() {
         const qrisSec = document.getElementById('qrisSection');
         const accSec = document.getElementById('accountSection');
         const loadingOverlay = document.getElementById('loadingOverlay');
-        const loadingText = document.getElementById('loadingText');
-        const loadingSubtext = document.getElementById('loadingSubtext');
-        const qrisImg = document.getElementById('qrisImage');
 
         if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
             if (loadingOverlay) {
-                if (loadingText) loadingText.textContent = 'Membuat Kode QRIS...';
-                if (loadingSubtext) loadingSubtext.textContent = 'Menghubungkan ke sistem pembayaran Midtrans';
+                document.getElementById('loadingText').textContent = 'Membuat Kode QRIS...';
+                document.getElementById('loadingSubtext').textContent = 'Menghubungkan ke sistem pembayaran Midtrans';
                 loadingOverlay.style.display = 'flex';
             }
 
@@ -870,50 +872,37 @@ if (btnConfirmPay) {
                 });
 
                 const apiData = await apiResponse.json();
-
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
 
                 if (apiData.success && apiData.qris_url) {
-                    if (qrisImg) qrisImg.src = apiData.qris_url;
-
-                    qrisSec.style.opacity = '0';
+                    document.getElementById('qrisImage').src = apiData.qris_url;
                     qrisSec.style.display = 'block';
                     document.getElementById('qrisTotal').innerText = document.getElementById('summary-total').innerText;
-                    setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
                     btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
-                    setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
                 } else {
                     showToast("Gagal membuat kode QRIS. Silakan coba lagi!");
                 }
             } catch (err) {
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
-                console.error("Error meminta QRIS:", err);
                 showToast("Terjadi kesalahan koneksi saat membuat QRIS.");
             }
 
         } else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
             if (loadingOverlay) {
-                if (loadingText) loadingText.textContent = 'Memeriksa Pembayaran...';
-                if (loadingSubtext) loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
+                document.getElementById('loadingText').textContent = 'Memeriksa Pembayaran...';
+                document.getElementById('loadingSubtext').textContent = 'Sistem sedang memverifikasi transaksi Anda';
                 loadingOverlay.style.display = 'flex';
             }
 
             try {
                 let isPaid = false;
-                
                 try {
-                    const checkResponse = await fetch(`https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task?order_id=${currentOrderId}`, {
-                        method: 'GET',
-                        headers: { 'Content-Type': 'application/json' }
-                    });
+                    const checkResponse = await fetch(`https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task?order_id=${currentOrderId}`);
                     const checkResult = await checkResponse.json();
-                    
                     if (checkResult.status === 'settlement' || checkResult.status === 'success' || checkResult.paid === true) {
                         isPaid = true;
                     }
-                } catch (chkErr) {
-                    console.log("Cek API status manual error...", chkErr);
-                }
+                } catch (e) {}
 
                 if (!isPaid) {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
@@ -934,7 +923,7 @@ if (btnConfirmPay) {
 
                 if (error || !data) {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
-                    showToast("Pembayaran diterima, tetapi stok akun sedang habis. Hubungi Admin!");
+                    showToast("Pembayaran diterima, tetapi stok akun habis. Hubungi Admin!");
                     return;
                 }
 
@@ -947,109 +936,142 @@ if (btnConfirmPay) {
 
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
 
-                const orderDetailContent = document.getElementById('order-detail-content');
-                if (orderDetailContent) orderDetailContent.style.display = 'none';
-                if (qrisSec) qrisSec.style.display = 'none';
+                document.getElementById('order-detail-content').style.display = 'none';
+                qrisSec.style.display = 'none';
                 btnConfirmPay.style.display = 'none';
 
                 if (accSec) {
                     document.getElementById('accEmail').textContent = data.account_data || '-';
                     document.getElementById('accPassword').textContent = data.password_data || '-';
-
                     accSec.style.display = 'block';
-                    accSec.style.opacity = '0';
-                    setTimeout(() => {
-                        accSec.style.opacity = '1';
-                        accSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
                 }
             } catch (err) {
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
-                showToast("Gagal memproses verifikasi. Silakan coba lagi!");
-                console.error("Error Verifikasi:", err);
+                showToast("Gagal memproses verifikasi.");
             }
         }
     });
 }
 
-// 9. Salin Teks
 function copyText(elementId) {
     const textElement = document.getElementById(elementId);
     if (!textElement) return;
-    const text = textElement.innerText;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('Berhasil disalin!');
-        });
-    } else {
-        alert('Berhasil disalin!');
+    navigator.clipboard.writeText(textElement.innerText).then(() => {
+        showToast('Berhasil disalin!');
+    });
+}
+
+// LOGIKA UNTUK MODAL & KIRIM ULASAN (Khusus Pembeli)
+function openReviewModal() {
+    document.getElementById('reviewModal').style.display = 'flex';
+}
+
+function closeReviewModal() {
+    document.getElementById('reviewModal').style.display = 'none';
+}
+
+const reviewForm = document.getElementById('reviewForm');
+if (reviewForm) {
+    reviewForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const nama = document.getElementById('reviewNameInput').value.trim();
+        const komentar = document.getElementById('reviewCommentInput').value.trim();
+
+        if (!nama || !komentar) {
+            showToast('Lengkapi semua kolom ulasan!');
+            return;
+        }
+
+        try {
+            const { error } = await supabaseClient
+                .from('reviews')
+                .insert([{ nama: nama, rating: selectedRating, komentar: komentar }]);
+
+            if (error) throw error;
+
+            showToast('Terima kasih! Ulasan berhasil dikirim.');
+            closeReviewModal();
+            document.getElementById('btnWriteReview').style.display = 'none';
+            loadReviewsData();
+        } catch (err) {
+            showToast('Gagal mengirim ulasan: ' + err.message);
+        }
+    });
+}
+
+// LOAD BANYAK ULASAN & TOMBOL "LIHAT ULASAN LAINNYA"
+async function loadReviewsData() {
+    try {
+        const { data: reviews, error } = await supabaseClient
+            .from('reviews')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        allReviewsData = reviews || [];
+        
+        renderReviews();
+    } catch (err) {
+        console.error('Error load ulasan:', err.message);
     }
 }
 
-// 10. Load Statistik & Ulasan Supabase
-async function loadReviewStats() {
-    try {
-        const { data: allReviews, error: errStats } = await supabaseClient
-            .from('reviews')
-            .select('*');
+function renderReviews() {
+    const reviewList = document.getElementById('review-list');
+    const total = allReviewsData.length;
 
-        if (errStats) throw errStats;
-        
-        const total = (allReviews && Array.isArray(allReviews)) ? allReviews.length : 0;
-        const reviewList = document.getElementById('review-list');
-
-        if (total === 0) {
-            document.getElementById('rating-avg').innerText = '0.0';
-            document.getElementById('rating-info').innerText = 'Belum ada ulasan';
-            for (let i = 1; i <= 5; i++) {
-                const bar = document.getElementById(`bar-${i}`);
-                if (bar) bar.style.width = '0%';
-            }
-        } else {
-            let sum = 0;
-            const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-
-            allReviews.forEach(r => {
-                const numRating = Number(r.rating) || 0;
-                sum += numRating;
-                counts[numRating] = (counts[numRating] || 0) + 1;
-            });
-
-            const avg = (sum / total).toFixed(1);
-
-            document.getElementById('rating-avg').innerText = avg;
-            document.getElementById('rating-info').innerText = `${avg} • ${total} Ulasan`;
-
-            for (let i = 1; i <= 5; i++) {
-                const percent = ((counts[i] || 0) / total) * 100;
-                const bar = document.getElementById(`bar-${i}`);
-                if (bar) bar.style.width = `${percent}%`;
-            }
-        }
-
-        const { data: latestReviews, error: errList } = await supabaseClient
-            .from('reviews')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(2);
-
-        if (errList) throw errList;
-
-        if (reviewList && latestReviews) {
-            reviewList.innerHTML = latestReviews.map(r => `
-                <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                        <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
-                        <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.8rem; color: #c9d1d9; line-height: 1.4;">${r.komentar}</p>
-                </div>
-            `).join('');
-        }
-
-    } catch (err) {
-        console.error('Gagal mengambil data ulasan:', err.message);
+    if (total === 0) {
+        document.getElementById('rating-avg').innerText = '0.0';
+        document.getElementById('rating-info').innerText = 'Belum ada ulasan';
+        return;
     }
+
+    let sum = 0;
+    const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+    allReviewsData.forEach(r => {
+        const numRating = Number(r.rating) || 0;
+        sum += numRating;
+        counts[numRating] = (counts[numRating] || 0) + 1;
+    });
+
+    const avg = (sum / total).toFixed(1);
+    document.getElementById('rating-avg').innerText = avg;
+    document.getElementById('rating-info').innerText = `${avg} • ${total} Ulasan`;
+
+    for (let i = 1; i <= 5; i++) {
+        const percent = ((counts[i] || 0) / total) * 100;
+        const bar = document.getElementById(`bar-${i}`);
+        if (bar) bar.style.width = `${percent}%`;
+    }
+
+    const currentDisplay = allReviewsData.slice(0, reviewDisplayLimit);
+
+    if (reviewList) {
+        reviewList.innerHTML = currentDisplay.map(r => `
+            <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
+                    <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
+                </div>
+                <p style="margin: 0; font-size: 0.8rem; color: #c9d1d9; line-height: 1.4;">${r.komentar}</p>
+            </div>
+        `).join('');
+    }
+
+    const btnMore = document.getElementById('btnMoreReviews');
+    if (btnMore) {
+        if (total > reviewDisplayLimit) {
+            btnMore.style.display = 'block';
+        } else {
+            btnMore.style.display = 'none';
+        }
+    }
+}
+
+function loadMoreReviews() {
+    reviewDisplayLimit += 5;
+    renderReviews();
 }
 </script>
 </body>
