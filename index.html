@@ -515,6 +515,20 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+    @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.review-card-anim {
+    animation: fadeInUp 0.35s ease-out forwards;
+}
 </style>
 
 <script>
@@ -1028,7 +1042,7 @@ function renderReviews() {
     const currentReviews = allFetchedReviews.slice(0, visibleCount);
 
     container.innerHTML = currentReviews.map(r => `
-        <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
+        <div class="review-card-anim" style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                 <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
                 <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
