@@ -163,7 +163,7 @@
             </section>
 
             <!-- Section Form Pembayaran -->
-            <section id="checkout-section" class="checkout-section">
+            <section id="checkout-section" class="checkout-section" style="scroll-margin-top: 80px;">
                 <div class="checkout-card">
                     <form id="orderForm" class="checkout-form">
                         <div class="form-group">
@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('selected');
 
             if (checkoutSec) {
-                checkoutSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                checkoutSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
