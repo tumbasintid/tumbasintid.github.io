@@ -960,6 +960,56 @@ function copyText(elementId) {
     }
 }
 </script>
+        <!-- Supabase JS Library & Script Rating -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://rjgkxqzecrsczcmuamhd.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadReviewStats() {
+      try {
+        const { data: reviews, error } = await supabaseClient
+          .from('reviews')
+          .select('rating');
+
+        if (error) throw error;
+
+        const total = reviews.length;
+
+        if (total === 0) {
+          document.getElementById('rating-avg').innerText = '0.0';
+          document.getElementById('rating-info').innerText = 'Belum ada ulasan';
+          for (let i = 1; i <= 5; i++) {
+            document.getElementById(`bar-${i}`).style.width = '0%';
+          }
+          return;
+        }
+
+        let sum = 0;
+        const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+        reviews.forEach(r => {
+          sum += r.rating;
+          counts[r.rating] = (counts[r.rating] || 0) + 1;
+        });
+
+        const avg = (sum / total).toFixed(1);
+
+        document.getElementById('rating-avg').innerText = avg;
+        document.getElementById('rating-info').innerText = `${avg} • ${total} Ulasan`;
+
+        for (let i = 1; i <= 5; i++) {
+          const percent = ((counts[i] || 0) / total) * 100;
+          document.getElementById(`bar-${i}`).style.width = `${percent}%`;
+        }
+      } catch (err) {
+        console.error('Gagal mengambil data ulasan:', err.message);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadReviewStats);
+  </script>
 </body>
 </html>
 
