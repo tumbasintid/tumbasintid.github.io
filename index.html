@@ -208,62 +208,60 @@
                                                 </form>
                 </div>
 
-                                <!-- CARD ULASAN PEMBELI MODEL BARU -->
+                                                <!-- CARD ULASAN PEMBELI AUTOMATIS -->
                 <div style="margin-top: 16px; background-color: #171e2e; border: 1px solid #2d3748; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);">
                     
-                    <!-- Judul Singkat -->
                     <h3 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 700; color: #ffffff;">Ulasan Pembeli</h3>
 
-                    <!-- Header Rating (Angka Besar + Bintang) -->
+                    <!-- Header Rating Kosong -->
                     <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-                        <span style="font-size: 2.5rem; font-weight: 800; color: #ffffff; line-height: 1;">4.9</span>
+                        <span id="rating-avg" style="font-size: 2.5rem; font-weight: 800; color: #ffffff; line-height: 1;">0.0</span>
                         <div>
                             <div style="display: flex; gap: 2px; margin-bottom: 4px;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f5b800"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4a5568"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192zm0 0"/></svg>
                             </div>
-                            <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">4.9 • 5.2K Rating <span style="text-decoration: underline;">18 Ulasan</span></p>
+                            <p id="rating-info" style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Belum ada ulasan</p>
                         </div>
                     </div>
 
-                    <!-- Breakdown Progress Bar Rating (5.0 - 1.0) -->
+                    <!-- Progress Bar Kosong -->
                     <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
-                                <div style="background-color: #f5b800; width: 85%; height: 100%;"></div>
+                                <div id="bar-5" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
                             </div>
                             <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">5.0 ★</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
-                                <div style="background-color: #f5b800; width: 60%; height: 100%;"></div>
+                                <div id="bar-4" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
                             </div>
                             <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">4.0 ★</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
-                                <div style="background-color: #f5b800; width: 35%; height: 100%;"></div>
+                                <div id="bar-3" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
                             </div>
                             <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">3.0 ★</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
-                                <div style="background-color: #f5b800; width: 15%; height: 100%;"></div>
+                                <div id="bar-2" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
                             </div>
                             <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">2.0 ★</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="flex: 1; background-color: #21262d; border-radius: 999px; height: 8px; overflow: hidden;">
-                                <div style="background-color: #f5b800; width: 5%; height: 100%;"></div>
+                                <div id="bar-1" style="background-color: #f5b800; width: 0%; height: 100%;"></div>
                             </div>
                             <span style="font-size: 0.75rem; color: #9ca3af; min-width: 32px;">1.0 ★</span>
                         </div>
                     </div>
 
-                    <!-- Tombol Tulis Ulasan dengan SVG Icon -->
                     <button type="button" onclick="openReviewModal()" style="width: 100%; background-color: transparent; border: 1px solid #30363d; color: #e6edf3; padding: 10px; border-radius: 10px; font-weight: 600; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e6edf3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 20h9"></path>
@@ -271,6 +269,7 @@
                         </svg>
                         Tulis Ulasan
                     </button>
+
                 </div>
         </div>
             </section>
