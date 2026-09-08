@@ -978,7 +978,7 @@ function copyText(elementId) {
             .select('*');
 
         if (errStats) throw errStats;
-
+        alert('Isi data dari Supabase: ' + JSON.stringify(allReviews));
         const total = (allReviews && Array.isArray(allReviews)) ? allReviews.length : 0;
         const reviewList = document.getElementById('review-list');
 
