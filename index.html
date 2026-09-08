@@ -269,6 +269,10 @@
                         </svg>
                         Tulis Ulasan
                     </button>
+                    <!-- Tempat Komentar Pembeli Dimuat -->
+<div id="review-list" style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+  <!-- Komentar terbaru dari Supabase akan muncul otomatis di sini -->
+</div>
 
                 </div>
         </div>
@@ -967,29 +971,36 @@ function copyText(elementId) {
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZ2t4cXplY3JzY3pjbXVhbWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NDE4NzUsImV4cCI6MjEwNDMxNzg3NX0.qQrORVY3s63ZK3EtBnf_pmI846zVOX3ykK82929DCCI';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    async function loadReviewStats() {
+        async function loadReviewStats() {
       try {
-        const { data: reviews, error } = await supabaseClient
+        // 1. Ambil SEMUA rating untuk statistik angka & progress bar
+        const { data: allReviews, error: errStats } = await supabaseClient
           .from('reviews')
           .select('rating');
 
-        if (error) throw error;
+        if (errStats) throw errStats;
 
-        const total = reviews.length;
+        const total = allReviews ? allReviews.length : 0;
+        const reviewList = document.getElementById('review-list');
 
         if (total === 0) {
           document.getElementById('rating-avg').innerText = '0.0';
           document.getElementById('rating-info').innerText = 'Belum ada ulasan';
           for (let i = 1; i <= 5; i++) {
-            document.getElementById(`bar-${i}`).style.width = '0%';
+            const bar = document.getElementById(`bar-${i}`);
+            if (bar) bar.style.width = '0%';
+          }
+          if (reviewList) {
+            reviewList.innerHTML = '<p style="font-size: 0.8rem; color: #8b949e; text-align: center; margin: 8px 0 0 0;">Belum ada ulasan pembeli.</p>';
           }
           return;
         }
 
+        // Hitung Rata-rata dan Persentase
         let sum = 0;
         const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
-        reviews.forEach(r => {
+        allReviews.forEach(r => {
           sum += r.rating;
           counts[r.rating] = (counts[r.rating] || 0) + 1;
         });
@@ -1001,12 +1012,36 @@ function copyText(elementId) {
 
         for (let i = 1; i <= 5; i++) {
           const percent = ((counts[i] || 0) / total) * 100;
-          document.getElementById(`bar-${i}`).style.width = `${percent}%`;
+          const bar = document.getElementById(`bar-${i}`);
+          if (bar) bar.style.width = `${percent}%`;
         }
+
+        // 2. Ambil CUMA 2 Ulasan Terbaru untuk Tampilan Komentar
+        const { data: latestReviews, error: errList } = await supabaseClient
+          .from('reviews')
+          .select('nama, rating, komentar')
+          .order('created_at', { ascending: false })
+          .limit(2);
+
+        if (errList) throw errList;
+
+        // Render Komentar Pembeli ke HTML
+        if (reviewList && latestReviews) {
+          reviewList.innerHTML = latestReviews.map(r => `
+            <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
+                <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
+              </div>
+              <p style="margin: 0; font-size: 0.8rem; color: #c9d1d9; line-height: 1.4;">${r.komentar}</p>
+            </div>
+          `).join('');
+        }
+
       } catch (err) {
         console.error('Gagal mengambil data ulasan:', err.message);
       }
-    }
+        }
 
     document.addEventListener('DOMContentLoaded', loadReviewStats);
   </script>
