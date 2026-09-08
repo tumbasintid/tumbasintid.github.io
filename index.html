@@ -202,12 +202,44 @@
                             </div>
                         </div>
 
-                        <input type="hidden" id="paymentMethodInput" value="">
+                                                <input type="hidden" id="paymentMethodInput" value="">
                         <button type="submit" class="btn-submit">BELI SEKARANG</button>
                         <p class="form-footer-note">Pastikan kembali nomor WhatsApp dan metode pembayaran yang Anda pilih sudah benar.</p>
                     </form>
+
+                    <!-- SECTION ULASAN PEMBELI -->
+                    <div style="margin-top: 20px; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div>
+                                <h3 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: #ffffff;">Ulasan Pembeli</h3>
+                                <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: #9ca3af;">⭐ <span style="color:#f5b800; font-weight:700;">4.9</span> / 5.0 dari pembeli terverifikasi</p>
+                            </div>
+                            <button type="button" onclick="openReviewModal()" style="background-color: #f5b800; color: #111827; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.775rem; cursor: pointer;">
+                                + Tulis Ulasan
+                            </button>
+                        </div>
+
+                        <!-- LIST REVIEW -->
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="background-color: #111827; border: 1px solid #374151; border-radius: 8px; padding: 10px 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                                    <span style="font-size: 0.8rem; font-weight: 600; color: #ffffff;">Rian S.</span>
+                                    <span style="color: #f5b800; font-size: 0.7rem;">★★★★★</span>
+                                </div>
+                                <p style="margin: 0; font-size: 0.75rem; color: #9ca3af; line-height: 1.3;">Proses kilat! Akun Advance Server sesuai deskripsi dan siap pakai.</p>
+                            </div>
+                            <div style="background-color: #111827; border: 1px solid #374151; border-radius: 8px; padding: 10px 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                                    <span style="font-size: 0.8rem; font-weight: 600; color: #ffffff;">Bagas P.</span>
+                                    <span style="color: #f5b800; font-size: 0.7rem;">★★★★★</span>
+                                </div>
+                                <p style="margin: 0; font-size: 0.75rem; color: #9ca3af; line-height: 1.3;">Toko mantap, langganan beli di sini selalu lancar.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
+            
         </div>
 
         <!-- TAB 2: DETAIL PESANAN -->
