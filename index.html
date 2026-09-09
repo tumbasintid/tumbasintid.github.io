@@ -51,6 +51,164 @@
     font-size: 0.8rem;
     font-weight: 500;
   }
+    /* --- OFF-CANVAS SIDEBAR HELP CENTER --- */
+
+/* Latar belakang gelap transparan (tidak tutup layar penuh) */
+#sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Panel Sidebar (Lebar dibatasi 300px / max 80% layar HP) */
+#sidebar-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  max-width: 80%; /* Menyisakan 20% layar di kanan agar tidak full */
+  height: 100%;
+  background-color: #121824;
+  color: #ffffff;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.5);
+}
+
+#sidebar-drawer.active {
+  transform: translateX(0);
+}
+
+/* Header Pusat Bantuan */
+.sidebar-header {
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1e2638;
+}
+
+.sidebar-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffc107;
+  letter-spacing: 0.5px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #8a99ad;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.sidebar-content {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* Accordion FAQ Clean Style */
+.faq-accordion {
+  border-bottom: 1px solid #1e2638;
+  padding: 14px 0;
+}
+
+/* Pertanyaan: Warna Putih, Ukuran Proporsional (15px) */
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  line-height: 1.4;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+/* Panah Abu-Abu Transparan */
+.faq-arrow {
+  stroke: rgba(255, 255, 255, 0.4);
+  transition: transform 0.25s ease, stroke 0.25s ease;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+/* Animasi Panah Berputar Saat Ditekan */
+.faq-accordion[open] .faq-arrow {
+  transform: rotate(180deg);
+  stroke: #ffc107;
+}
+
+/* Jawaban: Warna Abu-Abu, Ukuran Proporsional (13px) */
+.faq-answer {
+  padding-top: 10px;
+  font-size: 13px;
+  color: #a0aec0;
+  line-height: 1.6;
+}
+
+.steps-list {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.steps-list li {
+  margin-bottom: 6px;
+}
+
+/* Tombol Kontak WhatsApp */
+.sidebar-contact {
+  margin-top: 25px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.sidebar-contact p {
+  font-size: 12px;
+  color: #718096;
+  margin-bottom: 10px;
+}
+
+.btn-wa-help {
+  display: block;
+  background: #25d366;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 11px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.btn-wa-help:hover {
+  background: #1eb857;
+}
+
 </style>
 <!-- Supabase SDK JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -63,7 +221,7 @@
     <div id="app">
         <!-- Header Sticky -->
         <header class="navbar" id="navbar">
-            <button class="menu-btn" aria-label="Menu">
+            <button class="menu-btn" aria-label="Menu" onclick="openSidebar()">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -1104,8 +1262,100 @@ async function loadInitialReviews() {
 
 // Jalankan saat halaman dimuat
 document.addEventListener('DOMContentLoaded', loadInitialReviews);
+function openSidebar() {
+  document.getElementById("sidebar-drawer").classList.add("active");
+  document.getElementById("sidebar-overlay").classList.add("active");
+}
+
+function closeSidebar() {
+  document.getElementById("sidebar-drawer").classList.remove("active");
+  document.getElementById("sidebar-overlay").classList.remove("active");
+}
 
 </script>
+    <!-- Overlay Latar Belakang Gelap -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- Drawer Sidebar Utama -->
+<div id="sidebar-drawer">
+  <div class="sidebar-header">
+    <span class="sidebar-title">PUSAT BANTUAN</span>
+    <button class="close-btn" onclick="closeSidebar()">&times;</button>
+  </div>
+  
+  <div class="sidebar-content">
+    
+    <!-- Item FAQ 1 -->
+    <details class="faq-accordion">
+      <summary class="faq-question">
+        <span>Bagaimana cara Login akun?</span>
+        <svg class="faq-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="faq-answer">
+        <p>Login via akun Moonton. Untuk cara ubah email / pengamanan akun, bisa langsung akses situs <b>mail.tm</b> menggunakan data akun Moonton (Email & Password) tersebut. Baca selengkapnya di opsi pertanyaan ke-3.</p>
+      </div>
+    </details>
+
+    <!-- Item FAQ 2 -->
+    <details class="faq-accordion">
+      <summary class="faq-question">
+        <span>Apakah akun dijamin aman / anti-hackback?</span>
+        <svg class="faq-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="faq-answer">
+        <p>Dijamin 100% aman dan bergaransi. Semua akun dibuat secara bersih dan independen, sehingga bebas dari risiko penarikan kembali (hackback).</p>
+      </div>
+    </details>
+
+    <!-- Item FAQ 3 -->
+    <details class="faq-accordion">
+      <summary class="faq-question">
+        <span>Bagaimana cara mengamankan akun?</span>
+        <svg class="faq-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="faq-answer">
+        <ol class="steps-list">
+          <li>Login akun Moonton di game MLBB.</li>
+          <li>Buka browser HP, akses <b>mail.tm/en/</b> lalu login memakai email & kata sandi Moonton tersebut.</li>
+          <li>Masuk ke game MLBB &gt; Profil &gt; Pengaturan Akun &gt; Pusat Akun &gt; Ubah Alamat Email.</li>
+          <li>Klik <b>Kirim Kode</b>, lalu cek kode verifikasi yang masuk di situs <b>mail.tm</b> untuk mengganti ke email pribadimu.</li>
+        </ol>
+      </div>
+    </details>
+
+    <!-- Item FAQ 4 -->
+    <details class="faq-accordion">
+      <summary class="faq-question">
+        <span>Berapa lama proses pembelian?</span>
+        <svg class="faq-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="faq-answer">
+        <p>Proses penyerahan data akun berlangsung instan, rata-rata memakan waktu 5 hingga 15 menit setelah pembayaran terverifikasi.</p>
+      </div>
+    </details>
+
+    <!-- Item FAQ 5 -->
+    <details class="faq-accordion">
+      <summary class="faq-question">
+        <span>Metode pembayaran apa saja yang tersedia?</span>
+        <svg class="faq-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="faq-answer">
+        <p>Menerima pembayaran via QRIS (semua bank & e-wallet), Transfer Bank (BCA, Mandiri, BRI, BNI), serta E-Wallet (Dana, OVO, GoPay, ShopeePay).</p>
+      </div>
+    </details>
+
+    <!-- Button WA Help -->
+    <div class="sidebar-contact">
+      <p>Butuh bantuan lebih lanjut?</p>
+      <a href="https://wa.me/628xxxxxxx" target="_blank" class="btn-wa-help">
+        💬 Hubungi Admin WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>
 
