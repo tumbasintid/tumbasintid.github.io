@@ -1069,7 +1069,7 @@ if (btnConfirmPay) {
             }
 
             try {
-                let isPaid = true;
+                let isPaid = false;
                 
                 try {
                     const checkResponse = await fetch(`https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task?order_id=${currentOrderId}`, {
