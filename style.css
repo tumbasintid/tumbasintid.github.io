@@ -18,7 +18,7 @@ body {
     width: 100%;
     max-width: 480px;
     background-color: #121824;
-    min-height: 100vh;
+    min-height: auto;
     position: relative;
     padding-bottom: 30px;
     overflow-x: hidden;
@@ -511,3 +511,6 @@ html {
     color: #eab308;
 }
 
+.review-card, div[style*="margin-top: 16px"] {
+  margin-bottom: 10px !important;
+}
