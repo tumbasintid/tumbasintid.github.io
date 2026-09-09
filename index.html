@@ -1386,7 +1386,9 @@ document.addEventListener('DOMContentLoaded', loadInitialReviews);
         activeNav.classList.add('active');
       }
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
     }
 
 function showLegalDetail(type) {
