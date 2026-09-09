@@ -1245,6 +1245,31 @@ async function loadInitialReviews() {
 
 // Jalankan saat halaman dimuat
 document.addEventListener('DOMContentLoaded', loadInitialReviews);
+  
+    function switchTab(tabName) {
+  const tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(tab => {
+    tab.style.display = 'none';
+  });
+
+  const targetTab = document.getElementById('tab-' + tabName);
+  if (targetTab) {
+    targetTab.style.display = 'block';
+  }
+
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(item => {
+    item.classList.remove('active');
+  });
+
+  const activeNav = document.getElementById('nav-' + tabName);
+  if (activeNav) {
+    activeNav.classList.add('active');
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function showLegalDetail(type) {
   const mainView = document.getElementById("legal-main-view");
   const detailView = document.getElementById("legal-detail-view");
