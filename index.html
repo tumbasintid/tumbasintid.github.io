@@ -1274,6 +1274,14 @@ function closeSidebar() {
   document.getElementById("sidebar-overlay").classList.remove("active");
   document.body.style.overflow = "auto";
 }
+    function openReviewModal() {
+  const modal = document.getElementById('reviewModal');
+  if (modal) {
+    modal.style.display = 'flex';
+  } else {
+    alert('Modal ulasan belum ditemukan di HTML!');
+  }
+}
 
 </script>
     <!-- Overlay Latar Belakang Gelap -->
