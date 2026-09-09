@@ -1073,19 +1073,15 @@ if (btnConfirmPay) {
             try {
                 let isPaid = false;
                 
-                try {
-                    const checkResponse = await fetch(`https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task?order_id=${currentOrderId}`, {
-                        method: 'GET',
-                        headers: { 'Content-Type': 'application/json' }
-                    });
-                    const checkResult = await checkResponse.json();
-                    
-                    if (checkResult.status === 'settlement' || checkResult.status === 'success' || checkResult.paid === true || checkResult.status === 'PAID') {
-                        isPaid = true;
-                    }
-                } catch (chkErr) {
-                    console.log("Cek API status manual error...", chkErr);
-                }
+                const { data: orderData } = await supabaseClient
+            .from('orders')
+            .select('status')
+            .eq('order_id', currentOrderId)
+            .maybeSingle();
+
+          if (orderData && orderData.status === 'PAID') {
+            isPaid = true;
+          } 
 
                 if (!isPaid) {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
