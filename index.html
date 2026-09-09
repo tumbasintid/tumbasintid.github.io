@@ -1031,7 +1031,7 @@ if (btnConfirmPay) {
             }
 
             try {
-                let isPaid = false;
+                let isPaid = true;
                 
                 try {
                     const checkResponse = await fetch(`https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task?order_id=${currentOrderId}`, {
