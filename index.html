@@ -1040,7 +1040,9 @@ if (btnConfirmPay) {
                 });
 
                 const apiData = await apiResponse.json();
-
+                if (apiData.success) {
+                    await supabaseClient.from('orders').insert([{ order_id: currentOrderId, status: 'PENDING' }]);
+                }
                 if (loadingOverlay) loadingOverlay.style.display = 'none';
 
                 if (apiData.success && apiData.qris_url) {
