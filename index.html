@@ -1339,7 +1339,7 @@ async function submitReview() {
   const comment = document.getElementById('reviewCommentInput').value.trim();
 
   if (!name || !comment) {
-    alert('Harap isi nama dan ulasan!');
+    showToast('Harap isi nama dan ulasan!');
     return;
   }
 
@@ -1348,10 +1348,20 @@ async function submitReview() {
     .insert([{ nama: name, rating: parseInt(rating), komentar: comment }]);
 
   if (error) {
-    alert('Gagal mengirim ulasan: ' + error.message);
+    showToast('Gagal mengirim ulasan: ' + error.message);
   } else {
-    alert('Ulasan berhasil dikirim!');
+    // 1. Tutup modal ulasan
     closeReviewModal();
+
+    // 2. Reset isi form input
+    document.getElementById('reviewNameInput').value = '';
+    document.getElementById('reviewCommentInput').value = '';
+    setRating(5);
+
+    // 3. Tampilkan Toast Notification
+    showToast('Ulasan berhasil dikirim!');
+
+    // 4. Muat ulang daftar ulasan
     if (typeof loadInitialReviews === 'function') loadInitialReviews();
   }
 }
