@@ -638,6 +638,32 @@
             </a>
         </nav>
     </div>
+    <!-- MODAL FORM ULASAN -->
+<div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+  <div style="background: #1f2937; border: 1px solid #374151; border-radius: 16px; width: 100%; max-width: 400px; padding: 20px; color: #fff;">
+    <h3 style="margin-top: 0; text-align: center;">Tulis Ulasan</h3>
+    
+    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px; color: #9ca3af;">Nama Anda</label>
+    <input type="text" id="reviewNameInput" placeholder="Masukkan nama" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #374151; background: #111827; color: #fff; margin-bottom: 15px; box-sizing: border-box;">
+
+    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px; color: #9ca3af;">Rating</label>
+    <select id="reviewRatingInput" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #374151; background: #111827; color: #fff; margin-bottom: 15px; box-sizing: border-box;">
+      <option value="5">Bintang 5</option>
+      <option value="4">Bintang 4</option>
+      <option value="3">Bintang 3</option>
+      <option value="2">Bintang 2</option>
+      <option value="1">Bintang 1</option>
+    </select>
+
+    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px; color: #9ca3af;">Ulasan</label>
+    <textarea id="reviewCommentInput" rows="3" placeholder="Tulis pengalaman kamu..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #374151; background: #111827; color: #fff; margin-bottom: 15px; box-sizing: border-box;"></textarea>
+
+    <div style="display: flex; gap: 10px;">
+      <button type="button" onclick="closeReviewModal()" style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: #374151; color: #fff; cursor: pointer;">Batal</button>
+      <button type="button" onclick="submitReview()" style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: #f5b800; color: #000; font-weight: bold; cursor: pointer;">Kirim</button>
+    </div>
+  </div>
+</div>
 
     <!-- Modal Peringatan Stok Habis -->
     <div id="outOfStockModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
@@ -1280,6 +1306,33 @@ function closeSidebar() {
     modal.style.display = 'flex';
   } else {
     alert('Modal ulasan belum ditemukan di HTML!');
+  }
+}
+function closeReviewModal() {
+  const modal = document.getElementById('reviewModal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function submitReview() {
+  const name = document.getElementById('reviewNameInput').value.trim();
+  const rating = document.getElementById('reviewRatingInput').value;
+  const comment = document.getElementById('reviewCommentInput').value.trim();
+
+  if (!name || !comment) {
+    alert('Harap isi nama dan ulasan!');
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('reviews')
+    .insert([{ nama: name, rating: parseInt(rating), komentar: comment }]);
+
+  if (error) {
+    alert('Gagal mengirim ulasan: ' + error.message);
+  } else {
+    alert('Ulasan berhasil dikirim!');
+    closeReviewModal();
+    if (typeof loadInitialReviews === 'function') loadInitialReviews();
   }
 }
 
