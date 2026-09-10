@@ -209,6 +209,50 @@
   background: #1eb857;
 }
 
+/* STYLES SUB-TAB PADA HALAMAN INFO */
+.info-tab-nav {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #2d3748;
+  margin-bottom: 24px;
+}
+
+.info-tab-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 12px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.info-tab-btn.active {
+  color: #f5b800;
+}
+
+.info-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #f5b800;
+  border-radius: 2px 2px 0 0;
+}
+
+.info-subcontent {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 <!-- Supabase SDK JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -542,71 +586,156 @@
             </section>
         </div>
 
-        <!-- TAB 3: INFO & CARA ORDER -->
+        <!-- TAB 3: INFO (SISTEM SUB-TAB LEGALITAS & CARA ORDER) -->
         <div id="tab-info" class="tab-content" style="display: none;">
             <div style="padding: 80px 16px 100px 16px; max-width: 600px; margin: 0 auto; color: #fff;">
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Cara Melakukan Pemesanan</h2>
-                    <p style="font-size: 0.775rem; color: #9ca3af; margin: 0; line-height: 1.4;">Ikuti 7 langkah berikut sebelum melakukan transaksi.</p>
+                
+                <!-- Navigasi Sub-Tab Info -->
+                <div class="info-tab-nav">
+                    <button type="button" class="info-tab-btn active" id="btn-info-order" onclick="switchInfoSubTab('order')">Cara Order</button>
+                    <button type="button" class="info-tab-btn" id="btn-info-terms" onclick="switchInfoSubTab('terms')">Syarat & Ketentuan</button>
+                    <button type="button" class="info-tab-btn" id="btn-info-privacy" onclick="switchInfoSubTab('privacy')">Kebijakan Privasi</button>
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Pilih Produk</h4>
-                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pilih produk (akun) yang Anda butuhkan di halaman Beranda.</p>
-                        </div>
+                <!-- SUB-TAB 1: CARA ORDER -->
+                <div id="info-sub-order" class="info-subcontent">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                        <h2 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Cara Melakukan Pemesanan</h2>
+                        <p style="font-size: 0.775rem; color: #9ca3af; margin: 0; line-height: 1.4;">Ikuti 7 langkah berikut sebelum melakukan transaksi.</p>
                     </div>
 
-                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Lengkapi Data Pemesanan</h4>
-                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Masukkan nomor WhatsApp aktif, kode promo (jika ada), lalu pilih metode pembayaran.</p>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                            <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                            <div>
+                                <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Pilih Produk</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pilih produk (akun) yang Anda butuhkan di halaman Beranda.</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klik Beli Sekarang</h4>
-                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>BELI SEKARANG</b> untuk membuat rincian tagihan Anda.</p>
+                        <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                            <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                            <div>
+                                <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Lengkapi Data Pemesanan</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Masukkan nomor WhatsApp aktif, kode promo (jika ada), lalu pilih metode pembayaran.</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Periksa Detail Pesanan</h4>
-                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pastikan kembali item produk dan total pembayaran sudah sesuai.</p>
+                        <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                            <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                            <div>
+                                <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klik Beli Sekarang</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>BELI SEKARANG</b> untuk membuat rincian tagihan Anda.</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Konfirmasi Pembayaran</h4>
-                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>KONFIRMASI PEMBAYARAN</b> untuk menampilkan QRIS / kode bayar.</p>
+                        <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                            <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+                            <div>
+                                <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Periksa Detail Pesanan</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Pastikan kembali item produk dan total pembayaran sudah sesuai.</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Selesaikan Pembayaran</h4>
-                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Lakukan pemindaian (scan) QRIS yang tampil di layar via aplikasi e-wallet / mobile banking Anda.</p>
+                        <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                            <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+                            <div>
+                                <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Konfirmasi Pembayaran</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>KONFIRMASI PEMBAYARAN</b> untuk menampilkan QRIS / kode bayar.</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klaim Akun Anda</h4>
-                            <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>SAYA SUDAH BAYAR</b> untuk verifikasi otomatis dan penerimaan data akun.</p>
+                        <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                            <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+                            <div>
+                                <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Selesaikan Pembayaran</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Lakukan pemindaian (scan) QRIS yang tampil di layar via aplikasi e-wallet / mobile banking Anda.</p>
+                            </div>
+                        </div>
+
+                        <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;">
+                            <div style="background-color: #f5b800; color: #111827; font-weight: 700; font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+                            <div>
+                                <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #ffffff;">Klaim Akun Anda</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #9ca3af; line-height: 1.4;">Klik <b>SAYA SUDAH BAYAR</b> untuk verifikasi otomatis dan penerimaan data akun.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- SUB-TAB 2: SYARAT & KETENTUAN -->
+                <div id="info-sub-terms" class="info-subcontent" style="display: none;">
+                    <div style="margin-bottom: 20px;">
+                        <h2 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 8px;">Syarat & Ketentuan</h2>
+                        <p style="font-size: 0.8rem; color: #9ca3af; line-height: 1.5; margin: 0;">
+                            Harap membaca syarat dan ketentuan berikut sebelum bertransaksi di TUMBASAKUN.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 16px; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 18px;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">1. Hak Penggunaan</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
+                                Pembeli diberikan akses penuh atas akun Advance Server MLBB yang telah dibeli setelah pembayaran terkonfirmasi secara sah oleh sistem.
+                            </p>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">2. Tanggung Jawab Pengguna</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
+                                Pembeli wajib mengamankan (bind/ganti email) akun setelah data diserahkan. Segala kelalaian akibat pengamanan yang ditunda oleh pembeli di luar tanggung jawab TUMBASAKUN.
+                            </p>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">3. Pembelian & Pengembalian (Refund)</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
+                                Akun yang telah dibeli tidak dapat ditukar atau dikembalikan (non-refundable), kecuali jika stok akun tidak tersedia atau data yang diberikan terbukti tidak valid.
+                            </p>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">4. Garansi Akun</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
+                                Kami memberikan garansi anti-hackback 100% dengan syarat pembeli mengikuti panduan amankan akun yang sudah disediakan di Pusat Bantuan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 3: KEBIJAKAN PRIVASI -->
+                <div id="info-sub-privacy" class="info-subcontent" style="display: none;">
+                    <div style="margin-bottom: 20px;">
+                        <h2 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 8px;">Kebijakan Privasi</h2>
+                        <p style="font-size: 0.8rem; color: #9ca3af; line-height: 1.5; margin: 0;">
+                            Kami berkomitmen menjaga dan melindungi data pribadi setiap pelanggan.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 16px; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 18px;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">1. Pengumpulan Data</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
+                                Data yang kami kumpulkan hanyalah nomor WhatsApp yang Anda masukkan saat membuat pesanan untuk kebutuhan verifikasi dan layanan pelanggan.
+                            </p>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">2. Penggunaan Informasi</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
+                                Nomor WhatsApp hanya digunakan untuk menghubungi Anda jika terdapat kendala transaksi atau bantuan pengamanan akun.
+                            </p>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">3. Kerahasiaan Data</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
+                                Kami tidak akan pernah menjual, menyewakan, atau membagikan data pribadi Anda kepada pihak ketiga mana pun di luar proses transaksi ini.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div> 
         
@@ -737,6 +866,43 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let currentOrderAmount = 0;
 let currentOrderId = '';
 
+// Logika Pindah Sub-Tab di Halaman Info
+function switchInfoSubTab(subTabName) {
+  const subOrder = document.getElementById('info-sub-order');
+  const subTerms = document.getElementById('info-sub-terms');
+  const subPrivacy = document.getElementById('info-sub-privacy');
+
+  const btnOrder = document.getElementById('btn-info-order');
+  const btnTerms = document.getElementById('btn-info-terms');
+  const btnPrivacy = document.getElementById('btn-info-privacy');
+
+  if (subTabName === 'order') {
+    if (subOrder) subOrder.style.display = 'block';
+    if (subTerms) subTerms.style.display = 'none';
+    if (subPrivacy) subPrivacy.style.display = 'none';
+
+    if (btnOrder) btnOrder.classList.add('active');
+    if (btnTerms) btnTerms.classList.remove('active');
+    if (btnPrivacy) btnPrivacy.classList.remove('active');
+  } else if (subTabName === 'terms') {
+    if (subOrder) subOrder.style.display = 'none';
+    if (subTerms) subTerms.style.display = 'block';
+    if (subPrivacy) subPrivacy.style.display = 'none';
+
+    if (btnOrder) btnOrder.classList.remove('active');
+    if (btnTerms) btnTerms.classList.add('active');
+    if (btnPrivacy) btnPrivacy.classList.remove('active');
+  } else if (subTabName === 'privacy') {
+    if (subOrder) subOrder.style.display = 'none';
+    if (subTerms) subTerms.style.display = 'none';
+    if (subPrivacy) subPrivacy.style.display = 'block';
+
+    if (btnOrder) btnOrder.classList.remove('active');
+    if (btnTerms) btnTerms.classList.remove('active');
+    if (btnPrivacy) btnPrivacy.classList.add('active');
+  }
+}
+
 // 1. Inisialisasi Scroll Navbar
 window.addEventListener('scroll', function() {
     const navbar = document.getElementById('navbar');
@@ -749,7 +915,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 2. Logika Pindah Tab
+// 2. Logika Pindah Tab Utama
 function switchTab(tabName) {
   const berandaTab = document.getElementById('tab-beranda');
   const pesananTab = document.getElementById('tab-pesanan');
