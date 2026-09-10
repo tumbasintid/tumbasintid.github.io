@@ -611,20 +611,23 @@
             </section>
         </div>
 
-            <!-- TAB 3: INFO (TERMS & PRIVACY) -->
+          <!-- TAB 3: INFO (TERMS & PRIVACY) -->
     <div id="tab-info" class="tab-content" style="display: none;">
       <div style="padding: 80px 20px 100px 20px; max-width: 600px; margin: 0 auto; color: #fff;">
         
-        <!-- NAVIGASI SUB-TAB BERGAYA MODEL SEPERTI FOTO -->
+        <!-- JUDUL HALAMAN INFO -->
+        <h1 style="font-size: 1.6rem; font-weight: 800; color: #ffffff; margin-bottom: 16px; letter-spacing: -0.5px;">Halaman Info</h1>
+
+        <!-- NAVIGASI SUB-TAB -->
         <div class="info-tabs-wrapper" style="border-bottom: 1px solid #374151; margin-bottom: 24px;">
-          <div class="info-tabs" style="display: flex; gap: 24px;">
-            <button class="tab-btn active" onclick="switchInfoTab('terms')" style="background: transparent; border: none; padding: 8px 0; color: #ffffff; font-weight: 600; font-size: 0.95rem; cursor: pointer; border-bottom: 2px solid #f5b800; border-radius: 0;">Terms & Conditions</button>
-            <button class="tab-btn" onclick="switchInfoTab('privacy')" style="background: transparent; border: none; padding: 8px 0; color: #9ca3af; font-weight: 500; font-size: 0.95rem; cursor: pointer; border-bottom: 2px solid transparent; border-radius: 0;">Privacy Policy</button>
+          <div class="info-tabs" style="display: flex; gap: 20px;">
+            <button id="btn-info-terms" class="tab-btn active" onclick="document.getElementById('info-sub-terms').style.display='block'; document.getElementById('info-sub-privacy').style.display='none'; this.style.color='#fff'; this.style.borderBottom='2px solid #f5b800'; document.getElementById('btn-info-privacy').style.color='#9ca3af'; document.getElementById('btn-info-privacy').style.borderBottom='2px solid transparent';" style="background: transparent; border: none; padding: 6px 0; color: #ffffff; font-weight: 600; font-size: 0.85rem; cursor: pointer; border-bottom: 2px solid #f5b800; border-radius: 0; transition: all 0.2s ease;">Terms & Conditions</button>
+            <button id="btn-info-privacy" class="tab-btn" onclick="document.getElementById('info-sub-terms').style.display='none'; document.getElementById('info-sub-privacy').style.display='block'; this.style.color='#fff'; this.style.borderBottom='2px solid #f5b800'; document.getElementById('btn-info-terms').style.color='#9ca3af'; document.getElementById('btn-info-terms').style.borderBottom='2px solid transparent';" style="background: transparent; border: none; padding: 6px 0; color: #9ca3af; font-weight: 500; font-size: 0.85rem; cursor: pointer; border-bottom: 2px solid transparent; border-radius: 0; transition: all 0.2s ease;">Privacy Policy</button>
           </div>
         </div>
 
         <!-- KONTEN 1: TERMS & CONDITIONS -->
-        <div id="terms-content" class="info-content active">
+        <div id="info-sub-terms" class="info-subcontent">
           <h2 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 12px; line-height: 1.3;">Terms & Conditions for TUMBASAKUN</h2>
           <p style="font-size: 0.825rem; color: #9ca3af; line-height: 1.6; margin-bottom: 24px;">
             Welcome to TUMBASAKUN. By accessing, browsing, or purchasing products from our website, you agree to be bound by these Terms and Conditions. Please read them thoroughly before completing any transaction.
@@ -657,7 +660,7 @@
         </div>
 
         <!-- KONTEN 2: PRIVACY POLICY -->
-        <div id="privacy-content" class="info-content" style="display: none;">
+        <div id="info-sub-privacy" class="info-subcontent" style="display: none;">
           <h2 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 12px; line-height: 1.3;">Privacy Policy for TUMBASAKUN</h2>
           <p style="font-size: 0.825rem; color: #9ca3af; line-height: 1.6; margin-bottom: 24px;">
             At TUMBASAKUN, accessible from our official website, one of our main priorities is the privacy of our visitors. This Privacy Policy document outlines the types of information collected and how it is processed.
@@ -699,7 +702,7 @@
         </div>
 
       </div>
-    </div> 
+    </div>
 
         <!-- BOTTOM NAVIGATION -->
         <nav class="bottom-nav">
