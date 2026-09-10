@@ -611,92 +611,94 @@
             </section>
         </div>
 
-        <!-- TAB 3: INFO (SISTEM SUB-TAB LEGALITAS & CARA ORDER) -->
-        <div id="tab-info" class="tab-content" style="display: none;">
-            <div style="padding: 80px 16px 100px 16px; max-width: 600px; margin: 0 auto; color: #fff;">
-                
-                <!-- Navigasi Sub-Tab Info -->
-                <div class="info-tab-nav">
-                    <button type="button" class="info-tab-btn active" id="btn-info-terms" onclick="switchInfoSubTab('terms')">Syarat & Ketentuan</button>
-                    <button type="button" class="info-tab-btn" id="btn-info-privacy" onclick="switchInfoSubTab('privacy')">Kebijakan Privasi</button>
-                </div>
-
-                <!-- SUB-TAB 2: SYARAT & KETENTUAN -->
-                <div id="info-sub-terms" class="info-subcontent">
-                    <div style="margin-bottom: 20px;">
-                        <h2 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 8px;">Syarat & Ketentuan</h2>
-                        <p style="font-size: 0.8rem; color: #9ca3af; line-height: 1.5; margin: 0;">
-                            Harap membaca syarat dan ketentuan berikut sebelum bertransaksi di TUMBASAKUN.
-                        </p>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; gap: 16px; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 18px;">
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">1. Hak Penggunaan</h4>
-                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
-                                Pembeli diberikan akses penuh atas akun Advance Server MLBB yang telah dibeli setelah pembayaran terkonfirmasi secara sah oleh sistem.
-                            </p>
-                        </div>
-                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">2. Tanggung Jawab Pengguna</h4>
-                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
-                                Pembeli wajib mengamankan (bind/ganti email) akun setelah data diserahkan. Segala kelalaian akibat pengamanan yang ditunda oleh pembeli di luar tanggung jawab TUMBASAKUN.
-                            </p>
-                        </div>
-                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">3. Pembelian & Pengembalian (Refund)</h4>
-                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
-                                Akun yang telah dibeli tidak dapat ditukar atau dikembalikan (non-refundable), kecuali jika stok akun tidak tersedia atau data yang diberikan terbukti tidak valid.
-                            </p>
-                        </div>
-                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">4. Garansi Akun</h4>
-                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
-                                Kami memberikan garansi anti-hackback 100% dengan syarat pembeli mengikuti panduan amankan akun yang sudah disediakan di Pusat Bantuan.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SUB-TAB 3: KEBIJAKAN PRIVASI -->
-                <div id="info-sub-privacy" class="info-subcontent" style="display: none;">
-                    <div style="margin-bottom: 20px;">
-                        <h2 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 8px;">Kebijakan Privasi</h2>
-                        <p style="font-size: 0.8rem; color: #9ca3af; line-height: 1.5; margin: 0;">
-                            Kami berkomitmen menjaga dan melindungi data pribadi setiap pelanggan.
-                        </p>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; gap: 16px; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 18px;">
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">1. Pengumpulan Data</h4>
-                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
-                                Data yang kami kumpulkan hanyalah nomor WhatsApp yang Anda masukkan saat membuat pesanan untuk kebutuhan verifikasi dan layanan pelanggan.
-                            </p>
-                        </div>
-                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">2. Penggunaan Informasi</h4>
-                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
-                                Nomor WhatsApp hanya digunakan untuk menghubungi Anda jika terdapat kendala transaksi atau bantuan pengamanan akun.
-                            </p>
-                        </div>
-                        <hr style="border: 0; border-top: 1px solid #374151; margin: 0;">
-                        <div>
-                            <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 600; color: #f5b800;">3. Kerahasiaan Data</h4>
-                            <p style="margin: 0; font-size: 0.8rem; color: #9ca3af; line-height: 1.5;">
-                                Kami tidak akan pernah menjual, menyewakan, atau membagikan data pribadi Anda kepada pihak ketiga mana pun di luar proses transaksi ini.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div> 
+            <!-- TAB 3: INFO (TERMS & PRIVACY) -->
+    <div id="tab-info" class="tab-content" style="display: none;">
+      <div style="padding: 20px 16px 100px 16px; max-width: 600px; margin: 0 auto; color: #fff;">
         
+        <!-- Navigasi Tab -->
+        <div class="info-tabs">
+          <button class="tab-btn active" onclick="switchInfoTab('terms')">Terms & Conditions</button>
+          <button class="tab-btn" onclick="switchInfoTab('privacy')">Privacy Policy</button>
+        </div>
+
+        <!-- KONTEN 1: TERMS & CONDITIONS -->
+        <div id="terms-content" class="info-content active">
+          <h2 class="info-title">Terms & Conditions for TUMBASAKUN</h2>
+          <p class="info-desc">
+            Welcome to TUMBASAKUN. By accessing, browsing, or purchasing products from our website, you agree to be bound by these Terms and Conditions. Please read them thoroughly before completing any transaction.
+          </p>
+
+          <h3 class="sub-header">1. General Account Delivery</h3>
+          <p class="info-desc">
+            All Mobile Legends: Bang Bang (MLBB) Advance Server account credentials will be delivered via our automated system or customer service immediately after payment is verified. Delivery times may vary slightly during system maintenance or peak periods.
+          </p>
+
+          <h3 class="sub-header">2. User Account Security</h3>
+          <p class="info-desc">
+            Upon receiving account credentials, buyers are required to immediately secure the account by binding their personal Moonton account or email address. TUMBASAKUN is not liable for any account loss, unauthorized access, or security compromises resulting from delays or failure to secure credentials after delivery.
+          </p>
+
+          <h3 class="sub-header">3. Non-Refundable Policy</h3>
+          <p class="info-desc">
+            All sales are final due to the digital nature of our products. Refunds, returns, or exchanges are strictly non-applicable once account details have been issued, unless the credentials provided are proven invalid upon initial delivery or stock is unavailable.
+          </p>
+
+          <h3 class="sub-header">4. Limited Warranty & Claims</h3>
+          <p class="info-desc">
+            We provide a strict 1x24-hour warranty period starting from the timestamp of delivery. This warranty exclusively covers initial login errors or incorrect account specifications. Claims submitted after the 24-hour window will not be entertained.
+          </p>
+
+          <h3 class="sub-header">5. Limitation of Liability</h3>
+          <p class="info-desc">
+            TUMBASAKUN shall not be held liable for any secondary account bans, suspensions, or restrictions imposed by game developers due to post-purchase activities, policy updates, or user misconduct after credential delivery.
+          </p>
+        </div>
+
+        <!-- KONTEN 2: PRIVACY POLICY -->
+        <div id="privacy-content" class="info-content" style="display: none;">
+          <h2 class="info-title">Privacy Policy for TUMBASAKUN</h2>
+          <p class="info-desc">
+            At TUMBASAKUN, accessible from our official website, one of our main priorities is the privacy of our visitors. This Privacy Policy document outlines the types of information collected and how it is processed.
+          </p>
+
+          <h3 class="sub-header">Consent</h3>
+          <p class="info-desc">
+            By utilizing our website and services, you hereby consent to our Privacy Policy and agree to all terms stated herein.
+          </p>
+
+          <h3 class="sub-header">Information We Collect</h3>
+          <p class="info-desc">
+            We collect personal details essential for order fulfillment, including your phone number, WhatsApp contact details, and transaction verification records when you place an order or contact customer support.
+          </p>
+
+          <h3 class="sub-header">How We Use Your Information</h3>
+          <p class="info-desc">The information collected is strictly utilized for:</p>
+          <ul class="info-bullet-list">
+            <li>Processing and managing your account orders efficiently.</li>
+            <li>Verifying payments and preventing fraudulent activities.</li>
+            <li>Communicating directly with you regarding order statuses or inquiries.</li>
+            <li>Improving overall platform usability and user experience.</li>
+          </ul>
+
+          <h3 class="sub-header">Cookies and Web Beacons</h3>
+          <p class="info-desc">
+            Like most interactive websites, TUMBASAKUN uses 'cookies' to store preferences and track visited pages. This information optimizes user experience by customizing content based on browser types and browsing patterns.
+          </p>
+
+          <h3 class="sub-header">Third-Party Services & Payment Gateways</h3>
+          <p class="info-desc">
+            We integrate secure third-party payment infrastructure (such as Midtrans) to process transactions. Your financial data is handled directly by these licensed gateways in accordance with their respective privacy and security standards.
+          </p>
+
+          <h3 class="sub-header">Data Protection Rights</h3>
+          <p class="info-desc">
+            TUMBASAKUN ensures your personal details are kept safe. We do not sell, trade, or transfer your personally identifiable information to third parties under any circumstances.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
         <!-- BOTTOM NAVIGATION -->
         <nav class="bottom-nav">
             <a href="javascript:void(0)" class="nav-item active" onclick="switchTab('beranda')" id="nav-beranda">
