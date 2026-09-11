@@ -1151,135 +1151,46 @@ if (orderForm) {
     });
 }
 
-// 8. Konfirmasi & Verifikasi Pembayaran
-const btnConfirmPay = document.getElementById('btnConfirmPay');
-if (btnConfirmPay) {
+  // 8. Konfirmasi & Verifikasi Pembayaran
+  const btnConfirmPay = document.getElementById('btnConfirmPay');
+  if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', async function() {
-        const qrisSec = document.getElementById('qrisSection');
-        const accSec = document.getElementById('accountSection');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const loadingText = document.getElementById('loadingText');
-        const loadingSubtext = document.getElementById('loadingSubtext');
-        const qrisImg = document.getElementById('qrisImage');
+      const qrisSec = document.getElementById('qrisSection');
+      const qrisImg = document.getElementById('qrisImage');
 
-        if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
-            if (loadingOverlay) {
-                if (loadingText) loadingText.textContent = 'Membuat Kode QRIS...';
-                if (loadingSubtext) loadingSubtext.textContent = 'Menghubungkan ke sistem pembayaran Midtrans';
-                loadingOverlay.style.display = 'flex';
-            }
+      if (qrisSec && (qrisSec.style.display === 'none' || qrisSec.style.display === '')) {
+        // Tampilkan Card QRIS Manual secara mulus
+        qrisSec.style.opacity = '0';
+        qrisSec.style.display = 'block';
+        
+        // Ambil total bayar dari summary
+        const totalText = document.getElementById('summary-total') ? document.getElementById('summary-total').innerText : '';
+        const qrisTotalElem = document.getElementById('qrisTotal');
+        if (qrisTotalElem && totalText) {
+          qrisTotalElem.innerText = totalText;
+        }
 
-            try {
-                currentOrderId = 'SAKA-' + Date.now();
-
-                const apiResponse = await fetch('https://rjgkxqzecrsczcmuamhd.supabase.co/functions/v1/smooth-task', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        orderId: currentOrderId,
-                        amount: currentOrderAmount > 0 ? currentOrderAmount : 2275
-                    })
-                });
-
-                const apiData = await apiResponse.json();
-                if (apiData.success) {
-                    await supabaseClient.from('orders').insert([{ order_id: currentOrderId, status: 'PENDING' }]);
-                }
-                if (loadingOverlay) loadingOverlay.style.display = 'none';
-
-                if (apiData.success && apiData.qris_url) {
-                    if (qrisImg) qrisImg.src = apiData.qris_url;
-
-                    qrisSec.style.opacity = '0';
-                    qrisSec.style.display = 'block';
-                    document.getElementById('qrisTotal').innerText = document.getElementById('summary-total').innerText;
-                    setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
-                    btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
-                    setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
-                } else {
-                    showToast("Gagal membuat kode QRIS. Silakan coba lagi!");
-                }
-            } catch (err) {
-                if (loadingOverlay) loadingOverlay.style.display = 'none';
-                console.error("Error meminta QRIS:", err);
-                showToast("Terjadi kesalahan koneksi saat membuat QRIS.");
-            }
+        setTimeout(() => { qrisSec.style.opacity = '1'; }, 50);
+        
+        // Ubah tombol jadi "SAYA SUDAH BAYAR"
+        btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+        setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
+        return;
+      }
 
         } else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
-            if (loadingOverlay) {
-                if (loadingText) loadingText.textContent = 'Memeriksa Pembayaran...';
-                if (loadingSubtext) loadingSubtext.textContent = 'Sistem sedang memverifikasi transaksi Anda';
-                loadingOverlay.style.display = 'flex';
-            }
+                        // Langsung buka WhatsApp Admin
+      const noAdmin = "6285645096621";
+      const waText = document.getElementById('summary-wa') ? document.getElementById('summary-wa').innerText : '';
+      const totalText = document.getElementById('summary-total') ? document.getElementById('summary-total').innerText : '';
+      const productText = document.getElementById('summary-product') ? document.getElementById('summary-product').innerText : '';
 
-            try {
-                let isPaid = false;
-                
-                const { data: orderData } = await supabaseClient
-            .from('orders')
-            .select('status')
-            .eq('order_id', currentOrderId)
-            .maybeSingle();
+      const pesan = `Halo Admin, saya sudah melakukan pembayaran via QRIS.\n\n*Detail Pesanan:*\n- Produk: ${productText}\n- No. WA: ${waText}\n- Total Bayar: ${totalText}\n\nBerikut bukti transfernya. Mohon segera diproses, terima kasih!`;
 
-          if (orderData && orderData.status === 'PAID') {
-            isPaid = true;
-          } 
-
-                if (!isPaid) {
-                    if (loadingOverlay) loadingOverlay.style.display = 'none';
-                    showToast("Selesaikan pembayaran terlebih dahulu!");
-                    return;
-                }
-
-                const selectedCard = document.querySelector('.product-card.selected');
-                const selectedCategory = selectedCard ? selectedCard.getAttribute('data-category') : 'Level 3';
-
-                const { data, error } = await supabaseClient
-                    .from('accounts')
-                    .select('*')
-                    .eq('is_sold', false)
-                    .eq('category', selectedCategory)
-                    .limit(1)
-                    .maybeSingle();
-
-                if (error || !data) {
-                    if (loadingOverlay) loadingOverlay.style.display = 'none';
-                    showToast("Pembayaran diterima, tetapi stok akun sedang habis. Hubungi Admin!");
-                    return;
-                }
-
-                await supabaseClient
-                    .from('accounts')
-                    .update({ is_sold: true })
-                    .eq('id', data.id);
-
-                updateStockFromSupabase();
-
-                if (loadingOverlay) loadingOverlay.style.display = 'none';
-
-                const orderDetailContent = document.getElementById('order-detail-content');
-                if (orderDetailContent) orderDetailContent.style.display = 'none';
-                if (qrisSec) qrisSec.style.display = 'none';
-                btnConfirmPay.style.display = 'none';
-
-                if (accSec) {
-                    document.getElementById('accEmail').textContent = data.account_data || '-';
-                    document.getElementById('accPassword').textContent = data.password_data || '-';
-
-                    accSec.style.display = 'block';
-                    accSec.style.opacity = '0';
-                    setTimeout(() => {
-                        accSec.style.opacity = '1';
-                        accSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
-                }
-            } catch (err) {
-                if (loadingOverlay) loadingOverlay.style.display = 'none';
-                showToast("Gagal memproses verifikasi. Silakan coba lagi!");
-                console.error("Error Verifikasi:", err);
-            }
-        }
-    });
+      window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, '_blank');
+      return;
+    }
+  });
 }
 
 // 9. Salin Teks
