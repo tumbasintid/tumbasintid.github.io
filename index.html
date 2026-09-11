@@ -1657,45 +1657,52 @@ window.addEventListener('DOMContentLoaded', async () => {
 </div>
 <!-- MODAL POP-UP CARA ORDER -->
 <div id="orderHowModal" class="modal-overlay" style="display: none;">
-  <div class="modal-content" style="max-height: 80vh; overflow-y: auto;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-      <h3 style="margin: 0; color: #ffffff; font-size: 1.1rem; font-weight: 700;">Panduan Order</h3>
-      <span onclick="closeOrderHowModal()" style="color: #9ca3af; font-size: 1.5rem; cursor: pointer; line-height: 1;">&times;</span>
+  <div class="modal-content" style="max-height: 80vh; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
+    
+    <!-- HEADER MODAL (LENGKET DI ATAS) -->
+    <div style="padding: 20px 20px 12px 20px; border-bottom: 1px solid #374151; background-color: #111827; flex-shrink: 0;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+        <h3 style="margin: 0; color: #ffffff; font-size: 1.1rem; font-weight: 700;">Panduan Order</h3>
+        <span onclick="closeOrderHowModal()" style="color: #9ca3af; font-size: 1.5rem; cursor: pointer; line-height: 1;">&times;</span>
+      </div>
+      <p style="font-size: 0.75rem; color: #9ca3af; margin: 0;">
+        Ikuti langkah-langkah mudah berikut :
+      </p>
     </div>
-    <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 16px;">
-      Ikuti langkah-langkah mudah berikut :
-    </p>
-    <div style="display: flex; flex-direction: column; gap: 12px;">
-  <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
-    <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">1. Pilih Produk</h4>
-    <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Tentukan akun / produk yang ingin Anda beli pada halaman Beranda.</p>
-  </div>
 
-  <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
-    <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">2. Lengkapi Pemesanan</h4>
-    <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Masukkan nomor WhatsApp aktif, kode promo (jika ada), pilih metode pembayaran, lalu klik <b>PESAN SEKARANG</b>.</p>
-  </div>
+    <!-- BODY MODAL (AREA LANGKAH BISA DI-SCROLL) -->
+    <div style="padding: 16px 20px 20px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
+      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
+        <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">1. Pilih Produk</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Tentukan akun / produk yang ingin Anda beli pada halaman Beranda.</p>
+      </div>
 
-  <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
-    <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">3. Periksa Detail Pesanan</h4>
-    <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Pastikan kembali item produk serta total harga sudah sesuai, lalu klik <b>LANJUTKAN PEMBAYARAN</b>.</p>
-  </div>
+      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
+        <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">2. Lengkapi Pemesanan</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Masukkan nomor WhatsApp aktif, kode promo (jika ada), pilih metode pembayaran, lalu klik <b>PESAN SEKARANG</b>.</p>
+      </div>
 
-  <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
-    <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">4. Lakukan Pembayaran</h4>
-    <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Scan kode QRIS yang tertera untuk membayar, lalu tekan tombol <b>KONFIRMASI PEMBAYARAN</b>.</p>
-  </div>
+      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
+        <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">3. Periksa Detail Pesanan</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Pastikan kembali item produk serta total harga sudah sesuai, lalu klik <b>LANJUTKAN PEMBAYARAN</b>.</p>
+      </div>
 
-  <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
-    <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">5. Konfirmasi Bukti Transaksi</h4>
-    <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Kirim bukti transfer ke Admin via WhatsApp. Jika sudah, kembali ke halaman website.</p>
-  </div>
+      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
+        <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">4. Lakukan Pembayaran</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Scan kode QRIS yang tertera untuk membayar, lalu tekan tombol <b>KONFIRMASI PEMBAYARAN</b>.</p>
+      </div>
 
-  <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
-    <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">6. Dapatkan Detail Akun</h4>
-    <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Sistem akan otomatis mengubah tampilan halaman menjadi informasi akun (Email & Password) Anda secara instan.</p>
-  </div>
+      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
+        <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">5. Konfirmasi Bukti Transaksi</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Kirim bukti transfer ke Admin via WhatsApp. Jika sudah, kembali ke halaman website.</p>
+      </div>
+
+      <div style="background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 12px;">
+        <h4 style="margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600; color: #ffffff;">6. Dapatkan Detail Akun</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #9ca3af;">Sistem akan otomatis mengubah tampilan halaman menjadi informasi akun (Email & Password) Anda secara instan.</p>
+      </div>
     </div>
+
   </div>
 </div>
     
