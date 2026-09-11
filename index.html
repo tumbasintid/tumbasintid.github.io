@@ -1102,7 +1102,7 @@ if (orderForm) {
         const totalPrice = productPrice + adminFee;
 
         currentOrderAmount = totalPrice;
-        currentOrderId = 'ORD-' + Date.now();
+        currentOrderId = 'IDT-' + Date.now();
 localStorage.setItem('activeOrderId', currentOrderId);
 
               const orderDetails = {
@@ -1113,6 +1113,25 @@ localStorage.setItem('activeOrderId', currentOrderId);
         paymentInput: paymentInput
       };
       localStorage.setItem('activeOrderDetails', JSON.stringify(orderDetails));
+            // Simpan data order ke Supabase
+    if (typeof supabaseClient !== 'undefined') {
+      supabaseClient
+        .from('orders')
+        .insert([
+          {
+            order_id: currentOrderId,
+            status: 'PENDING',
+            whatsapp: waInput,
+            product_name: productName,
+            product_price: productPrice,
+            total_price: totalPrice,
+            payment_method: paymentInput
+          }
+        ])
+        .then(({ error }) => {
+          if (error) console.error('Gagal simpan ke Supabase:', error);
+        });
+    }
 
         const summaryProduct = document.getElementById('summary-product');
         const summaryPrice = document.getElementById('summary-price');
