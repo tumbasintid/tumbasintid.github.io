@@ -1508,17 +1508,47 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         if (order) {
           // Cek Status Pembayaran
-          if (order.status === 'PAID' || order.status === 'SUCCESS') {
-            if (qrisSec) qrisSec.style.display = 'none';
-            if (btnConfirmPay) btnConfirmPay.style.display = 'none';
-            if (accSec) accSec.style.display = 'block';
-          } else {
-            if (qrisSec) qrisSec.style.display = 'block';
-            if (btnConfirmPay) {
-              btnConfirmPay.style.display = 'block';
-              btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
-            }
+        if (order.status === 'PAID' || order.status === 'SUCCESS') {
+          // 1. Sembunyikan QRIS, Tombol Bayar, dan Card Detail Pembelian
+          if (qrisSec) qrisSec.style.display = 'none';
+          if (btnConfirmPay) btnConfirmPay.style.display = 'none';
+          if (orderDetailContent) orderDetailContent.style.display = 'none';
+
+          // 2. Tampilkan HANYA Card Detail Akun
+          if (accSec) accSec.style.display = 'block';
+
+          // 3. Ambil data Email & Password dari tabel accounts
+          const { data: accData } = await supabaseClient
+            .from('accounts')
+            .select('*')
+            .limit(1)
+            .single();
+
+          if (accData) {
+            const elements = document.querySelectorAll('#accountSection h3, #accountSection p, #accountSection div');
+            let replacedCount = 0;
+            elements.forEach(el => {
+              if (el.textContent.includes('loading...')) {
+                if (replacedCount === 0) {
+                  el.textContent = accData.email || 'email@gmail.com';
+                  replacedCount++;
+                } else if (replacedCount === 1) {
+                  el.textContent = accData.password || 'password123';
+                  replacedCount++;
+                }
+              }
+            });
           }
+        } else {
+          // Jika masih PENDING
+          if (qrisSec) qrisSec.style.display = 'block';
+          if (orderDetailContent) orderDetailContent.style.display = 'block';
+          if (accSec) accSec.style.display = 'none';
+          if (btnConfirmPay) {
+            btnConfirmPay.style.display = 'block';
+            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+          }
+        }
         }
       } catch (err) {
         console.error('Gagal cek status Supabase:', err);
