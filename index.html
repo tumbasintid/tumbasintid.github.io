@@ -1516,7 +1516,10 @@ window.addEventListener('DOMContentLoaded', async () => {
           if (orderDetailContent) orderDetailContent.style.display = 'none';
 
           // 2. Tampilkan HANYA Card Detail Akun
-          if (accSec) accSec.style.display = 'block';
+          if (accSec) {
+  accSec.style.display = 'block';
+  accSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
 
                        // 3. Cek apakah order ini sudah punya akun yang tersimpan lokal
             let assignedEmail = localStorage.getItem('assigned_email_' + savedOrderId);
