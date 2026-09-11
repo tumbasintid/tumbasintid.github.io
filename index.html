@@ -606,6 +606,7 @@
 
                         <p style="font-size: 0.75rem; color: #6b7280; text-align: center;">Simpan informasi akun ini dengan baik ya!</p>
                         <button id="btn-open-review" onclick="openReviewModal()" style="width: 100%; margin-top: 15px; padding: 10px; background-color: #eab308; color: #000000; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">Tulis Ulasan</button>
+                        <button onclick="resetToHomeState()" style="width: 100%; margin-top: 10px; padding: 10px; background-color: transparent; border: 1px solid #374151; color: #9ca3af; border-radius: 8px; font-weight: 600; cursor: pointer;">Kembali ke Beranda</button>
                     </div>
 
                 </div>
@@ -1570,7 +1571,50 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   }
 });
+// --- FUNGSI RESET & BATAS WAKTU 1 MENIT ---
 
+// 1. Fungsi Tombol "Kembali ke Beranda" (Reset Manual)
+function resetToHomeState() {
+  localStorage.removeItem("activeOrderId");
+  localStorage.removeItem("orderTimestamp");
+
+  // Sembunyikan Detail Akun & Tampilkan Pesan Peringatan Kosong
+  const accSec = document.getElementById("accountSection");
+  const emptyState = document.getElementById("empty-state-card");
+  const orderDetailContent = document.getElementById("order-detail-content");
+  const qrisSec = document.getElementById("qrisSection");
+
+  if (accSec) accSec.style.display = "none";
+  if (orderDetailContent) orderDetailContent.style.display = "none";
+  if (qrisSec) qrisSec.style.display = "none";
+  if (emptyState) emptyState.style.display = "block";
+
+  // Pindahkan tampilan ke tab Beranda
+  if (typeof switchTab === "function") {
+    switchTab("beranda");
+  }
+}
+
+// 2. Pengecekan Batas Waktu 1 Menit saat Refresh Halaman
+document.addEventListener("DOMContentLoaded", function () {
+  const savedTime = localStorage.getItem("orderTimestamp");
+  const savedOrderId = localStorage.getItem("activeOrderId");
+
+  if (savedOrderId) {
+    if (!savedTime) {
+      // Jika baru pertama kali masuk kondisi ini, catat waktu sekarang
+      localStorage.setItem("orderTimestamp", new Date().getTime());
+    } else {
+      const currentTime = new Date().getTime();
+      const timePassed = (currentTime - parseInt(savedTime)) / 1000; // Selisih dalam detik
+
+      // Jika sudah lebih dari 60 detik (1 menit)
+      if (timePassed > 60) {
+        resetToHomeState();
+      }
+    }
+  }
+});
     
 </script>
     <!-- Overlay Latar Belakang Gelap -->
