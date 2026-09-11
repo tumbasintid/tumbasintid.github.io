@@ -1183,10 +1183,14 @@ if (orderForm) {
         const totalText = document.getElementById('summary-total') ? document.getElementById('summary-total').innerText : '';
         const productText = document.getElementById('summary-product') ? document.getElementById('summary-product').innerText : '';
 
-        const pesan = `Halo Admin, saya sudah melakukan pembayaran via QRIS.\n\n*Detail Pesanan:*\n- Produk: ${productText}\n- No. WA: ${waText}\n- Total Bayar: ${totalText}\n\nBerikut bukti transfernya. Mohon segera diproses, terima kasih!`;
+              const pesan = `Halo Admin, saya sudah melakukan pembayaran via QRIS.\n\n*Detail Pesanan:*\n- Produk: ${productText}\n- No. WA: ${waText}\n- Total Bayar: ${totalText}\n\nBerikut bukti transfernya. Mohon segera diproses, terima kasih!`;
 
-        window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, '_blank');
-        return;
+      if (typeof currentOrderId !== 'undefined' && currentOrderId) {
+        localStorage.setItem('activeOrderId', currentOrderId);
+      }
+
+      window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, '_blank');
+      return;
       }
     });
   }
