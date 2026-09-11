@@ -1517,28 +1517,22 @@ window.addEventListener('DOMContentLoaded', async () => {
           // 2. Tampilkan HANYA Card Detail Akun
           if (accSec) accSec.style.display = 'block';
 
-          // 3. Ambil data Email & Password dari tabel accounts
-          const { data: accData } = await supabaseClient
-            .from('accounts')
-            .select('*')
-            .limit(1)
-            .single();
+                      // 3. Ambil akun ready dari tabel accounts
+            const { data: accData } = await supabaseClient
+              .from('accounts')
+              .select('*')
+              .eq('is_sold', false)
+              .limit(1)
+              .single();
 
-          if (accData) {
-            const elements = document.querySelectorAll('#accountSection h3, #accountSection p, #accountSection div');
-            let replacedCount = 0;
-            elements.forEach(el => {
-              if (el.textContent.includes('loading...')) {
-                if (replacedCount === 0) {
-                  el.textContent = accData.email || 'email@gmail.com';
-                  replacedCount++;
-                } else if (replacedCount === 1) {
-                  el.textContent = accData.password || 'password123';
-                  replacedCount++;
-                }
-              }
-            });
-          }
+            if (accData) {
+              const accEmailElem = document.getElementById('accEmail');
+              const accPassElem = document.getElementById('accPassword');
+
+              if (accEmailElem) accEmailElem.textContent = accData.account_data || '-';
+              if (accPassElem) accPassElem.textContent = accData.password_data || '-';
+            }
+
         } else {
           // Jika masih PENDING
           if (qrisSec) qrisSec.style.display = 'block';
