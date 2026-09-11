@@ -1427,6 +1427,51 @@ function closeOrderHowModal() {
   document.getElementById('orderHowModal').style.display = 'none';
   document.body.style.overflow = '';
 }
+// Pengecekan Transaksi Aktif Saat Refresh
+window.addEventListener('DOMContentLoaded', async () => {
+  const savedOrderId = localStorage.getItem('activeOrderId');
+  
+  if (savedOrderId && typeof supabaseClient !== 'undefined') {
+    try {
+      // 1. Cek status transaksi di Supabase
+      const { data: order, error } = await supabaseClient
+        .from('orders')
+        .select('*')
+        .eq('order_id', savedOrderId)
+        .maybeSingle();
+
+      if (order) {
+        // Pindahkan ke tab pesanan
+        if (typeof switchTab === 'function') switchTab('pesanan');
+
+        const emptyState = document.getElementById('empty-state-card');
+        const orderDetailContent = document.getElementById('order-detail-content');
+        const qrisSec = document.getElementById('qrisSection');
+        const btnConfirmPay = document.getElementById('btnConfirmPay');
+        const accSec = document.getElementById('accountSection');
+
+        if (emptyState) emptyState.style.display = 'none';
+        if (orderDetailContent) orderDetailContent.style.display = 'block';
+
+        // 2. Jika Admin sudah ACC (Status = PAID)
+        if (order.status === 'PAID' || order.status === 'SUCCESS') {
+          if (qrisSec) qrisSec.style.display = 'none';
+          if (btnConfirmPay) btnConfirmPay.style.display = 'none';
+          if (accSec) accSec.style.display = 'block'; // Tampilkan Card Detail Akun & Ulasan!
+        } else {
+          // 3. Jika masih PENDING, tetap tampilkan Card QRIS
+          if (qrisSec) qrisSec.style.display = 'block';
+          if (btnConfirmPay) {
+            btnConfirmPay.style.display = 'block';
+            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Gagal memuat status pesanan:', err);
+    }
+  }
+});
 
 </script>
     <!-- Overlay Latar Belakang Gelap -->
