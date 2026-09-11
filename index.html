@@ -1105,6 +1105,15 @@ if (orderForm) {
         currentOrderId = 'ORD-' + Date.now();
 localStorage.setItem('activeOrderId', currentOrderId);
 
+              const orderDetails = {
+        productName: productName,
+        productPrice: productPrice,
+        totalPrice: totalPrice,
+        waInput: waInput,
+        paymentInput: paymentInput
+      };
+      localStorage.setItem('activeOrderDetails', JSON.stringify(orderDetails));
+
         const summaryProduct = document.getElementById('summary-product');
         const summaryPrice = document.getElementById('summary-price');
         const summaryTotal = document.getElementById('summary-total');
@@ -1444,6 +1453,25 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     if (emptyState) emptyState.style.display = 'none';
     if (orderDetailContent) orderDetailContent.style.display = 'block';
+       
+      // 1. Ambil rincian dari localStorage agar tidak jadi Rp 0
+    const savedDetails = localStorage.getItem('activeOrderDetails');
+    if (savedDetails) {
+      const details = JSON.parse(savedDetails);
+      const sumProduct = document.getElementById('summary-product');
+      const sumPrice = document.getElementById('summary-price');
+      const sumTotal = document.getElementById('summary-total');
+      const sumWa = document.getElementById('summary-wa');
+      const sumMethod = document.getElementById('summary-method');
+      const qrisTotalElem = document.getElementById('qrisTotal');
+
+      if (sumProduct) sumProduct.textContent = details.productName || '-';
+      if (sumPrice) sumPrice.textContent = 'Rp ' + (details.productPrice || 0).toLocaleString('id-ID');
+      if (sumTotal) sumTotal.textContent = 'Rp ' + (details.totalPrice || 0).toLocaleString('id-ID');
+      if (sumWa) sumWa.textContent = details.waInput || '-';
+      if (sumMethod) sumMethod.textContent = (details.paymentInput || '-').toUpperCase();
+      if (qrisTotalElem) qrisTotalElem.textContent = 'Rp ' + (details.totalPrice || 0).toLocaleString('id-ID');
+    }
 
     if (typeof supabaseClient !== 'undefined') {
       try {
@@ -1454,21 +1482,6 @@ window.addEventListener('DOMContentLoaded', async () => {
           .maybeSingle();
 
         if (order) {
-          // Isi kembali rincian teks dari database Supabase
-          const sumProduct = document.getElementById('summary-product');
-          const sumPrice = document.getElementById('summary-price');
-          const sumTotal = document.getElementById('summary-total');
-          const sumWa = document.getElementById('summary-wa');
-          const sumMethod = document.getElementById('summary-method');
-          const qrisTotalElem = document.getElementById('qrisTotal');
-
-          if (sumProduct) sumProduct.textContent = order.product_name || '-';
-          if (sumPrice) sumPrice.textContent = 'Rp ' + (order.product_price || 0).toLocaleString('id-ID');
-          if (sumTotal) sumTotal.textContent = 'Rp ' + (order.total_price || 0).toLocaleString('id-ID');
-          if (sumWa) sumWa.textContent = order.whatsapp || '-';
-          if (sumMethod) sumMethod.textContent = (order.payment_method || '-').toUpperCase();
-          if (qrisTotalElem) qrisTotalElem.textContent = 'Rp ' + (order.total_price || 0).toLocaleString('id-ID');
-
           // Cek Status Pembayaran
           if (order.status === 'PAID' || order.status === 'SUCCESS') {
             if (qrisSec) qrisSec.style.display = 'none';
