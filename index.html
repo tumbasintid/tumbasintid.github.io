@@ -1472,6 +1472,12 @@ window.addEventListener('DOMContentLoaded', async () => {
       if (sumMethod) sumMethod.textContent = (details.paymentInput || '-').toUpperCase();
       if (qrisTotalElem) qrisTotalElem.textContent = 'Rp ' + (details.totalPrice || 0).toLocaleString('id-ID');
     }
+          // 2. Tampilkan langsung QRIS & tombol
+    if (qrisSec) qrisSec.style.display = 'block';
+    if (btnConfirmPay) {
+      btnConfirmPay.style.display = 'block';
+      btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+    }
 
     if (typeof supabaseClient !== 'undefined') {
       try {
