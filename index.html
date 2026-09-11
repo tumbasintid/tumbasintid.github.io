@@ -1517,27 +1517,41 @@ window.addEventListener('DOMContentLoaded', async () => {
           // 2. Tampilkan HANYA Card Detail Akun
           if (accSec) accSec.style.display = 'block';
 
-                      // 3. Ambil akun ready dari tabel accounts
-            const { data: accData } = await supabaseClient
-              .from('accounts')
-              .select('*')
-              .eq('is_sold', false)
-              .limit(1)
-              .single();
+                       // 3. Cek apakah order ini sudah punya akun yang tersimpan lokal
+            let assignedEmail = localStorage.getItem('assigned_email_' + savedOrderId);
+            let assignedPass = localStorage.getItem('assigned_pass_' + savedOrderId);
 
-                        if (accData) {
-              const accEmailElem = document.getElementById('accEmail');
-              const accPassElem = document.getElementById('accPassword');
-
-              if (accEmailElem) accEmailElem.textContent = accData.account_data || '-';
-              if (accPassElem) accPassElem.textContent = accData.password_data || '-';
-
-              // Ubah status is_sold di Supabase jadi true agar tidak terpakai ulang
-              await supabaseClient
+            if (!assignedEmail) {
+              // Jika belum ada, ambil 1 akun ready dari database
+              const { data: accData } = await supabaseClient
                 .from('accounts')
-                .update({ is_sold: true })
-                .eq('id', accData.id);
-                        }
+                .select('*')
+                .eq('is_sold', false)
+                .limit(1)
+                .single();
+
+              if (accData) {
+                assignedEmail = accData.account_data;
+                assignedPass = accData.password_data;
+
+                // Kunci akun di HP pembeli agar tidak berubah saat refresh
+                localStorage.setItem('assigned_email_' + savedOrderId, assignedEmail);
+                localStorage.setItem('assigned_pass_' + savedOrderId, assignedPass);
+
+                // Tandai akun di Supabase sebagai terjual (is_sold = true)
+                await supabaseClient
+                  .from('accounts')
+                  .update({ is_sold: true })
+                  .eq('id', accData.id);
+              }
+            }
+
+            // Tampilkan akun yang sudah dikunci
+            const accEmailElem = document.getElementById('accEmail');
+            const accPassElem = document.getElementById('accPassword');
+
+            if (accEmailElem) accEmailElem.textContent = assignedEmail || '-';
+            if (accPassElem) accPassElem.textContent = assignedPass || '-';
 
         } else {
           // Jika masih PENDING
