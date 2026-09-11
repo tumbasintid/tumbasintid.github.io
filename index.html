@@ -1151,7 +1151,7 @@ if (orderForm) {
     });
 }
 
-  // 8. Konfirmasi & Verifikasi Pembayaran
+    // 8. Konfirmasi & Verifikasi Pembayaran
   const btnConfirmPay = document.getElementById('btnConfirmPay');
   if (btnConfirmPay) {
     btnConfirmPay.addEventListener('click', async function() {
@@ -1176,22 +1176,20 @@ if (orderForm) {
         btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
         setTimeout(() => { btnConfirmPay.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
         return;
+      } else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
+        // Langsung buka WhatsApp Admin
+        const noAdmin = "6285645096621";
+        const waText = document.getElementById('summary-wa') ? document.getElementById('summary-wa').innerText : '';
+        const totalText = document.getElementById('summary-total') ? document.getElementById('summary-total').innerText : '';
+        const productText = document.getElementById('summary-product') ? document.getElementById('summary-product').innerText : '';
+
+        const pesan = `Halo Admin, saya sudah melakukan pembayaran via QRIS.\n\n*Detail Pesanan:*\n- Produk: ${productText}\n- No. WA: ${waText}\n- Total Bayar: ${totalText}\n\nBerikut bukti transfernya. Mohon segera diproses, terima kasih!`;
+
+        window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, '_blank');
+        return;
       }
-
-        } else if (btnConfirmPay.textContent === 'SAYA SUDAH BAYAR') {
-                        // Langsung buka WhatsApp Admin
-      const noAdmin = "6285645096621";
-      const waText = document.getElementById('summary-wa') ? document.getElementById('summary-wa').innerText : '';
-      const totalText = document.getElementById('summary-total') ? document.getElementById('summary-total').innerText : '';
-      const productText = document.getElementById('summary-product') ? document.getElementById('summary-product').innerText : '';
-
-      const pesan = `Halo Admin, saya sudah melakukan pembayaran via QRIS.\n\n*Detail Pesanan:*\n- Produk: ${productText}\n- No. WA: ${waText}\n- Total Bayar: ${totalText}\n\nBerikut bukti transfernya. Mohon segera diproses, terima kasih!`;
-
-      window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, '_blank');
-      return;
-    }
-  });
-}
+    });
+  }
 
 // 9. Salin Teks
 function copyText(elementId) {
