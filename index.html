@@ -1525,13 +1525,19 @@ window.addEventListener('DOMContentLoaded', async () => {
               .limit(1)
               .single();
 
-            if (accData) {
+                        if (accData) {
               const accEmailElem = document.getElementById('accEmail');
               const accPassElem = document.getElementById('accPassword');
 
               if (accEmailElem) accEmailElem.textContent = accData.account_data || '-';
               if (accPassElem) accPassElem.textContent = accData.password_data || '-';
-            }
+
+              // Ubah status is_sold di Supabase jadi true agar tidak terpakai ulang
+              await supabaseClient
+                .from('accounts')
+                .update({ is_sold: true })
+                .eq('id', accData.id);
+                        }
 
         } else {
           // Jika masih PENDING
