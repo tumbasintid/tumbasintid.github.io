@@ -1453,15 +1453,33 @@ window.addEventListener('DOMContentLoaded', async () => {
           .eq('order_id', savedOrderId)
           .maybeSingle();
 
-        if (order && (order.status === 'PAID' || order.status === 'SUCCESS')) {
-          if (qrisSec) qrisSec.style.display = 'none';
-          if (btnConfirmPay) btnConfirmPay.style.display = 'none';
-          if (accSec) accSec.style.display = 'block';
-        } else {
-          if (qrisSec) qrisSec.style.display = 'block';
-          if (btnConfirmPay) {
-            btnConfirmPay.style.display = 'block';
-            btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+        if (order) {
+          // Isi kembali rincian teks dari database Supabase
+          const sumProduct = document.getElementById('summary-product');
+          const sumPrice = document.getElementById('summary-price');
+          const sumTotal = document.getElementById('summary-total');
+          const sumWa = document.getElementById('summary-wa');
+          const sumMethod = document.getElementById('summary-method');
+          const qrisTotalElem = document.getElementById('qrisTotal');
+
+          if (sumProduct) sumProduct.textContent = order.product_name || '-';
+          if (sumPrice) sumPrice.textContent = 'Rp ' + (order.product_price || 0).toLocaleString('id-ID');
+          if (sumTotal) sumTotal.textContent = 'Rp ' + (order.total_price || 0).toLocaleString('id-ID');
+          if (sumWa) sumWa.textContent = order.whatsapp || '-';
+          if (sumMethod) sumMethod.textContent = (order.payment_method || '-').toUpperCase();
+          if (qrisTotalElem) qrisTotalElem.textContent = 'Rp ' + (order.total_price || 0).toLocaleString('id-ID');
+
+          // Cek Status Pembayaran
+          if (order.status === 'PAID' || order.status === 'SUCCESS') {
+            if (qrisSec) qrisSec.style.display = 'none';
+            if (btnConfirmPay) btnConfirmPay.style.display = 'none';
+            if (accSec) accSec.style.display = 'block';
+          } else {
+            if (qrisSec) qrisSec.style.display = 'block';
+            if (btnConfirmPay) {
+              btnConfirmPay.style.display = 'block';
+              btnConfirmPay.textContent = 'SAYA SUDAH BAYAR';
+            }
           }
         }
       } catch (err) {
