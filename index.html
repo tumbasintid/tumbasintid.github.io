@@ -1102,6 +1102,8 @@ if (orderForm) {
         const totalPrice = productPrice + adminFee;
 
         currentOrderAmount = totalPrice;
+        currentOrderId = 'ORD-' + Date.now();
+localStorage.setItem('activeOrderId', currentOrderId);
 
         const summaryProduct = document.getElementById('summary-product');
         const summaryPrice = document.getElementById('summary-price');
