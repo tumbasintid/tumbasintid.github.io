@@ -420,11 +420,10 @@
                                     <span id="closeModal" style="color: #94a3b8; font-size: 20px; cursor: pointer; font-weight: bold;">&times;</span>
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 10px;">
-                                    <div class="modal-opt" data-value="qris" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">QRIS (All Payment)</div>
-                                    <div class="modal-opt" data-value="dana" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">DANA</div>
-                                    <div class="modal-opt" data-value="gopay" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">GoPay</div>
-                                    <div class="modal-opt" data-value="ovo" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">OVO</div>
-                                    <div class="modal-opt" data-value="bca" style="padding: 12px 15px; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; border: 1px solid #334155;">Bank BCA</div>
+                                    <div class="modal-opt" onclick="document.getElementById('paymentMethodInput').value='DANA'; document.getElementById('selectedOptionText').textContent='DANA'; document.getElementById('modalOverlay').style.display='none';">DANA</div>
+<div class="modal-opt" onclick="document.getElementById('paymentMethodInput').value='OVO'; document.getElementById('selectedOptionText').textContent='OVO'; document.getElementById('modalOverlay').style.display='none';">OVO</div>
+<div class="modal-opt" onclick="document.getElementById('paymentMethodInput').value='GoPay'; document.getElementById('selectedOptionText').textContent='GoPay'; document.getElementById('modalOverlay').style.display='none';">GoPay</div>
+<div class="modal-opt" onclick="document.getElementById('paymentMethodInput').value='QRIS'; document.getElementById('selectedOptionText').textContent='QRIS'; document.getElementById('modalOverlay').style.display='none';">QRIS</div>
                                 </div>
                             </div>
                         </div>
