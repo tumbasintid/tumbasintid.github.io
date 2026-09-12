@@ -1650,6 +1650,7 @@ function saveToOrderHistory(orderData) {
   
   localStorage.setItem('tumbas_order_history', JSON.stringify(history));
 }
+
 function renderOrderHistory() {
   const history = JSON.parse(localStorage.getItem('tumbas_order_history')) || [];
   const emptyState = document.getElementById('empty-state-card');
@@ -1680,8 +1681,31 @@ function renderOrderHistory() {
     parentContainer.style.padding = '0';
   }
 
+  // Filter agar ID Transaksi yang sama tidak muncul 2 kali (mengutamakan data dengan metode selain QRIS jika ada)
+  const uniqueHistory = [];
+  const seenOrderIds = new Set();
+
+  // Sort/prioritaskan data transaksi yang metode pembayarannya bukan QRIS default
+  const sortedHistory = [...history].sort((a, b) => {
+    const methodA = (a.paymentMethod || a.payment_method || '').toUpperCase();
+    const methodB = (b.paymentMethod || b.payment_method || '').toUpperCase();
+    if (methodA !== 'QRIS' && methodB === 'QRIS') return -1;
+    if (methodA === 'QRIS' && methodB !== 'QRIS') return 1;
+    return 0;
+  });
+
+  sortedHistory.forEach(item => {
+    const id = item.orderId || item.id;
+    if (id && !seenOrderIds.has(id)) {
+      seenOrderIds.add(id);
+      uniqueHistory.push(item);
+    } else if (!id) {
+      uniqueHistory.push(item);
+    }
+  });
+
   // Jika riwayat kosong
-  if (history.length === 0) {
+  if (uniqueHistory.length === 0) {
     if (emptyState) emptyState.style.display = 'block';
     historyList.style.display = 'none';
   } else {
@@ -1691,7 +1715,7 @@ function renderOrderHistory() {
     // SVG Icon Box Garis Warna Kuning Emas (#fbbf24)
     const boxIconSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>`;
 
-    // Header Judul - Margin top minus (-15px) agar naik mendekati navbar
+    // Header Judul Halaman Riwayat Transaksi
     const headerTitleHtml = `
       <div style="margin-top: -15px; margin-bottom: 14px; padding-left: 2px;">
         <h2 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin: 0 0 2px 0;">
@@ -1701,7 +1725,7 @@ function renderOrderHistory() {
       </div>
     `;
 
-    const cardsHtml = history.map(item => {
+    const cardsHtml = uniqueHistory.map(item => {
       const isPaid = item.status === 'PAID' || item.status === 'SUCCESS';
       const statusBadge = isPaid 
         ? `<span style="background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Sukses</span>`
@@ -1709,8 +1733,6 @@ function renderOrderHistory() {
       
       const formattedPrice = (item.totalPrice || item.price || '0').toString().replace(/^Rp\s*/i, '');
       const orderId = item.orderId || item.id || '-';
-      
-      // Deteksi metode pembayaran dari berbagai nama variabel yang mungkin tersimpan
       const paymentMethod = item.paymentMethod || item.payment_method || item.paymentInput || item.method || 'QRIS';
       const orderDate = item.date || new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
 
@@ -1753,8 +1775,8 @@ function renderOrderHistory() {
 
     historyList.innerHTML = headerTitleHtml + cardsHtml;
   }
-    }
-
+}
+    
 </script>
     <!-- Overlay Latar Belakang Gelap -->
 <div id="sidebar-overlay" onclick="closeSidebar()"></div>
