@@ -1642,7 +1642,6 @@ function saveToOrderHistory(orderData) {
   
   localStorage.setItem('tumbas_order_history', JSON.stringify(history));
 }
-
 function renderOrderHistory() {
   const history = JSON.parse(localStorage.getItem('tumbas_order_history')) || [];
   const emptyState = document.getElementById('empty-state-card');
@@ -1653,7 +1652,7 @@ function renderOrderHistory() {
 
   if (!historyList) return;
   
-  // Sembunyikan riwayat jika transaksi/detail pembelian sedang aktif
+  // Sembunyikan riwayat jika ada transaksi/detail pembelian yang sedang aktif
   const isTransactionActive = savedOrderId || 
     (orderDetailContent && orderDetailContent.style.display !== 'none' && orderDetailContent.style.display !== '') || 
     (accSec && accSec.style.display !== 'none' && accSec.style.display !== '');
@@ -1664,39 +1663,63 @@ function renderOrderHistory() {
     return;
   }
 
-  // Jika tidak ada transaksi aktif & riwayat kosong
+  // Jika riwayat kosong
   if (history.length === 0) {
     if (emptyState) emptyState.style.display = 'block';
     historyList.style.display = 'none';
   } else {
-    // Jika tidak ada transaksi aktif & ada riwayat
     if (emptyState) emptyState.style.display = 'none';
     historyList.style.display = 'block';
     
     historyList.innerHTML = history.map(item => {
       const isPaid = item.status === 'PAID' || item.status === 'SUCCESS';
       const statusBadge = isPaid 
-        ? `<span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid #22c55e; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">Sukses</span>`
-        : `<span style="background: rgba(234, 179, 8, 0.2); color: #eab308; border: 1px solid #eab308; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">Pending</span>`;
+        ? `<span style="background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Sukses</span>`
+        : `<span style="background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Pending</span>`;
       
-      const formattedPrice = (item.totalPrice || '0').replace(/^Rp\s*/i, '');
+      const formattedPrice = (item.totalPrice || item.price || '0').replace(/^Rp\s*/i, '');
+      const orderId = item.orderId || item.id || '-';
+      const paymentMethod = item.paymentMethod || item.method || 'QRIS';
+      const orderDate = item.date || new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
 
       return `
-        <div style="background-color: #1f2937; border-radius: 12px; padding: 14px; margin-bottom: 12px; border: 1px solid #374151;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <strong style="color: #ffffff; font-size: 0.9rem;">${item.productName || 'Pesanan Akun'}</strong>
+        <div style="background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);">
+          <!-- Header Card: Nama Produk & Status -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #374151; padding-bottom: 10px; margin-bottom: 12px;">
+            <div style="font-weight: 700; color: #ffffff; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+              📦 <span>${item.productName || 'Pesanan Akun'}</span>
+            </div>
             ${statusBadge}
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #9ca3af;">
-            <span>${item.date || ''}</span>
-            <span style="color: #f59e0b; font-weight: 700;">Rp ${formattedPrice}</span>
+
+          <!-- Rincian Informasi -->
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem;">
+            <div style="display: flex; justify-content: space-between; color: #9ca3af;">
+              <span>ID Transaksi</span>
+              <span style="color: #d1d5db; font-family: monospace; font-weight: 600;">#${orderId}</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; color: #9ca3af;">
+              <span>Metode Pembayaran</span>
+              <span style="color: #d1d5db; font-weight: 500;">${paymentMethod}</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; color: #9ca3af;">
+              <span>Waktu Transaksi</span>
+              <span style="color: #9ca3af; font-size: 0.78rem;">${orderDate}</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; border-top: 1px solid #1f2937; padding-top: 8px;">
+              <span style="color: #d1d5db; font-weight: 600;">Total Harga</span>
+              <span style="color: #f59e0b; font-weight: 700; font-size: 1rem;">Rp ${formattedPrice}</span>
+            </div>
           </div>
         </div>
       `;
     }).join('');
   }
 }
-    
+
 </script>
     <!-- Overlay Latar Belakang Gelap -->
 <div id="sidebar-overlay" onclick="closeSidebar()"></div>
