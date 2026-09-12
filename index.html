@@ -1777,17 +1777,17 @@ function renderOrderHistory() {
   }
 }
     document.querySelectorAll('.modal-opt').forEach(opt => {
-    opt.addEventListener('click', function() {
-      const text = this.innerText.trim();
-      const inputHidden = document.getElementById('paymentMethodInput');
-      const triggerText = document.getElementById('selectedOptionText');
-      const modal = document.getElementById('modalOverlay');
+  opt.addEventListener('click', function() {
+    const selectedValue = (this.getAttribute('data-value') || this.innerText).trim().toUpperCase();
+    const inputHidden = document.getElementById('paymentMethodInput');
+    const triggerText = document.getElementById('selectedOptionText');
+    const modal = document.getElementById('modalOverlay');
 
-      if (inputHidden) inputHidden.value = text;
-      if (triggerText) triggerText.textContent = text;
-      if (modal) modal.style.display = 'none';
-    });
+    if (inputHidden) inputHidden.value = selectedValue;
+    if (triggerText) triggerText.textContent = selectedValue;
+    if (modal) modal.style.display = 'none';
   });
+});
     
 </script>
     <!-- Overlay Latar Belakang Gelap -->
