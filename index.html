@@ -1115,7 +1115,7 @@ localStorage.setItem('activeOrderId', currentOrderId);
           productPrice: productPrice,
           totalPrice: totalPrice,
           waInput: waInput,
-          paymentMethod: paymentInput,
+          paymentMethod: (document.getElementById('paymentMethodInput')?.value || 'QRIS').toUpperCase(),
           date: new Date().toLocaleDateString('id-ID'),
           status: 'PAID'
         };
@@ -1137,7 +1137,7 @@ localStorage.setItem('activeOrderId', currentOrderId);
             product_name: productName,
             product_price: productPrice,
             total_price: totalPrice,
-            payment_method: paymentInput
+            payment_method: (document.getElementById('paymentMethodInput')?.value || 'QRIS').toUpperCase(),
           }
         ])
         .then(({ error }) => {
@@ -1778,14 +1778,13 @@ function renderOrderHistory() {
 }
     document.querySelectorAll('.modal-opt').forEach(opt => {
   opt.addEventListener('click', function() {
-    const selectedValue = (this.getAttribute('data-value') || this.innerText).trim().toUpperCase();
-    const inputHidden = document.getElementById('paymentMethodInput');
-    const triggerText = document.getElementById('selectedOptionText');
-    const modal = document.getElementById('modalOverlay');
-
-    if (inputHidden) inputHidden.value = selectedValue;
-    if (triggerText) triggerText.textContent = selectedValue;
-    if (modal) modal.style.display = 'none';
+    // Mengambil nilai asli dari opsi yang diklik (misal: "ovo", "dana")
+    const val = this.getAttribute('data-value') || this.innerText.trim();
+    
+    // Simpan nilai ke input hidden dan ubah teks tombol
+    document.getElementById('paymentMethodInput').value = val;
+    document.getElementById('selectedOptionText').textContent = this.innerText.trim();
+    document.getElementById('modalOverlay').style.display = 'none';
   });
 });
     
