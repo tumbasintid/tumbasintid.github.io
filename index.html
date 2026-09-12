@@ -1034,33 +1034,6 @@ if (modalOverlay) {
     });
 }
 
-modalOpts.forEach(function(opt) {
-    opt.addEventListener('click', function() {
-        modalOpts.forEach(o => {
-            o.style.border = '1px solid #334155';
-            o.style.color = '#fff';
-        });
-
-        this.style.border = '1px solid #eab308';
-        this.style.color = '#eab308';
-
-        const value = this.getAttribute('data-value') || this.textContent.trim();
-        const text = this.textContent.trim();
-
-        if (paymentMethodInput) paymentMethodInput.value = value;
-
-        const targetText = document.getElementById('selectedOptionText');
-        if (targetText) {
-            targetText.textContent = text;
-            targetText.style.color = '#fff';
-        }
-
-        setTimeout(() => {
-            if (modalOverlay) modalOverlay.style.display = 'none';
-        }, 150);
-    });
-});
-
 // 6. Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
