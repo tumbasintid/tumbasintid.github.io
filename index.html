@@ -1706,7 +1706,7 @@ function renderOrderHistory() {
       
       const formattedPrice = (item.totalPrice || item.price || '0').toString().replace(/^Rp\s*/i, '');
       const orderId = item.orderId || item.id || '-';
-      const paymentMethod = item.paymentMethod || item.payment_method || item.paymentInput || item.method || 'QRIS';
+      const paymentMethod = item.payment_method || (typeof item.paymentMethod === 'string' ? item.paymentMethod : '') || 'QRIS';
       const orderDate = item.date || new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
 
       return `
