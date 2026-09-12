@@ -1553,6 +1553,13 @@ window.addEventListener('DOMContentLoaded', async () => {
             }
 
             // Tampilkan akun yang sudah dikunci
+            saveToOrderHistory({ 
+  id: savedOrderId, 
+  productName: document.getElementById('summary-product') ? document.getElementById('summary-product').textContent : "Pesanan Akun", 
+  date: new Date().toLocaleDateString('id-ID'), 
+  totalPrice: document.getElementById('summary-total') ? document.getElementById('summary-total').textContent : "-", 
+  status: "SUCCESS" 
+});
             const accEmailElem = document.getElementById('accEmail');
             const accPassElem = document.getElementById('accPassword');
 
