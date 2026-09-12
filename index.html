@@ -1680,8 +1680,8 @@ function renderOrderHistory() {
     if (emptyState) emptyState.style.display = 'none';
     historyList.style.display = 'block';
     
-    // SVG Icon Box Garis Warna Kuning (Menyesuaikan Tema Website)
-    const boxIconSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>`;
+    // SVG Icon Box Garis Warna Kuning Emas (#fbbf24)
+    const boxIconSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>`;
 
     historyList.innerHTML = history.map(item => {
       const isPaid = item.status === 'PAID' || item.status === 'SUCCESS';
@@ -1695,9 +1695,9 @@ function renderOrderHistory() {
       const orderDate = item.date || new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
 
       return `
-        <div style="background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+        <div style="background: #161d2a; border: 1px solid #252e3e; border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);">
           <!-- Header Card: Nama Produk (Putih) & Status -->
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); padding-bottom: 10px; margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #2d3748; padding-bottom: 10px; margin-bottom: 12px;">
             <div style="font-weight: 700; color: #ffffff; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
               ${boxIconSvg}
               <span>${item.productName || item.product || 'Pesanan Akun'}</span>
@@ -1722,9 +1722,9 @@ function renderOrderHistory() {
               <span style="color: #9ca3af; font-size: 0.78rem;">${orderDate}</span>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; border-top: 1px solid #252e3e; padding-top: 8px;">
               <span style="color: #d1d5db; font-weight: 600;">Total Harga</span>
-              <span style="color: #f59e0b; font-weight: 700; font-size: 1rem;">Rp ${formattedPrice}</span>
+              <span style="color: #fbbf24; font-weight: 700; font-size: 1.05rem;">Rp ${formattedPrice}</span>
             </div>
           </div>
         </div>
