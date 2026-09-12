@@ -1291,7 +1291,7 @@ async function loadReviewStats() {
 
         if (reviewList && latestReviews) {
             reviewList.innerHTML = latestReviews.map(r => `
-                <div style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
+                <div style="background-color: #1f2937; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                         <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
                         <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
@@ -1322,7 +1322,7 @@ function renderReviews() {
     const currentReviews = allFetchedReviews.slice(0, visibleCount);
 
     container.innerHTML = currentReviews.map(r => `
-        <div class="review-card-anim" style="background-color: #21262d; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
+        <div class="review-card-anim" style="background-color: #1f2937; border-radius: 8px; padding: 12px; border: 1px solid #30363d; margin-bottom: 8px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                 <strong style="font-size: 0.85rem; color: #ffffff;">${r.nama || 'Pembeli'}</strong>
                 <span style="font-size: 0.8rem; color: #f5b800;">★ ${r.rating}.0</span>
