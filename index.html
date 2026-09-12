@@ -1083,7 +1083,7 @@ if (orderForm) {
 
         const selectedCard = document.querySelector('.product-card.selected');
         const waInput = document.getElementById('whatsappInput')?.value.trim();
-        const paymentInput = document.getElementById('paymentMethodInput')?.value;
+        const paymentInput = document.getElementById('paymentMethodInput')?.value || document.getElementById('selectedOptionText')?.textContent || 'QRIS';
 
         if (!selectedCard) {
             showToast('Pilih produk terlebih dahulu!');
